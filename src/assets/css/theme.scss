@@ -1,0 +1,22 @@
+@use "sass:color";
+@import "./variables.scss";
+
+body {
+    --theme-background-color: #{$theme-background-color};
+    --theme-primary-color: #{$theme-primary-color};
+    --theme-secondary-color: #{$theme-secondary-color};
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: color.adjust($theme-background-color, $lightness: 1.5%);
+}
+
+.currency-list .currency-table .table tbody tr.active,
+.wallet-list .currency-table .table tbody tr.active {
+  background-color: color.change($theme-primary-color, $lightness: 90%);
+}
+
+.footer-list__link:hover {
+  color: darken($theme-primary-color, 5%);
+  text-decoration: none;
+}

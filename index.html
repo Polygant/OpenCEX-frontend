@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#000" />
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#000" />
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#000" />
+    <!--  recaptchaLoaded  -->
+    <script>
+      (function () {
+        window.recaptchaLoaded = function () {
+          window.isRecaptchaLoaded = true;
+        };
+      })();
+    </script>
+    <!-- /recaptchaLoaded -->
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+    <!-- TradingView -->
+    <script
+        type="module"
+        src="/public/TV/datafeeds/udf/dist/bundle.js"
+    ></script>
+  </body>
+</html>

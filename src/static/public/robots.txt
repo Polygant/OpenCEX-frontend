@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /login
+Disallow: /account
+User-agent: GoogleBot
+Disallow: /login
+Disallow: /account
+User-agent: Yandex
+Disallow: /login
+Disallow: /account
+Clean-Param: utm_source&utm_medium&utm_campaign
+Clean-Param: openstat
