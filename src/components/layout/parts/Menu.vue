@@ -70,7 +70,7 @@ export default {
         {
           key: "exchange",
           iconClass: "exchange",
-          path: "/quick-buy-sell",
+          path: "/quick-swap",
           rout: true,
         },
         {

@@ -63,7 +63,7 @@
             <router-link to="/trade/BTC-USDT">
               {{ $t("common.buysell") }}
             </router-link>
-            <router-link to="/quick-buy-sell">
+            <router-link to="/quick-swap">
               {{ $t("common.exchange") }}
             </router-link>
             <router-link to="/wallet">

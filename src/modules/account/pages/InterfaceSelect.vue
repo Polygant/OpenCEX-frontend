@@ -63,7 +63,7 @@ export default {
       if (this.prevRoute === "/settings") {
         this.$router.push("/settings");
       } else {
-        this.$router.push("/quick-buy-sell");
+        this.$router.push("/quick-swap");
       }
     },
     goTrade() {
