@@ -109,7 +109,7 @@ const support = {
       title: "Обменник",
       items: {
         title1: "Что представляет собой Обменник?",
-        content1: `<p>Обменник — это облегченный интерфейс для покупки и продажи криптовалют. Если вы не трейдер, то можете воспользоваться этим простым и удобным интерфейсом. Для этого выберите «<a rel='noopener noreferrer nofollow' href='/account/quick-buy-sell' target='_blank'>Обменник</a>» через главное Меню или переключите интерфейс в настройках, чтобы он автоматически открывался после входа на ${localConfig.project_title}.`,
+        content1: `<p>Обменник — это облегченный интерфейс для покупки и продажи криптовалют. Если вы не трейдер, то можете воспользоваться этим простым и удобным интерфейсом. Для этого выберите «<a rel='noopener noreferrer nofollow' href='/account/quick-swap' target='_blank'>Обменник</a>» через главное Меню или переключите интерфейс в настройках, чтобы он автоматически открывался после входа на ${localConfig.project_title}.`,
         title2: `Как просто купить или продать криптовалюту через Обменник?`,
         content2: `<p>На странице облегченного обмена представлены 3 блока:</p>
           <ol>
@@ -273,7 +273,7 @@ const support = {
         title1: `Ways of buying and selling cryptocurrency with ${localConfig.project_title}`,
         content1: `
           <p>The ${localConfig.project_title} team has created two interfaces for buying and selling cryptocurrencies: Simplified and Advanced.</p>
-          <p>The simplified interface (Quick Buy & Sell) can help you buy or sell cryptocurrency quickly and easily. You won’t need any specific trading knowledge. Read more in the <a href="/account/support?c=fast" target="_blank">QUICK BUY & SELL</a> chapter.</p>
+          <p>The simplified interface (Quick Swap) can help you buy or sell cryptocurrency quickly and easily. You won’t need any specific trading knowledge. Read more in the <a href="/account/support?c=fast" target="_blank">Quick Swap</a> chapter.</p>
           <p>The advanced interface (the Exchange) is a full-fledged trading page offering a range of professional tools. It consists of 7 segments:</p>
           <ol>
           <li>On the left is the order book (to buy and sell).</li>
@@ -297,14 +297,13 @@ const support = {
       },
     },
     fast: {
-      title: "Quick Buy&Sell",
+      title: "Quick Swap",
       items: {
-        title1: "What is Quick Buy & Sell?",
-        content1: `Quick Buy & Sell is a simplified interface for buying and selling cryptocurrency. If you are not a trader, this simple and convenient interface is for you. In order to use it, click ‘<a href="/account/quick-buy-sell" target="_blank">Quick Buy & Sell</a>’ in the main Menu or switch the interface in Settings to make it launch automatically whenever you log in to ${localConfig.project_title}.`,
-        title2:
-          "How to buy or sell cryptocurrency easily with Quick Buy & Sell",
+        title1: "What is Quick Swap?",
+        content1: `Quick Swap is a simplified interface for buying and selling cryptocurrency. If you are not a trader, this simple and convenient interface is for you. In order to use it, click ‘<a href="/account/quick-swap" target="_blank">Quick Swap</a>’ in the main Menu or switch the interface in Settings to make it launch automatically whenever you log in to ${localConfig.project_title}.`,
+        title2: "How to buy or sell cryptocurrency easily with Quick Swap",
         content2: `
-          <p>The ‘Quick Buy & Sell’ page contains 3 segments:</p>
+          <p>The ‘Quick Swap’ page contains 3 segments:</p>
           <ol>
           <li>The main segment is for selecting cryptocurrencies to send and receive, entering the amount, and making an exchange.</li>
           <li>The ‘Wallet’ segment (left) is for displaying the balances of your cryptocurrencies.</li>

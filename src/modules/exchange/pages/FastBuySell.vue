@@ -190,7 +190,7 @@ export default {
   name: "QuickBuySell",
   metaInfo() {
     return {
-      title: this.$t("pages.titles.quick_buy_sell"),
+      title: this.$t("pages.titles.quick_swap"),
       meta: [
         {
           name: "description",

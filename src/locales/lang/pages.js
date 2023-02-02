@@ -55,7 +55,7 @@ const pages = {
   en: {
     titles: {
       trade: "%7C Buy and Sell Bitcoin %7C",
-      quick_buy_sell: "Quick Buy & Sell Cryptocurrency",
+      quick_buy_sell: "Quick Swap Cryptocurrency",
       stake: "Token Staking. Profitable Staking.",
       token: "Native Exchange Token",
       page404: "Error 404 — Page Not Found on Platform",
@@ -87,7 +87,7 @@ const pages = {
       "Learn what fees and limits are set on. Trade fee levels, deposit/withdrawal fees, order limits.",
     interfaceSelect: "Interface Setting",
     interfaceSelectDescription:
-      "We care for your convenience: feel free to choose the interface you like most. Go with Basic for a quick buy & sell, or stay with Advanced for professional trading.",
+      "We care for your convenience: feel free to choose the interface you like most. Go with Basic for a Quick Swap, or stay with Advanced for professional trading.",
     wallet: "Wallet, Deposit, and Withdrawal from the Account Balance on",
     walletDescription:
       "Top up your balance to buy cryptocurrency and start trading. offers a bunch of handy methods for depositing and withdrawing funds.",
