@@ -1,11 +1,13 @@
 <template>
   <div v-if="cur1 !== '' && cur2 !== ''">
-    <div class="grid gap-2 xl:grid-cols-3 xl:gap-4">
+    <div class="fastBuy-wpapper md:grid gap-2 xl:grid-cols-2 xl:gap-4">
       <FastBuySellWalletList @set-pair="setPair" />
-      <div class="xl:col-span-2">
+      <div class="">
         <div class="exchange">
           <div class="exchangeNow">
-            1 {{ cur1 }} = {{ getCoolPrice(pricetop) }} {{ cur2 }}
+            1 {{ cur1 }} =
+            {{ getFixedDecimal(pricetop, coins[cur2]?.decimals || 8) }}
+            {{ cur2 }}
           </div>
           <div
             class="wallet__title exchange__title font-bold"
@@ -29,6 +31,7 @@
                     id="give"
                     v-model="give"
                     v-numeric.number.decimal.fractional
+                    :fractional="coins[cur1]?.decimals || 8"
                     class="exchangeForm__input exchange__input"
                     type="text"
                   />
@@ -48,7 +51,7 @@
                     class="relative ml-2 inline-block"
                     style="top: -2px"
                     width="13"
-                    :src="`/public/img/coin/${cur1?.toLowerCase()}.svg`"
+                    :src="`/public/img/coin/${cur1.toLowerCase()}.svg`"
                     alt=""
                   />
                   {{ cur1 }}
@@ -59,7 +62,7 @@
                     class="relative ml-2 inline-block"
                     style="top: -2px"
                     width="13"
-                    :src="`/public/img/coin/${cur1?.toLowerCase()}.svg`"
+                    :src="`/public/img/coin/${cur1.toLowerCase()}.svg`"
                     alt=""
                   />
                   {{ cur1 }}
@@ -75,6 +78,21 @@
                 </p>
               </span>
             </div>
+            <div class="flex justify-center w-full">
+              <div
+                class="simple-ad-search__arrows simple-ad-search__arrows_button"
+                @click="swapPairs"
+              >
+                <img
+                  class="simple-ad-search__arrow-down"
+                  src="/public/img/common/arrow.svg"
+                />
+                <img
+                  class="simple-ad-search__arrow-top"
+                  src="/public/img/common/arrow.svg"
+                />
+              </div>
+            </div>
             <div
               class="exchangeFormWrap"
               style="margin-bottom: 0px; margin-top: 5px"
@@ -84,14 +102,14 @@
                   {{ $t("common.i_get") }}:
                 </label>
                 <div class="exchange__input-select-container">
-                  <div
+                  <input
                     id="get"
+                    v-model="get"
+                    class="exchangeForm__input exchange__input"
                     :class="{ 'exchange__input--zero-value': !receiveAmount }"
-                    class="exchangeForm__input exchange__input exchange__input--second"
                     type="text"
-                  >
-                    {{ get }}
-                  </div>
+                  />
+
                   <Select3
                     v-if="relatedCoinsSelect3[cur2]"
                     :name="'cur_2'"
@@ -165,7 +183,7 @@
     </div>
     <div>
       <div class="w-full">
-        <FastBuySellHistoryList />
+        <FastBuySellHistoryList ref="history" />
       </div>
     </div>
   </div>
@@ -190,7 +208,7 @@ export default {
   name: "QuickBuySell",
   metaInfo() {
     return {
-      title: this.$t("pages.titles.quick_swap"),
+      title: this.$t("pages.titles.quick_buy_sell"),
       meta: [
         {
           name: "description",
@@ -218,8 +236,8 @@ export default {
       exchangeDisabled: false,
       receiveAmount: 0,
       balanceSum: 0,
-      cur1: "",
-      cur2: "",
+      cur1: "BTC",
+      cur2: "USDT",
       give: null,
       get: null,
       pricetop: 1,
@@ -230,6 +248,7 @@ export default {
       ignoreChangeCur1: false,
       ignoreChangeCur2: false,
       badLimits: true,
+      stop: false,
     };
   },
   computed: {
@@ -265,22 +284,17 @@ export default {
         Object.keys(currentCoin.pairs).map((key) => {
           let pair = currentCoin.pairs[key];
           if (
-            pair.quote !== this.cur1 &&
-            !(
-              this.coins[pair.base].disable_all ||
-              this.coins[pair.base].disable_exchange
-            )
+            !this.coins[pair.base].disable_all &&
+            !this.coins[pair.base].disable_exchange &&
+            !this.coins[pair.quote].disable_all &&
+            !this.coins[pair.quote].disable_exchange
           ) {
-            coins[pair.quote] = pair.quote;
-          }
-          if (
-            pair.base !== this.cur1 &&
-            !(
-              this.coins[pair.base].disable_all ||
-              this.coins[pair.base].disable_exchange
-            )
-          ) {
-            coins[pair.base] = pair.base;
+            if (pair.quote !== this.cur1) {
+              coins[pair.quote] = pair.quote;
+            }
+            if (pair.base !== this.cur1) {
+              coins[pair.base] = pair.base;
+            }
           }
         });
       }
@@ -288,18 +302,11 @@ export default {
     },
     exchangeFee() {
       if (this.receiveAmount) {
-        const isFiat = this.isFiat(this.cur2);
         let fee =
           this.receiveAmount *
           this.coins[this.cur2]["fee"]["exchange"]["value"];
-
-        fee = isFiat
-          ? this.getFixedDecimal(fee, 2)
-          : this.getFixedDecimal(fee, 8);
-        const regularNumber = this.getRegularNumber(fee);
-        return typeof regularNumber === "string"
-          ? Number.parseFloat(regularNumber).toFixed(8)
-          : regularNumber;
+        fee = this.getFixedDecimal(fee, this.coins[this.cur2]?.decimals || 8);
+        return this.getRegularNumber(fee);
       }
 
       return 0;
@@ -313,11 +320,32 @@ export default {
           : this.getCoolBalance(this.cur1)
         : 0;
     },
+    currentBalanceEx() {
+      const isFiat = this.isFiat(this.cur2);
+      const coin = this.coins[this.cur2];
+      return coin?.actual
+        ? isFiat
+          ? this.getCoolBalanceFIAT(this.cur2)
+          : this.getCoolBalance(this.cur2)
+        : 0;
+    },
     cur1notEnough() {
       return this.getFixedDecimal(this.currentBalance) < this.give;
     },
+    cur2notEnough() {
+      return this.getFixedDecimal(this.currentBalance) < this.get;
+    },
     limits() {
       const coin = this.coins[this.cur1];
+      const result = {};
+      if (coin) {
+        result.min = coin?.limits?.order?.min;
+        result.max = coin?.limits?.order?.max;
+      }
+      return result;
+    },
+    limitsEx() {
+      const coin = this.coins[this.cur2];
       const result = {};
       if (coin) {
         result.min = coin?.limits?.order?.min;
@@ -334,6 +362,11 @@ export default {
     },
   },
   watch: {
+    isAuthorized(val) {
+      if (val === undefined) {
+        location.reload();
+      }
+    },
     cur1() {
       this.give = null;
       this.get = null;
@@ -351,10 +384,20 @@ export default {
       this.delayProcessExchange();
     },
     give(val) {
-      if (typeof val === "string" && val.includes(",")) {
-        this.give = val.replace(",", ".");
+      if (!this.stop) {
+        if (typeof val === "string" && val.includes(",")) {
+          this.give = val.replace(",", ".");
+        }
+        this.delayProcessExchange("giveChange");
       }
-      this.delayProcessExchange("giveChange");
+    },
+    get(val) {
+      if (!this.stop) {
+        if (typeof val === "string" && val.includes(",")) {
+          this.get = val.replace(",", ".");
+        }
+        this.delayProcessExchangeEx("getChange");
+      }
     },
     user_notification(notifications) {
       if (notifications.length) {
@@ -372,7 +415,6 @@ export default {
     },
   },
   mounted() {
-    this.setDefaultCoins();
     this.$store.dispatch("core/getCoinsLimits");
     this.updateBalance();
     this.$store.dispatch("core/getPairs");
@@ -417,6 +459,25 @@ export default {
         400
       );
     },
+    delayProcessExchangeEx(id = "pairChange") {
+      this.delay(
+        id,
+        () => {
+          this.maintimer && clearTimeout(this.maintimer);
+          this.processexchangeEx();
+          if (this.cur2notEnough) {
+            this.give = null;
+          }
+        },
+        400
+      );
+    },
+
+    swapPairs() {
+      const tempCur = this.cur1;
+      this.cur1 = this.cur2;
+      this.cur2 = tempCur;
+    },
 
     setPair({ currency, type }) {
       if (this.coins[currency].disable_exchange) {
@@ -430,19 +491,21 @@ export default {
 
       const pairs = this.filteredCoins[currency].pairs;
       const firstPair = pairs[Object.keys(pairs)[0]];
-      if (type === "buy") {
+      if (type === "sell") {
         this.ignoreChangeCur1 = true;
-        this.cur1 = firstPair.quote;
+        this.cur1 = currency;
         this.ignoreChangeCur1 = false;
         setTimeout(() => {
-          this.cur2 = firstPair.base;
+          this.cur2 =
+            currency == firstPair.base ? firstPair.quote : firstPair.base;
         }, 10);
       } else {
         this.ignoreChangeCur1 = true;
-        this.cur1 = firstPair.base;
+        this.cur1 =
+          currency === firstPair.base ? firstPair.quote : firstPair.base;
         this.ignoreChangeCur1 = false;
         setTimeout(() => {
-          this.cur2 = firstPair.quote;
+          this.cur2 = currency;
         }, 10);
       }
     },
@@ -518,6 +581,70 @@ export default {
         }
       }
     },
+    checkAndSetAmountEx(result, percent = null) {
+      result = this.getFixedDecimal(result);
+      if (Number.isNaN(result) || result === 0) return false;
+      if (percent && this.get !== result) {
+        this.get = result;
+      }
+      if (this.isLoggedIn) {
+        const { min, max } = this.limitsEx;
+        let text = "";
+
+        if (result >= min && this.currentBalanceEx >= min && result <= max) {
+          this.badLimits = false;
+
+          return true;
+        } else if (result > max) {
+          this.badLimits = true;
+
+          if (percent) {
+            text = this.$t("common.quantityIsGreaterThanMax", {
+              selectedPercent: percent,
+              maxLimit: max,
+              currency: this.cur2,
+            });
+            this.$notify({
+              type: "warning",
+              text,
+              duration: 10000,
+            });
+          }
+
+          return true;
+        } else if (result < min && this.currentBalanceEx > min) {
+          this.badLimits = true;
+
+          if (percent) {
+            text = this.$t("common.quantityIsLowerThanMin", {
+              selectedPercent: percent,
+              minLimit: max,
+              currency: this.cur2,
+            });
+          } else {
+            text = this.$t("common.quantityIsTooLow");
+          }
+
+          this.$notify({
+            type: "warning",
+            text,
+            duration: 10000,
+          });
+
+          return true;
+        } else {
+          this.badLimits = false;
+
+          this.$notify({
+            type: "warning",
+            text: this.$t("common.notEnoughForExchange"),
+            duration: 5000,
+          });
+
+          return false;
+        }
+      }
+    },
     getCoolPrice(priceValue) {
       const price = parseFloat(priceValue);
 
@@ -547,13 +674,19 @@ export default {
             "common.to"
           )} ${price} ${cur2}`,
         });
-      } else {
+      } else if (oper === "no") {
         self.$notify({
           type: "error",
           title: self.$t("common.not_done"),
           text: `${self.$t("common.amount_short")}: ${sum} ${cur1} ${self.$t(
             "common.to"
           )} ${cur2}`,
+        });
+      } else if (oper === "cancelled") {
+        self.$notify({
+          type: "error",
+          title: self.$t("common.not_done"),
+          text: self.$t("common.order_cancelled"),
         });
       }
     },
@@ -570,7 +703,8 @@ export default {
             operation: this.operation,
             quantity: this.give,
           });
-          if (Object.keys(response.data).length === 0) throw null;
+          if (Object.keys(response.data).length === 0) throw "no";
+          else if (response.data.order.state === 2) throw "cancelled";
           this.getNotifications();
           this.drawSuccess(
             "succ",
@@ -583,22 +717,46 @@ export default {
           this.give = null;
           this.get = null;
           this.receiveAmount = 0;
+          // Вернуть кнопку
         } catch (e) {
-          this.drawSuccess("no", this.give, this.cur1, this.cur2, "");
+          if (e === "cancelled")
+            this.drawSuccess("cancelled", this.give, this.cur1, this.cur2, "");
+          else this.drawSuccess("no", this.give, this.cur1, this.cur2, "");
         } finally {
           stop = false;
         }
+        this.$refs.history.getExchangeHistory();
       }
 
       this.exchangePending = false;
     },
-    disableExchange() {
+    disableExchange(showMessage) {
       if (!this.preventDisabledExchangeMsg) {
         const self = this;
 
         this.preventDisabledExchangeMsg = true;
 
-        if (this.give !== null && this.give !== undefined && this.give > 0) {
+        if (showMessage) {
+          this.$notify({
+            type: "error",
+            text: this.$t("common.exchangeDisabled"),
+          });
+        }
+
+        setTimeout(() => {
+          self.preventDisabledExchangeMsg = false;
+        }, 1000);
+      }
+
+      this.exchangeDisabled = true;
+    },
+    disableExchangeEx() {
+      if (!this.preventDisabledExchangeMsg) {
+        const self = this;
+
+        this.preventDisabledExchangeMsg = true;
+
+        if (this.get !== null && this.get !== undefined && this.get > 0) {
           this.$notify({
             type: "error",
             text: this.$t("common.exchangeDisabled"),
@@ -615,21 +773,8 @@ export default {
     enableExchange() {
       this.exchangeDisabled = false;
     },
-    setDefaultCoins() {
-      let clearCoins = Object.fromEntries(
-        Object.entries(this.coins).filter(
-          ([, coin]) => !coin.disable_all && !coin.disable_exchange
-        )
-      );
-      if (this.cur1 === "" || this.cur1 === undefined) {
-        this.cur1 = Object.keys(clearCoins)[0];
-      }
-      if (this.cur2 === "" || this.cur2 === undefined) {
-        this.cur2 = Object.keys(clearCoins)[1];
-      }
-    },
     processexchange(give = this.give, percent = null) {
-      let stop = true;
+      this.stop = true;
       if (!this.checkAndSetAmount(give, percent) && Number.isNaN(give)) {
         return;
       }
@@ -646,8 +791,7 @@ export default {
         }
       }
       this.operation = opertype;
-      if (stop) {
-        this.setDefaultCoins();
+      if (this.stop) {
         this.$http
           .put("exchange/", {
             base_currency: this.cur1,
@@ -658,9 +802,19 @@ export default {
           .then(
             (response) => {
               if (response.data.disable_exchange) {
-                this.disableExchange();
+                this.disableExchange(
+                  this.give !== null && this.give !== undefined && this.give > 0
+                );
               } else {
                 this.enableExchange();
+              }
+
+              if (response.data["cost"] * 1 === 0) {
+                this.disableExchange(false);
+                this.$notify({
+                  type: "warning",
+                  text: this.$t("common.instant_exchange"),
+                });
               }
 
               if (
@@ -668,11 +822,14 @@ export default {
                 this.give === "" ||
                 this.getFixedDecimal(this.give) === 0
               ) {
-                this.get = "0.0";
+                this.get = "";
                 this.receiveAmount = 0;
               } else {
                 this.receiveAmount = response.data["cost"]
-                  ? this.getCoolPrice(response.data["cost"])
+                  ? this.getFixedDecimal(
+                      response.data["cost"],
+                      this.coins[this.cur2]?.decimals || 8
+                    )
                   : "0.0";
                 this.get = this.receiveAmount;
               }
@@ -699,12 +856,115 @@ export default {
                   }, 3000);
                 }
               }
+
               this.maintimer = setTimeout(() => {
                 this.processexchange();
               }, time);
             },
             (r) => {
               this.get = null;
+              this.badLimits = true;
+
+              if (r?.data?.non_field_errors) {
+                if (
+                  r.data["non_field_errors"][0] === "suitable pair not found"
+                ) {
+                  this.$notify({
+                    type: "warning",
+                    text: this.$t("common.notSuitablePair"),
+                  });
+                }
+              } else {
+                this.disableExchange(false);
+                this.$notify({
+                  type: "warning",
+                  text: this.$t("common.instant_exchange"),
+                });
+              }
+            }
+          )
+          .finally(() => {
+            this.stop = false;
+          });
+      }
+    },
+    processexchangeEx(get = this.get, percent = null) {
+      this.stop = true;
+      if (!this.checkAndSetAmountEx(get, percent) && Number.isNaN(get)) {
+        return;
+      }
+
+      const time = 20000;
+      const opertype = 1;
+      let qUANTITY = 0.000001;
+
+      this.maintimer && clearTimeout(this.maintimer);
+
+      if (this.give !== "") {
+        if (this.getFixedDecimal(this.get) > 0.0) {
+          qUANTITY = this.getFixedDecimal(this.get);
+        }
+      }
+      this.operation = opertype;
+      if (this.stop) {
+        this.$http
+          .put("exchange/", {
+            base_currency: this.cur2,
+            quote_currency: this.cur1,
+            operation: opertype,
+            quantity: qUANTITY,
+          })
+          .then(
+            (response) => {
+              if (response.data.disable_exchange) {
+                this.disableExchangeEx();
+              } else {
+                this.enableExchange();
+              }
+
+              if (
+                !this.get ||
+                this.get === "" ||
+                this.getFixedDecimal(this.get) === 0
+              ) {
+                this.give = "";
+                this.receiveAmount = 0;
+              } else {
+                this.receiveAmount = response.data["cost"]
+                  ? this.getCoolPrice(response.data["cost"])
+                  : "";
+                this.give = this.receiveAmount;
+              }
+              if (response.data["price"]) {
+                this.pricetop = response.data["price"];
+              } else {
+                this.pricetop = 0.0;
+
+                if (
+                  !this.times &&
+                  this.balance[this.cur2] &&
+                  this.balance[this.cur2].actual >
+                    this.getFixedDecimal(this.get)
+                ) {
+                  this.times = true;
+
+                  this.$notify({
+                    type: "warning",
+                    text: this.$t("common.instant_exchange"),
+                  });
+
+                  setTimeout(() => {
+                    this.times = false;
+                  }, 3000);
+                }
+              }
+
+              this.maintimer = setTimeout(() => {
+                this.processexchangeEx();
+              }, time);
+            },
+            (r) => {
+              this.give = null;
               this.badLimits = true;
 
               if (r.data["non_field_errors"]) {
@@ -720,7 +980,7 @@ export default {
             }
           )
           .finally(() => {
-            stop = false;
+            this.stop = false;
           });
       }
     },

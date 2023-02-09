@@ -98,6 +98,10 @@
             type="text"
             autocomplete="off"
           />
+          <div class="bottom-text">
+            {{ $t("common.allbalance") }}:
+            {{ filteredCoins?.[balanceCoin]?.actual }} {{ balanceCoin }}
+          </div>
           <button
             type="submit"
             :disabled="isFormDisabled"
@@ -126,6 +130,7 @@
 
 <script>
 import getFixedDecimal from "~/mixins/getFixedDecimal";
+import { mapGetters } from "vuex";
 
 export default {
   mixins: [getFixedDecimal],
@@ -156,16 +161,30 @@ export default {
   },
 
   computed: {
+    ...mapGetters({ coins: "core/coins" }),
     currencies() {
       return {
         base: this.order.pair.split("-")[0],
         quote: this.order.pair.split("-")[1],
       };
     },
-
+    balanceCoin() {
+      if (this.order.operation === 1) {
+        return this.order.pair.split("-")[0];
+      } else {
+        return this.order.pair.split("-")[1];
+      }
+    },
     minSum() {
       return parseFloat(
         (this.order.quantity - this.order.quantity_left).toFixed(8)
+      );
+    },
+    filteredCoins() {
+      return Object.fromEntries(
+        Object.entries(this.coins).filter(([, coin]) => {
+          return coin.active && !coin.disable_all;
+        })
       );
     },
   },
@@ -236,6 +255,7 @@ export default {
     },
 
     updateOrderErrorParser(data) {
+      console.log("-", data);
       const detail = data.detail;
 
       if (detail && detail.message) return detail.message;
@@ -283,7 +303,7 @@ export default {
           detail.slice(0, 16) === "Order cost limit":
           ans = this.$t("common.order_errors.cost_limit");
           break;
-        case detail === "NotEnoughFunds":
+        case data.message.code === "not_enough_funds":
           ans = this.$t("common.order_errors.no_funds");
           break;
         case data?.type?.message === "order_max_cost":
@@ -291,6 +311,9 @@ export default {
           break;
         case data?.message?.code === "order_quantity_invalid_error":
           ans = this.$t("common.check_min_limit");
+          break;
+        case data?.message?.code === "order_price_invalid_error":
+          ans = this.$t("common.order_price_invalid");
           break;
         default:
           ans = this.$t("common.order_errors.error");
@@ -340,6 +363,10 @@ export default {
     color: var(--theme-primary-color);
     display: inline-block;
     width: 100%;
+  }
+  .bottom-text {
+    font-size: 15px;
+    padding-top: 12px;
   }
 }
 </style>

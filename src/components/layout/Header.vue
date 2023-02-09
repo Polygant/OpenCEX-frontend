@@ -46,7 +46,7 @@
     <div class="header__etc">
       <div class="header__etc-middle">
         <div v-if="accountData" class="middle-list__title">
-          {{ coins[accountData?.currentPair[0]].name }}
+          {{ coins[accountData?.currentPair?.[0]]?.name }}
           <span class="header__ether-info-text"></span>
           <ul class="header__links">
             <li class="header__links-item">{{ $t("common.site") }}:</li>
@@ -115,9 +115,9 @@
 
               <!-- eslint-disable-next-line -->
               <router-link
-                v-else
-                :to="item.path"
-                class="author-list__item"
+                  v-else
+                  :to="item.path"
+                  class="author-list__item"
               >
                 <a class="author-list__link">
                   <img
@@ -234,7 +234,7 @@ export default {
     },
 
     getLinkInfo(ticker) {
-      return this.coins[ticker]["links"];
+      return this.coins?.[ticker]?.["links"];
     },
   },
 };
