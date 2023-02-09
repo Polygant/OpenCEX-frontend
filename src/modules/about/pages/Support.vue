@@ -47,7 +47,7 @@
           </p>
           <p class="mb-4">
             <a
-              :href="localConfig.socials.telegram.link"
+              :href="`https://t.me/${localConfig.socials.telegram.link}`"
               target="_blank"
               rel="noopener noreferrer nofollow"
               >{{ localConfig.socials.telegram.link }}</a
@@ -132,7 +132,7 @@ export default {
   computed: {
     activeQuestionIndex() {
       const index = this.questions.findIndex(
-        (question) => question.category == this.$route.query.c
+        (question) => question.category === this.$route.query.c
       );
       return index === -1 ? 0 : index;
     },

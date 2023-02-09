@@ -151,7 +151,6 @@
           />
           <!--CAPTCHA-->
           <p v-if="errtext" class="text-danger mb-4">{{ errtext }}</p>
-
           <button
             :disabled="isInvalidFaCode"
             class="logIn__form__input logIn__form__input_button block"
@@ -160,6 +159,12 @@
             {{ $t("common.login_upper") }}
           </button>
         </form>
+        <input
+          class="forgot-password__button forgot-password__button_red logIn__form__input logIn__form__input_button back-button"
+          type="button"
+          :value="$t('common.back_to_login')"
+          @click="reload()"
+        />
       </div>
     </div>
     <!--GOOGLE AUTH-->
@@ -236,6 +241,9 @@ export default {
       this.captchaIsON = false;
       this.captchaResponse = "";
       this.dangertext = {};
+    },
+    reload() {
+      location.reload();
     },
   },
 };
@@ -583,7 +591,6 @@ button {
     &--country {
       right: 45px;
 
-      /* в не мобильной версии строка немного выше, тут мы смещаем подсказку выше*/
       @media (min-width: 531px) {
         top: 48%;
       }
@@ -593,7 +600,6 @@ button {
       top: 60%;
       right: 85px;
 
-      /* в не мобильной версии строка немного выше, тут мы смещаем подсказку выше*/
       @media (min-width: 531px) {
         top: 55%;
       }
@@ -689,5 +695,8 @@ button {
 .secretclass1::placeholder {
   color: #169664;
   opacity: 0.03;
+}
+.back-button {
+  background: #968cad !important;
 }
 </style>
