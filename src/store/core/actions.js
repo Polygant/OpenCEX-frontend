@@ -393,7 +393,33 @@ export default {
   logout({ commit }) {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
+    localStorage.removeItem("refresh_token");
     commit(mutationTypes.LOGOUT);
+  },
+  async refreshToken({ dispatch, state }) {
+    if (!state.refresh_token_lock) {
+      state.refresh_token_lock = true;
+      if (
+        localStorage.getItem("refresh_token") &&
+        localStorage.getItem("refresh_token") !== "undefined"
+      ) {
+        // eslint-disable-next-line no-undef
+        app.config.globalProperties.$http
+          .post("auth/token/refresh/", {
+            refresh: localStorage.getItem("refresh_token") ?? "",
+          })
+          .then((response) => {
+            localStorage.setItem("token", response.data.access);
+            localStorage.setItem("refresh_token", response.data.refresh);
+          })
+          .catch(() => {
+            dispatch("logout");
+          })
+          .finally(() => {
+            state.refresh_token_lock = false;
+          });
+      }
+    }
   },
   getStoreList({ commit }, callback) {
     StoreList.list().then((response) => {
