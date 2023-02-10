@@ -73,7 +73,8 @@ export default {
       app.config.globalProperties.$http
         .post("auth/login/", data)
         .then((response) => {
-          localStorage.setItem("token", response.data.key);
+          localStorage.setItem("token", response.data.access_token);
+          localStorage.setItem("refresh_token", response.data.refresh_token);
           localStorage.removeItem("show_security_notice");
           this.$store.dispatch("core/loginSuccess");
           this.checkProfile();
@@ -135,7 +136,8 @@ export default {
         app.config.globalProperties.$http
           .post("auth/login/", config)
           .then((response) => {
-            localStorage.setItem("token", response.data.key);
+            localStorage.setItem("token", response.data.access_token);
+            localStorage.setItem("refresh_token", response.data.refresh_token);
             localStorage.removeItem("show_security_notice");
             this.$store.dispatch("core/loginSuccess");
             this.checkProfile();

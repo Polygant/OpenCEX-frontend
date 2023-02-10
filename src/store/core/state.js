@@ -43,4 +43,5 @@ export default () => ({
   countriesList: [],
   userNotifications: [],
   currentPrecisions: null,
+  refresh_token_lock: false,
 });
