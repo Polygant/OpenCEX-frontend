@@ -4,7 +4,6 @@
       <div>
         <setting-section></setting-section>
         <div class="walletlist" style="width: 100%; height: 500px">
-          <div class="settings__NAME">{{ $t("common.personalInfo") }}</div>
           <div style="height: 390px">
             <div class="personal-info-wrapper">
               <PersonalInfoSettings :profile="profile" />

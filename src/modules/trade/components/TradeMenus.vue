@@ -12,6 +12,15 @@
             {{ $t("common.limit") }}
           </a>
         </li>
+        <li class="nav-item trade-menus__nav-item">
+          <a
+            class="trade-menus__link nav-link"
+            :class="{ active: tab === 2 }"
+            @click="setTab(2)"
+          >
+            {{ $t("common.stop_limit") }}
+          </a>
+        </li>
         <li v-if="otcenabled" class="nav-item trade-menus__nav-item">
           <a
             class="trade-menus__link nav-link"
@@ -46,6 +55,34 @@
               :base-currency="baseCurrency"
               :quote-currency="quoteCurrency"
               :disable-operations="disableOperations"
+              operation="sell"
+              @add-order="
+                addOrder('sell', $event.orderData, $event.type, $event.callback)
+              "
+            />
+          </div>
+        </div>
+        <div
+          id="stop-limit-1"
+          class="tab-pane fade show"
+          :class="{ active: tab === 2 }"
+        >
+          <div class="xl:flex block">
+            <StopLimit
+              class="trade-menus__block"
+              :base-currency="baseCurrency"
+              :quote-currency="quoteCurrency"
+              :bitfinex-price="bitfinex.price"
+              operation="buy"
+              @add-order="
+                addOrder('buy', $event.orderData, $event.type, $event.callback)
+              "
+            />
+            <StopLimit
+              class="trade-menus__block"
+              :base-currency="baseCurrency"
+              :quote-currency="quoteCurrency"
+              :bitfinex-price="bitfinex.price"
               operation="sell"
               @add-order="
                 addOrder('sell', $event.orderData, $event.type, $event.callback)
@@ -91,6 +128,7 @@
 import LimitList from "../components/LimitsList.vue";
 import OTC from "../components/OTC.vue";
 import getPair from "~/mixins/getPair";
+import StopLimit from "../components/StopLimit.vue";
 import { mapGetters, mapActions } from "vuex";
 import { OTCPrices } from "~/api/otcprices";
 import errorManager from "~/helpers/errorHundle";
@@ -98,6 +136,7 @@ import errorManager from "~/helpers/errorHundle";
 export default {
   components: {
     LimitList,
+    StopLimit,
     OTC,
   },
   mixins: [getPair],
