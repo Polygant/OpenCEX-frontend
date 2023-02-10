@@ -1,3 +1,4 @@
+import { app } from "~/main";
 import { Coin } from "~/api/coin";
 import { UserNotifications } from "~/api/user_notifications";
 import { Pairs, PairsVolume } from "~/api/pairs";
@@ -403,7 +404,6 @@ export default {
         localStorage.getItem("refresh_token") &&
         localStorage.getItem("refresh_token") !== "undefined"
       ) {
-        // eslint-disable-next-line no-undef
         app.config.globalProperties.$http
           .post("auth/token/refresh/", {
             refresh: localStorage.getItem("refresh_token") ?? "",
