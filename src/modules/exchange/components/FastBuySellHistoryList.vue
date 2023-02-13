@@ -2,74 +2,84 @@
   <div class="historylist">
     <!--HISTORY-->
     <div class="wallet__title">{{ $t("common.exchangehistory") }}</div>
-    <div>
-      <div v-if="exchanges.length" style="max-height: 400px">
-        <perfect-scrollbar>
-          <table class="walletTable">
-            <thead class="fast-buy-sell-history-list__thead">
-              <tr>
-                <th class="walletTable__header walletTable__header_data_ex">
-                  {{ $t("common.date") }}
-                </th>
-                <th class="walletTable__header walletTable__header_value_ex">
-                  {{ $t("common.gave") }}/{{ $t("common.got") }}
-                </th>
-                <th class="walletTable__header walletTable__header_data_ex_1">
-                  {{ $t("common.price") }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="ex in exchanges" :key="ex.id">
-                <td
-                  class="walletTable__column walletTable__column_data"
-                  :data-thead="$t('common.date')"
-                >
-                  {{ getprettyDate(ex.order.updated) }}
-                </td>
-                <td
-                  class="walletTable__column is-centered"
-                  :data-thead="`${$t('common.gave')}/${$t('common.got')}`"
-                >
-                  <div class="walletTable__amount">
-                    <span class="walletTable__column_sell">
-                      {{
-                        isFiat(ex.base_currency)
-                          ? $options.getDecimalWLength(ex.quantity)
-                          : getCoolValueForTable(ex.quantity)
-                      }}
-                      {{ ex.base_currency }}
-                    </span>
-                    <i class="fa fa-exchange" aria-hidden="true"></i>
-                    <span class="walletTable__column_buy">
-                      {{
-                        isFiat(ex.quote_currency)
-                          ? $options.getDecimalWLength(ex.cost)
-                          : getCoolValueForTable(ex.cost)
-                      }}
-                      {{ ex.quote_currency }}
-                    </span>
-                  </div>
-                </td>
-                <td
-                  class="walletTable__column"
-                  :data-thead="$t('common.price')"
-                >
-                  {{ ex.order.price }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </perfect-scrollbar>
-      </div>
-      <div v-else class="nodata not-information" style="padding-top: 30px">
-        <div class="icon smile">
-          <img src="/public/img/Smile.svg" alt="no data" />
-        </div>
-        <div class="txt">{{ $t("common.nodata") }}</div>
-      </div>
+    <div v-if="exchanges.length">
+      <table class="walletTable">
+        <thead>
+          <tr>
+            <th class="walletTable__header walletTable__header_data_ex">
+              {{ $t("common.date") }}
+            </th>
+            <th class="walletTable__header walletTable__header_value_ex">
+              {{ $t("common.gave") }}/{{ $t("common.got") }}
+            </th>
+            <th class="walletTable__header walletTable__header_data_ex_1">
+              {{ $t("common.price") }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="ex in exchanges" :key="ex.id">
+            <td
+              class="walletTable__column walletTable__column_data"
+              :data-thead="$t('common.date')"
+            >
+              {{ getprettyDate(ex.order.updated) }}
+            </td>
+            <td
+              class="walletTable__column is-centered"
+              :data-thead="`${$t('common.gave')}/${$t('common.got')}`"
+            >
+              <div class="walletTable__amount">
+                <span class="walletTable__column_sell">
+                  {{
+                    isFiat(ex.base_currency)
+                      ? $options.getDecimalWLength(ex.quantity)
+                      : getCoolValueForTable(ex.quantity)
+                  }}
+                  {{ ex.base_currency }}
+                </span>
+                <i class="fa fa-exchange" aria-hidden="true"></i>
+                <span class="walletTable__column_buy">
+                  {{
+                    isFiat(ex.quote_currency)
+                      ? $options.getDecimalWLength(ex.cost)
+                      : getCoolValueForTable(ex.cost)
+                  }}
+                  {{ ex.quote_currency }}
+                </span>
+              </div>
+            </td>
+            <td class="walletTable__column" :data-thead="$t('common.price')">
+              {{ ex.order.price }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <paginate
+        v-model="currentPage"
+        :page-range="5"
+        :margin-pages="0"
+        :page-count="Math.ceil(exchangesCount / 5) - 1"
+        :click-handler="handlePagination"
+        :prev-text="'❮'"
+        :next-text="'❯'"
+        :container-class="`pagination pagination-custom ${
+          pageCount > 5 ? 'over-pages' : ''
+        }`"
+        :page-class="'page-item page-item-custom noselect'"
+        :prev-class="'page-item page-item-custom-prev noselect'"
+        :next-class="'page-item page-item-custom-prev noselect'"
+        :break-view-class="'page-item page-item-custom-break'"
+        :break-view-text="''"
+      >
+      </paginate>
     </div>
-
+    <div v-else class="nodata not-information" style="padding-top: 30px">
+      <div class="icon smile">
+        <img src="/public/img/Smile.svg" alt="no data" />
+      </div>
+      <div class="txt">{{ $t("common.nodata") }}</div>
+    </div>
     <!--HISTORY-->
   </div>
 </template>
@@ -78,6 +88,7 @@ import { mapGetters } from "vuex";
 import { Decimal } from "decimal.js";
 import getFixedDecimal from "~/mixins/getFixedDecimal";
 import { getDecimalWLength } from "~/utilities/helpers";
+import Paginate from "vuejs-paginate-next";
 
 function precision(a) {
   const decimalValue = new Decimal(a);
@@ -95,15 +106,30 @@ function precision(a) {
 
 export default {
   name: "FastBuySellHistoryList",
+  components: { Paginate },
   mixins: [getFixedDecimal],
   getDecimalWLength,
+  props: {
+    curPage: {
+      type: Number,
+      default: 1,
+    },
+    pageCount: {
+      type: Number,
+      default: 12,
+    },
+  },
   data() {
     return {
       exchangeTimeout: null,
+      currentPage: 1,
     };
   },
   computed: {
-    ...mapGetters({ exchanges: "core/exchanges" }),
+    ...mapGetters({
+      exchanges: "core/exchanges",
+      exchangesCount: "core/exchangesCount",
+    }),
   },
   mounted() {
     this.getExchangeHistory();
@@ -112,6 +138,10 @@ export default {
     this.exchangeTimeout && clearTimeout(this.exchangeTimeout);
   },
   methods: {
+    handlePagination(pageNum) {
+      this.currentPage = pageNum;
+      this.getExchangeHistory();
+    },
     isFiat(cur) {
       return cur === "USD" || cur === "EUR" || cur === "RUB";
     },
@@ -124,12 +154,21 @@ export default {
       a.setTime(parseInt(ptime));
       return a.toLocaleString("ru-RU");
     },
-    getExchangeHistory() {
-      const self = this;
 
+    createGetExchangeHistoryLoop() {
       if (this.exchangeTimeout) clearTimeout(this.exchangeTimeout);
 
-      this.$store.dispatch("core/getExchanges");
+      this.getExchangeHistory();
+
+      this.exchangeTimeout = setTimeout(this.getExchangeHistory, 60 * 1000);
+    },
+
+    getExchangeHistory() {
+      this.$store.dispatch("core/getExchanges", {
+        limit: 10,
+        offset: (this.currentPage - 1) * 10,
+        st: 1,
+      });
 
       this.exchangeTimeout = setTimeout(function () {
         self.getExchangeHistory();
@@ -149,7 +188,7 @@ export default {
   position: relative;
 }
 .historylist {
-  padding: 0;
+  padding: 0 0 40px 0;
 }
 
 .table-responsive {

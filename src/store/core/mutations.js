@@ -154,6 +154,9 @@ export default {
   [mutationTypes.EXCHANGES](state, exs) {
     state.exchanges = exs;
   },
+  [mutationTypes.EXCHANGES_COUNT](state, exs) {
+    state.exchangesCount = exs;
+  },
   [mutationTypes.ORDERS](state, orders) {
     state.orders = orders;
   },

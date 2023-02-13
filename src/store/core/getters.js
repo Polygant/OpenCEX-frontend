@@ -18,6 +18,7 @@ export default {
   walletTickerHistory: (state) => state.walletTickerHistory,
   affiliatebonuses: (state) => state.affiliatebonuses,
   exchanges: (state) => state.exchanges,
+  exchangesCount: (state) => state.exchangesCount,
   orders: (state) => state.orders,
   openorders: (state) => state.openorders,
   closedorders: (state) => state.closedorders,
