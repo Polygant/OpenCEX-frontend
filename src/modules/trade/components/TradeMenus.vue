@@ -243,7 +243,6 @@ export default {
             this.notifyOrderOpened(data);
             if (callback) callback();
           } else {
-            console.log("data", data);
             if (data.message?.code === "order_price_invalid_error") {
               this.$emit("error", this.$t("common.order_price_invalid"));
             }
