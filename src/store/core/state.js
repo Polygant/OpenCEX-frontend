@@ -20,6 +20,7 @@ export default () => ({
   walletWithdrawalsHistory: {},
   walletTickerHistory: {},
   exchanges: [],
+  exchangesCount: null,
   orders: {},
   openorders: [],
   closedorders: {},

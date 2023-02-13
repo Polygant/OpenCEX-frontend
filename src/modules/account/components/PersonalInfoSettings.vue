@@ -17,7 +17,7 @@
       <span v-else class="p-2">
         {{ profile.user.first_name }}
         <img
-          src="/public/img/times.svg"
+          src="/public/img/pencil_b.svg"
           width="20"
           @click="editField('firstName')"
         />
@@ -37,7 +37,7 @@
       <span v-else class="p-2">
         {{ profile.user.last_name }}
         <img
-          src="/public/img/times.svg"
+          src="/public/img/pencil_b.svg"
           width="20"
           @click="editField('lastName')"
         />
@@ -71,7 +71,7 @@
       <span v-else class="p-2">
         {{ birthdayLive === "" ? birthday : birthdayLive }}
         <img
-          src="/public/img/times.svg"
+          src="/public/img/pencil_b.svg"
           width="20"
           @click="editField('birthday')"
         />

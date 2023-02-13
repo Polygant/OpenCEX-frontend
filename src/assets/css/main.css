@@ -2389,7 +2389,6 @@ button:active {
 
 .historylist {
   min-height: 270px;
-  max-height: 700px;
   transition: all 0.3s linear;
   overflow: hidden;
   margin-top: 15px;
@@ -3335,10 +3334,6 @@ input[type="password"].logIn__form__input::placeholder {
 
 .page-item-custom {
   width: 45px;
-}
-
-.pagination-custom.over-pages li:nth-last-child(3) {
-  width: initial;
 }
 
 .pagination-custom:not(.over-pages) li:nth-last-child(2) {
