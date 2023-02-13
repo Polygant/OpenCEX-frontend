@@ -194,7 +194,7 @@ export default {
         let result = JSON.parse(JSON.stringify(state.pairs[code] || {}));
         result = { ...result, base, quote, id, code };
         resultPairs = { ...resultPairs, [code]: result };
-        if (coins[base.code] && coins[quote.code]) {
+        if (coins && coins[base.code] && coins[quote.code]) {
           coins[base.code].pairs[`${base.code}-${quote.code}`] = {
             base: base.code,
             quote: quote.code,

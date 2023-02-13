@@ -193,7 +193,8 @@ export default {
         .then((data) => (this.bitfinex.price = data.price))
         .catch((error) => {
           const detail = error.body.detail;
-          if (error.body.detail.message) this.$emit("error", detail.message);
+          if (error.body && error.body.detail.message)
+            this.$emit("error", detail.message);
         });
     },
 
@@ -242,6 +243,13 @@ export default {
             this.notifyOrderOpened(data);
             if (callback) callback();
           } else {
+            console.log("data", data);
+            if (data.message?.code === "order_price_invalid_error") {
+              this.$emit("error", this.$t("common.order_price_invalid"));
+            }
+            if (data.message?.code === "order_stop_invalid_error") {
+              this.$emit("error", this.$t("common.order_price_invalid"));
+            }
             if (data.detail && data.detail.message) {
               if (Array.isArray(data.detail.message))
                 this.$emit("error", data.detail.message[0]);
@@ -252,6 +260,8 @@ export default {
                 "bad_max_amount",
                 "order_max_cost",
                 "not_enough_funds",
+                "order_price_invalid",
+                "order_stop_price_invalid",
               ]);
             }
           }
