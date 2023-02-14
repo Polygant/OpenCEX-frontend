@@ -152,7 +152,7 @@ input[type="password"]::-webkit-input-placeholder {
 }
 
 .personal-info-wrapper {
-  padding: 50px 90px;
+  padding: 10px 0;
 }
 
 .setting-table {
@@ -177,7 +177,9 @@ input[type="password"]::-webkit-input-placeholder {
   max-width: 1432px;
   margin: 0 auto;
 }
-
+.settings__NAME {
+  padding: 15px 15px 15px;
+}
 @media screen and (max-width: 650px) {
   .personal-info-wrapper,
   .settings__NAME,
