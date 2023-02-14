@@ -1,100 +1,112 @@
 <template>
   <div class="personal-info-settings" :class="{ blured: blured }">
-    <div class="settings__NAME" style="padding-left: 0">
+    <div class="settings__NAME">
       {{ $t("common.personalInfo") }}
     </div>
-    <p v-if="profile.user.first_name" class="pb-4 flex">
-      <strong class="pt-2 mr-2">{{ $t("common.firstname") }}:</strong>
-      <span v-if="firstNameEdit" class="flex">
-        <input v-model="firstName" class="col-span-2" type="text" />
-        <img
-          src="/public/img/check-circle.svg"
-          width="20"
-          class="cursor-pointer ml-2"
-          @click="saveField()"
-        />
-      </span>
-      <span v-else class="p-2">
-        {{ profile.user.first_name }}
-        <img
-          src="/public/img/pencil_b.svg"
-          width="20"
-          @click="editField('firstName')"
-        />
-      </span>
-    </p>
-    <p v-if="profile.user.last_name" class="pb-4 flex">
-      <strong class="pt-2 mr-2">{{ $t("common.lastname") }}:</strong>
-      <span v-if="lastNameEdit" class="flex">
-        <input v-model="lastName" class="col-span-2" type="text" />
-        <img
-          src="/public/img/check-circle.svg"
-          width="20"
-          class="cursor-pointer ml-2"
-          @click="saveField()"
-        />
-      </span>
-      <span v-else class="p-2">
-        {{ profile.user.last_name }}
-        <img
-          src="/public/img/pencil_b.svg"
-          width="20"
-          @click="editField('lastName')"
-        />
-      </span>
-    </p>
-    <p v-if="birthday" class="pb-4 flex">
-      <strong class="pt-2 mr-2">{{ $t("common.birthday") }}:</strong>
-      <span v-if="birthdayEdit" class="flex">
-        <date-picker
-          ref="datepicker"
-          v-model:value="birthDay"
-          :typeable="true"
-          :clearable="datePickerOptions.isClearable"
-          :editable="datePickerOptions.editable"
-          :format="datePickerOptions.format"
-          :placeholder="datePickerOptions.placeholder"
-          :first-day-of-week="datePickerOptions.firstDay"
-          value-type="timestamp"
-          :lang="$locale === 'en' ? 'en' : 'ru'"
-          class="register__input--birthday"
-        >
-        </date-picker>
-        <img
-          src="/public/img/check-circle.svg"
-          width="20"
-          class="cursor-pointer ml-2"
-          style="position: relative; top: -8px"
-          @click="saveField()"
-        />
-      </span>
-      <span v-else class="p-2">
-        {{ birthdayLive === "" ? birthday : birthdayLive }}
-        <img
-          src="/public/img/pencil_b.svg"
-          width="20"
-          @click="editField('birthday')"
-        />
-      </span>
-    </p>
-    <p v-if="profile.country && notAfghanistan" class="pb-4 flex">
-      <strong class="pt-2 mr-2">{{ $t("common.country") }}:</strong>
-      <span class="p-2">
-        {{ profile.country.name }}
-      </span>
-    </p>
-    <p class="pb-6">
-      <strong class="mr-2">{{ $t("common.email") }}:</strong>
-      {{ profile.user.username }}
-    </p>
-    <p v-if="profile.referrer" class="pb-4">
-      <strong class="mr-2">{{ $t("common.referrer") }}:</strong>
-      {{ profile.referrer }}
-    </p>
-    <p v-if="profile.phone" class="pb-2">
-      <strong class="mr-2">{{ $t("common.phonenumber") }}:</strong>
-      {{ profile.phone }}
-    </p>
+    <div class="px-4 pt-5">
+      <p v-if="profile.user.first_name" class="pb-4 flex">
+        <strong class="pt-2 mr-2">{{ $t("common.firstname") }}:</strong>
+        <span v-if="firstNameEdit" class="flex">
+          <input
+            v-model="firstName"
+            v-pattern="/^[a-zA-Z\s]*$/"
+            class="col-span-2"
+            type="text"
+          />
+          <img
+            src="/public/img/check-circle.svg"
+            width="20"
+            class="cursor-pointer ml-2"
+            @click="saveField()"
+          />
+        </span>
+        <span v-else class="p-2">
+          {{ profile.user.first_name }}
+          <img
+            src="/public/img/pencil_b.svg"
+            width="20"
+            @click="editField('firstName')"
+          />
+        </span>
+      </p>
+      <p v-if="profile.user.last_name" class="pb-4 flex">
+        <strong class="pt-2 mr-2">{{ $t("common.lastname") }}:</strong>
+        <span v-if="lastNameEdit" class="flex">
+          <input
+            v-model="lastName"
+            v-pattern="/^[a-zA-Z\s]*$/"
+            class="col-span-2"
+            type="text"
+          />
+          <img
+            src="/public/img/check-circle.svg"
+            width="20"
+            class="cursor-pointer ml-2"
+            @click="saveField()"
+          />
+        </span>
+        <span v-else class="p-2">
+          {{ profile.user.last_name }}
+          <img
+            src="/public/img/pencil_b.svg"
+            width="20"
+            @click="editField('lastName')"
+          />
+        </span>
+      </p>
+      <p v-if="birthday" class="pb-4 flex">
+        <strong class="pt-2 mr-2">{{ $t("common.birthday") }}:</strong>
+        <span v-if="birthdayEdit" class="flex">
+          <date-picker
+            ref="datepicker"
+            v-model:value="birthDay"
+            :typeable="true"
+            :clearable="datePickerOptions.isClearable"
+            :editable="datePickerOptions.editable"
+            :format="datePickerOptions.format"
+            :placeholder="datePickerOptions.placeholder"
+            :first-day-of-week="datePickerOptions.firstDay"
+            value-type="timestamp"
+            :lang="$locale === 'en' ? 'en' : 'ru'"
+            class="register__input--birthday"
+          >
+          </date-picker>
+          <img
+            src="/public/img/check-circle.svg"
+            width="20"
+            class="cursor-pointer ml-2"
+            style="position: relative; top: -8px"
+            @click="saveField()"
+          />
+        </span>
+        <span v-else class="p-2">
+          {{ birthdayLive === "" ? birthday : birthdayLive }}
+          <img
+            src="/public/img/pencil_b.svg"
+            width="20"
+            @click="editField('birthday')"
+          />
+        </span>
+      </p>
+      <p v-if="profile.country && notAfghanistan" class="pb-4 flex">
+        <strong class="pt-2 mr-2">{{ $t("common.country") }}:</strong>
+        <span class="p-2">
+          {{ profile.country.name }}
+        </span>
+      </p>
+      <p class="pb-6">
+        <strong class="mr-2">{{ $t("common.email") }}:</strong>
+        {{ profile.user.username }}
+      </p>
+      <p v-if="profile.referrer" class="pb-4">
+        <strong class="mr-2">{{ $t("common.referrer") }}:</strong>
+        {{ profile.referrer }}
+      </p>
+      <p v-if="profile.phone" class="pb-2">
+        <strong class="mr-2">{{ $t("common.phonenumber") }}:</strong>
+        {{ profile.phone }}
+      </p>
+    </div>
   </div>
 </template>
 <script>
@@ -269,9 +281,6 @@ input[type="password"]::-webkit-input-placeholder {
 
 .personal-info-settings strong {
   font-weight: 700;
-}
-.settings__NAME {
-  padding-bottom: 35px;
 }
 .btn {
   cursor: pointer;

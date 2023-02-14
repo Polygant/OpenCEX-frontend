@@ -24,7 +24,6 @@
           <vue-recaptcha
             ref="recaptcha"
             :sitekey="localConfig.recaptcha_site_key"
-            size="invisible"
             @verify="handleRecovery(false, $event)"
             @expired="onExpired"
           ></vue-recaptcha>

@@ -73,7 +73,6 @@
             v-show="usernameFixed"
             ref="recaptcha"
             :sitekey="localConfig.recaptcha_site_key"
-            size="invisible"
             style="display: table"
             @verify="handleLogin"
             @expired="onExpired"

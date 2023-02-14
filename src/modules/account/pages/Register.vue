@@ -239,7 +239,6 @@
                   <vue-recaptcha
                     ref="recaptcha"
                     :sitekey="localConfig.recaptcha_site_key"
-                    size="invisible"
                     @verify="handleRegister"
                     @expired="onExpired"
                   />
