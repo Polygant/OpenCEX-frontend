@@ -226,24 +226,38 @@ export default {
     },
     saveField() {
       if (this.firstNameEdit) {
-        this.$http
-          .patch("/auth/user/", {
-            first_name: this.firstName,
-          })
-          .then(() => {
-            // eslint-disable-next-line vue/no-mutating-props
-            this.profile.user.first_name = this.firstName;
+        if (this.firstName.length > 0) {
+          this.$http
+            .patch("/auth/user/", {
+              first_name: this.firstName,
+            })
+            .then(() => {
+              // eslint-disable-next-line vue/no-mutating-props
+              this.profile.user.first_name = this.firstName;
+            });
+        } else {
+          this.$notify({
+            type: "error",
+            text: this.$t("common.not_empty_field"),
           });
+        }
       }
       if (this.lastNameEdit) {
-        this.$http
-          .patch("/auth/user/", {
-            last_name: this.lastName,
-          })
-          .then(() => {
-            // eslint-disable-next-line vue/no-mutating-props
-            this.profile.user.last_name = this.lastName;
+        if (this.lastName.length > 0) {
+          this.$http
+            .patch("/auth/user/", {
+              last_name: this.lastName,
+            })
+            .then(() => {
+              // eslint-disable-next-line vue/no-mutating-props
+              this.profile.user.last_name = this.lastName;
+            });
+        } else {
+          this.error({
+            type: "warning",
+            text: this.$t("common.not_empty_field"),
           });
+        }
       }
       if (this.birthdayEdit) {
         if (this.birthRangeError) {
