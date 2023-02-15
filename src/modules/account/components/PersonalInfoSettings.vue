@@ -4,7 +4,7 @@
       {{ $t("common.personalInfo") }}
     </div>
     <div class="px-4 pt-5">
-      <p v-if="profile.user.first_name" class="pb-4 flex">
+      <p class="pb-4 flex">
         <strong class="pt-2 mr-2">{{ $t("common.firstname") }}:</strong>
         <span v-if="firstNameEdit" class="flex">
           <input
@@ -29,7 +29,7 @@
           />
         </span>
       </p>
-      <p v-if="profile.user.last_name" class="pb-4 flex">
+      <p class="pb-4 flex">
         <strong class="pt-2 mr-2">{{ $t("common.lastname") }}:</strong>
         <span v-if="lastNameEdit" class="flex">
           <input
