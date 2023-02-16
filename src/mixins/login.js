@@ -16,6 +16,7 @@ export default {
       captchaIsON: false,
       showPassword: false,
       dangertext: {},
+      isLoading: false,
     };
   },
   computed: {
@@ -133,6 +134,7 @@ export default {
           password: this.password,
           captcha,
         };
+        this.isLoading = true;
         app.config.globalProperties.$http
           .post("auth/login/", config)
           .then((response) => {
@@ -143,7 +145,12 @@ export default {
             this.checkProfile();
           })
           .catch(this.parseLoginError)
-          .finally(this.resetAndShowCaptcha);
+          .finally(() => {
+            this.resetAndShowCaptcha;
+            setTimeout(() => {
+              this.isLoading = false;
+            }, 500);
+          });
       }
     },
     resetAndShowCaptcha() {
