@@ -253,8 +253,9 @@ export default {
               this.profile.user.last_name = this.lastName;
             });
         } else {
-          this.error({
-            type: "warning",
+          this.$notify({
+            type: "error",
+            title: ``,
             text: this.$t("common.not_empty_field"),
           });
         }
@@ -273,6 +274,12 @@ export default {
             .finally(() => {
               location.reload();
             });
+        } else {
+          this.$notify({
+            type: "error",
+            title: ``,
+            text: this.$t("common.bdayError"),
+          });
         }
         this.disableEditFields();
       }
