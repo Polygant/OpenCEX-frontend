@@ -24,17 +24,23 @@
                   <input
                     id="first_name"
                     v-model="form.first_name"
-                    v-pattern="/^[a-zA-Z\s]*$/"
                     type="text"
                     class="register__input"
                     :class="{ 'border-red': validationError.first_name }"
                     @focus="clearError('first_name')"
                   />
+                  {{ errorFirstName }}
                   <span
                     v-if="validationError.first_name"
                     class="register__input-error-hint"
                   >
                     {{ validationError.first_name }}
+                  </span>
+                  <span
+                    v-if="!validFirstName"
+                    class="register__input-error-hint"
+                  >
+                    {{ $t("common.invalidValueString") }}
                   </span>
                 </span>
               </div>
@@ -46,7 +52,6 @@
                   <input
                     id="last_name"
                     v-model="form.last_name"
-                    v-pattern="/^[a-zA-Z\s]*$/"
                     type="text"
                     class="register__input"
                     :class="{ 'border-red': validationError.last_name }"
@@ -57,6 +62,12 @@
                     class="register__input-error-hint"
                   >
                     {{ validationError.last_name }}
+                  </span>
+                  <span
+                    v-if="!validLastName"
+                    class="register__input-error-hint"
+                  >
+                    {{ $t("common.invalidValueString") }}
                   </span>
                 </span>
               </div>
@@ -77,6 +88,9 @@
                     class="register__input-error-hint"
                   >
                     {{ validationError.email }}
+                  </span>
+                  <span v-if="validEmail" class="register__input-error-hint">
+                    {{ $t("common.invalidEmail") }}
                   </span>
                 </span>
               </div>
@@ -355,6 +369,8 @@ export default {
       registeredUserEmail: null,
       passwordViewType: "password",
       isValidCountry: null,
+      validFirstName: true,
+      validLastName: true,
     };
   },
   computed: {
@@ -424,6 +440,16 @@ export default {
       handler(val) {
         console.log(val);
         this.$store.dispatch("core/getCountryList", val);
+      },
+    },
+    "form.first_name": {
+      handler(val) {
+        this.validFirstName = this.isCorrectName(val);
+      },
+    },
+    "form.last_name": {
+      handler(val) {
+        this.validLastName = this.isCorrectName(val);
       },
     },
   },
