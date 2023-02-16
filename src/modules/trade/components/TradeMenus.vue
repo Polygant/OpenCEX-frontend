@@ -261,6 +261,7 @@ export default {
                 "not_enough_funds",
                 "order_price_invalid",
                 "order_stop_price_invalid",
+                "percent_min_value",
               ]);
             }
           }
