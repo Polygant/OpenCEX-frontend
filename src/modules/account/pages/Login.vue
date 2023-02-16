@@ -75,7 +75,7 @@
               ref="recaptcha"
               :sitekey="localConfig.recaptcha_site_key"
               style="display: table"
-              @verify="handleLogin"
+              @verify="handleCaptcha"
               @expired="onExpired"
             ></vue-recaptcha>
           </div>
@@ -100,7 +100,7 @@
               :value="
                 usernameFixed ? $t('common.login_upper') : $t('common.continue')
               "
-              @click="$refs.recaptcha.execute()"
+              @click="handleLogin"
             />
           </div>
           <router-link to="/forgot" class="logIn__recovery mb-4">{{

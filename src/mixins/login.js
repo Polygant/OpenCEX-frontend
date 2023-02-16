@@ -17,6 +17,7 @@ export default {
       showPassword: false,
       dangertext: {},
       isLoading: false,
+      captcha: "",
     };
   },
   computed: {
@@ -25,6 +26,9 @@ export default {
     },
   },
   methods: {
+    handleCaptcha(captchaString) {
+      this.captcha = captchaString;
+    },
     formatGoogleCode() {
       this.googlecode = this.googlecode.replace(/\D/g, "");
     },
@@ -127,12 +131,12 @@ export default {
       }
       this.resetAndShowCaptcha();
     },
-    handleLogin(captcha) {
+    handleLogin() {
       if (this.validateData()) {
         let config = {
           username: this.username,
           password: this.password,
-          captcha,
+          captcha: this.captcha,
         };
         this.isLoading = true;
         app.config.globalProperties.$http
