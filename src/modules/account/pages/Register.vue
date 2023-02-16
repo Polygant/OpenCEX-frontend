@@ -14,7 +14,7 @@
               class="register__form"
               autocomplete="off"
               novalidate
-              @submit.prevent="$refs.recaptcha.execute()"
+              @submit.prevent="handleRegister"
             >
               <div
                 class="register__input-group register__input-group--half-width"
@@ -77,7 +77,6 @@
                   <input
                     id="email"
                     v-model="form.email"
-                    v-pattern:email
                     type="text"
                     class="register__input"
                     :class="{ 'border-red': validationError.email }"
@@ -253,7 +252,7 @@
                   <vue-recaptcha
                     ref="recaptcha"
                     :sitekey="localConfig.recaptcha_site_key"
-                    @verify="handleRegister"
+                    @verify="handleCaptcha"
                     @expired="onExpired"
                   />
                 </span>
@@ -371,6 +370,7 @@ export default {
       isValidCountry: null,
       validFirstName: true,
       validLastName: true,
+      captcha: "",
     };
   },
   computed: {
@@ -565,7 +565,10 @@ export default {
       this.passwordViewType =
         this.passwordViewType === "password" ? "text" : "password";
     },
-    handleRegister(captchaResponse) {
+    handleCaptcha(captchaResponse) {
+      this.captcha = captchaResponse;
+    },
+    handleRegister() {
       if (this.validateData(this.form) && !this.birthRangeError) {
         const config = {
           ...this.form,
@@ -573,7 +576,7 @@ export default {
           password1: this.form.password,
           password2: this.form.password,
           username: this.form.email,
-          captchaResponse,
+          captchaResponse: this.captcha,
         };
 
         config.birth_day = new Date(
