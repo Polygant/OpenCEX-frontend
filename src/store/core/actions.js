@@ -151,7 +151,6 @@ export default {
 
       ans = ans.slice(0, 20);
       commit(mutationTypes.EXCHANGES, ans);
-      console.log("123213", exs["data"]["count"]);
       commit(mutationTypes.EXCHANGES_COUNT, exs["data"]["count"]);
 
       if (callback) {

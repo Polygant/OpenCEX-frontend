@@ -233,7 +233,6 @@ export default {
   },
   computed: {
     getFilteredCoins() {
-      console.log(this.coins);
       return Object.fromEntries(
         Object.entries(this.coins).filter(([, coin]) => !coin.disable_all)
       );
