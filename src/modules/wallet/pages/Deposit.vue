@@ -14,6 +14,7 @@
                   :items="filteredCoins"
                   :image="true"
                   :selected-default="selectedDefault"
+                  :total-title="$t('common.allbalance')"
                   @select="coinChoose"
                 />
               </div>

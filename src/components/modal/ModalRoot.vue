@@ -36,8 +36,8 @@ watch(modals, (value) => {
 .modal-root {
   &__close-button {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 10px;
+    top: 10px;
     cursor: pointer;
   }
 }
@@ -61,7 +61,7 @@ watch(modals, (value) => {
   max-width: 100%;
   // min-height: 200px;
   background: #fff;
-  padding: 20px;
+  padding: 30px;
   z-index: 222;
   max-height: calc(100vh - 70px);
   overflow: auto;

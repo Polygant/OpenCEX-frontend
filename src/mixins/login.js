@@ -16,6 +16,8 @@ export default {
       captchaIsON: false,
       showPassword: false,
       dangertext: {},
+      isLoading: false,
+      captcha: "",
     };
   },
   computed: {
@@ -24,6 +26,9 @@ export default {
     },
   },
   methods: {
+    handleCaptcha(captchaString) {
+      this.captcha = captchaString;
+    },
     formatGoogleCode() {
       this.googlecode = this.googlecode.replace(/\D/g, "");
     },
@@ -73,7 +78,8 @@ export default {
       app.config.globalProperties.$http
         .post("auth/login/", data)
         .then((response) => {
-          localStorage.setItem("token", response.data.key);
+          localStorage.setItem("token", response.data.access_token);
+          localStorage.setItem("refresh_token", response.data.refresh_token);
           localStorage.removeItem("show_security_notice");
           this.$store.dispatch("core/loginSuccess");
           this.checkProfile();
@@ -125,23 +131,30 @@ export default {
       }
       this.resetAndShowCaptcha();
     },
-    handleLogin(captcha) {
+    handleLogin() {
       if (this.validateData()) {
         let config = {
           username: this.username,
           password: this.password,
-          captcha,
+          captcha: this.captcha,
         };
+        this.isLoading = true;
         app.config.globalProperties.$http
           .post("auth/login/", config)
           .then((response) => {
-            localStorage.setItem("token", response.data.key);
+            localStorage.setItem("token", response.data.access_token);
+            localStorage.setItem("refresh_token", response.data.refresh_token);
             localStorage.removeItem("show_security_notice");
             this.$store.dispatch("core/loginSuccess");
             this.checkProfile();
           })
           .catch(this.parseLoginError)
-          .finally(this.resetAndShowCaptcha);
+          .finally(() => {
+            this.resetAndShowCaptcha;
+            setTimeout(() => {
+              this.isLoading = false;
+            }, 500);
+          });
       }
     },
     resetAndShowCaptcha() {

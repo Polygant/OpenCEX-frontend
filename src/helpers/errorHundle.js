@@ -172,6 +172,16 @@ const errorManager = {
         });
       },
     },
+    percent_min_value: {
+      triggers: ["percent_min_value"],
+      callback(r, item, component) {
+        component.$notify({
+          type: "error",
+          title: ``,
+          text: component.$t("common.percent_min_value"),
+        });
+      },
+    },
   },
   handle(r, key, msg, type_list, item, component, callback) {
     for (let i in type_list) {

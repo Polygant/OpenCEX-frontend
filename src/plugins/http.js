@@ -1,6 +1,7 @@
 import axios from "axios";
 import config from "~/local_config";
 import store from "~/store";
+import jwt_decode from "jwt-decode";
 
 export default (app) => {
   app.config.globalProperties.$http = axios.create({
@@ -41,15 +42,29 @@ export default (app) => {
   ].map((uri) => config.api.baseURL + uri);
 
   app.config.globalProperties.$http.interceptors.request.use(
-    function (config) {
-      config.headers["X-API-LANG"] = localStorage.getItem("planguage") || "en";
-
+    async function (config) {
+      config.headers["X-API-LANG"] = localStorage.getItem("lang") || "en";
+      let token = localStorage.getItem("token");
+      try {
+        let payload = jwt_decode(token);
+        let expTime = payload.exp * 1000;
+        let curTime = new Date().getTime();
+        if (expTime - curTime <= -3000) {
+          if (config.url !== "auth/token/refresh/") {
+            await store.dispatch("core/refreshToken");
+          }
+        }
+      } catch (err) {
+        if (config.url !== "auth/token/refresh/") {
+          await store.dispatch("core/refreshToken");
+        }
+      }
       if (
         !noAuthRequireApis.includes(config.url) &&
         localStorage.getItem("token")
       ) {
         config.headers["Authorization"] =
-          "Token " + localStorage.getItem("token");
+          "Bearer " + localStorage.getItem("token");
       }
       return config;
     },
@@ -62,37 +77,44 @@ export default (app) => {
     function (response) {
       return transformResponse(response);
     },
-    function (error) {
+    async function (error) {
       if (
-        error.response.status === 401 &&
-        !noAuthRequireApis.includes(error.response.config.url)
+        error.response?.status === 401 &&
+        !noAuthRequireApis.includes(error.response.config.url) &&
+        error.response.config.url !== "auth/token/refresh/"
       ) {
         if (!localStorage.getItem("wiz-auth")) {
           localStorage.removeItem("token");
         }
-
-        store.dispatch("core/logout");
-
+        await store.dispatch("core/refreshToken");
         const pathname = window.location.pathname;
-
         const matchNotAuthViews = noAuthRequireRoutes.find((route) =>
           pathname.startsWith(route)
         );
-
         if (pathname !== "/" && !matchNotAuthViews) {
           const lastPage = router.currentRoute.value.fullPath;
-
           if (lastPage) {
-            router.push({ name: "login", query: { redirectFrom: lastPage } });
+            if (
+              error.response &&
+              error.response?.data?.code?.code !== "token_not_valid"
+            ) {
+              router.push({ name: "login", query: { redirectFrom: lastPage } });
+            }
           } else {
             router.push({ name: "login" });
           }
         }
       }
-
-      return Promise.reject(
-        error && error.response ? transformResponse(error.response) : error
-      );
+      if (
+        error.response &&
+        error.response?.data?.code?.code === "token_not_valid"
+      ) {
+        return Promise.reject();
+      } else {
+        return Promise.reject(
+          error && error.response ? transformResponse(error.response) : error
+        );
+      }
     }
   );
 

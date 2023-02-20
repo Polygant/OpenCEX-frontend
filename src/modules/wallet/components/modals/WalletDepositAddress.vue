@@ -211,7 +211,9 @@ export default {
   },
   mounted() {
     if (this.coin.address) {
-      this.makeQR(this.coin.address.address);
+      setTimeout(() => {
+        this.makeQR(this.coin.address.address);
+      }, 1000);
     }
   },
   methods: {

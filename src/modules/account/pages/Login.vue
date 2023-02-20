@@ -2,7 +2,7 @@
   <div class="auth">
     <div v-if="!showGoogleCodeInput" class="logIn pb-5">
       <ModalPagesHeader />
-      <div class="flex box white flex-col">
+      <div class="flex box white flex-col" :class="{ isBlur: isLoading }">
         <div class="logIn__title">{{ $t("common.login") }}</div>
         <div
           v-if="!usernameFixed"
@@ -69,15 +69,16 @@
             </div>
           </div>
           <!--CAPTCHA-->
-          <vue-recaptcha
-            v-show="usernameFixed"
-            ref="recaptcha"
-            :sitekey="localConfig.recaptcha_site_key"
-            size="invisible"
-            style="display: table"
-            @verify="handleLogin"
-            @expired="onExpired"
-          ></vue-recaptcha>
+          <div class="mb-3">
+            <vue-recaptcha
+              v-show="usernameFixed"
+              ref="recaptcha"
+              :sitekey="localConfig.recaptcha_site_key"
+              style="display: table"
+              @verify="handleCaptcha"
+              @expired="onExpired"
+            ></vue-recaptcha>
+          </div>
           <!--CAPTCHA-->
           <p
             v-for="(text, id) in getFilteredDangerText"
@@ -99,7 +100,7 @@
               :value="
                 usernameFixed ? $t('common.login_upper') : $t('common.continue')
               "
-              @click="$refs.recaptcha.execute()"
+              @click="handleLogin"
             />
           </div>
           <router-link to="/forgot" class="logIn__recovery mb-4">{{
@@ -698,5 +699,8 @@ button {
 }
 .back-button {
   background: #968cad !important;
+}
+.isBlur {
+  filter: blur(5px);
 }
 </style>

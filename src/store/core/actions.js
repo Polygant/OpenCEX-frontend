@@ -1,3 +1,4 @@
+import { app } from "~/main";
 import { Coin } from "~/api/coin";
 import { UserNotifications } from "~/api/user_notifications";
 import { Pairs, PairsVolume } from "~/api/pairs";
@@ -133,19 +134,24 @@ export default {
       }
     });
   },
-  getExchanges({ commit }, callback) {
-    return Exchanges.list().then((exs) => {
-      let ans = [...exs.data.results]
-        .filter((item) => item.order.executed)
-        .slice(0, 20)
-        .sort(function (a, b) {
-          let keyA = a.id;
-          let keyB = b.id;
-          if (keyA < keyB) return 1;
-          if (keyA > keyB) return -1;
-          return 0;
-        });
+  getExchanges({ commit }, { limit, offset, st, callback }) {
+    return Exchanges.list(limit, offset, st).then((exs) => {
+      let ans = [];
+      for (let i = 0; i < exs["data"]["results"].length; i++) {
+        ans.push(exs["data"]["results"][i]);
+      }
+      ans.sort(function (a, b) {
+        let keyA = a.id;
+        let keyB = b.id;
+        // Compare the 2 ids
+        if (keyA < keyB) return 1;
+        if (keyA > keyB) return -1;
+        return 0;
+      });
+
+      ans = ans.slice(0, 20);
       commit(mutationTypes.EXCHANGES, ans);
+      commit(mutationTypes.EXCHANGES_COUNT, exs["data"]["count"]);
 
       if (callback) {
         callback(ans);
@@ -393,7 +399,32 @@ export default {
   logout({ commit }) {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
+    localStorage.removeItem("refresh_token");
     commit(mutationTypes.LOGOUT);
+  },
+  async refreshToken({ dispatch, state }) {
+    if (!state.refresh_token_lock) {
+      state.refresh_token_lock = true;
+      if (
+        localStorage.getItem("refresh_token") &&
+        localStorage.getItem("refresh_token") !== "undefined"
+      ) {
+        app.config.globalProperties.$http
+          .post("auth/token/refresh/", {
+            refresh: localStorage.getItem("refresh_token") ?? "",
+          })
+          .then((response) => {
+            localStorage.setItem("token", response.data.access);
+            localStorage.setItem("refresh_token", response.data.refresh);
+          })
+          .catch(() => {
+            dispatch("logout");
+          })
+          .finally(() => {
+            state.refresh_token_lock = false;
+          });
+      }
+    }
   },
   getStoreList({ commit }, callback) {
     StoreList.list().then((response) => {

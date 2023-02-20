@@ -151,13 +151,13 @@ export default {
     },
 
     color() {
-      return this.operation == "buy" ? "green" : "orange";
+      return this.operation === "buy" ? "green" : "orange";
     },
 
     fee() {
       let output = 0;
 
-      if (this.operation == "buy")
+      if (this.operation === "buy")
         output = this.getMax8Digits(
           this.operationData.quantity *
             (typeof this.profile.user.user_fee !== "undefined" &&
@@ -172,7 +172,7 @@ export default {
             (typeof this.profile.user.user_fee !== "undefined" &&
             this.profile.user.user_fee !== 0
               ? this.profile.user.user_fee
-              : this.coins[this.quoteCurrency].fee.order.limit)
+              : this.coins[this.quoteCurrency].fee?.order.limit)
         );
 
       return output || 0;
