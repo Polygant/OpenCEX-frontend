@@ -255,7 +255,6 @@ export default {
     },
 
     updateOrderErrorParser(data) {
-      console.log("-", data);
       const detail = data.detail;
 
       if (detail && detail.message) return detail.message;

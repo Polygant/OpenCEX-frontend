@@ -438,7 +438,6 @@ export default {
     "$i18n.locale": {
       immediate: true,
       handler(val) {
-        console.log(val);
         this.$store.dispatch("core/getCountryList", val);
       },
     },
