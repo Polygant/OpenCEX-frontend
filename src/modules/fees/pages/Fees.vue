@@ -112,7 +112,8 @@
                   class="walletTable__item1"
                   :data-thead="$t('fees.second_table_deposit_fee')"
                 >
-                  {{ getStringOfFloat(coin.fee?.deposit?.address) }} %
+                  {{ getStringOfFloat(coin.fee?.deposit?.address) }}
+                  {{ ticker }}
                 </td>
                 <td
                   class="walletTable__item1"
