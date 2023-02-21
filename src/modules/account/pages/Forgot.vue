@@ -7,7 +7,7 @@
         <form
           v-if="formstatus === 'pending'"
           class="logIn__form"
-          @submit.prevent="$refs.recaptcha.execute()"
+          @submit.prevent
         >
           <input
             v-model="username"
@@ -19,22 +19,23 @@
             placeholder="Email"
             style="margin-bottom: 1rem"
           />
-
-          <!--CAPTCHA-->
-          <vue-recaptcha
-            ref="recaptcha"
-            :sitekey="localConfig.recaptcha_site_key"
-            @verify="handleRecovery(false, $event)"
-            @expired="onExpired"
-          ></vue-recaptcha>
-          <!--CAPTCHA-->
-
+          <div class="pb-3">
+            <!--CAPTCHA-->
+            <vue-recaptcha
+              ref="recaptcha"
+              :sitekey="localConfig.recaptcha_site_key"
+              @verify="handleRecoveryCaptcha(false, $event)"
+              @expired="onExpired"
+            ></vue-recaptcha>
+            <!--CAPTCHA-->
+          </div>
           <p class="text-danger">{{ dangertext }}</p>
           <input
             id="mainbtn"
             class="forgot-password__button logIn__form__input logIn__form__input_button"
             type="submit"
             :value="$t('common.continue')"
+            @click="handleRecovery"
           />
           <input
             class="forgot-password__button forgot-password__button_red logIn__form__input logIn__form__input_button"
@@ -128,6 +129,8 @@ export default {
       captchaIsON: true,
       dangertext2fa: "",
       dangertext: "",
+      is2Fa: "",
+      captcha: "",
     };
   },
   beforeCreate: function () {
@@ -148,17 +151,21 @@ export default {
 
       return f === 0;
     },
-    handleRecovery(is2FA, captcha) {
-      let dangerTextProp = is2FA ? "dangertext2fa" : "dangertext";
+    handleRecoveryCaptcha(is2FA, captcha) {
+      this.is2Fa = is2FA;
+      this.captcha = captcha;
+    },
+    handleRecovery() {
+      let dangerTextProp = this.is2FA ? "dangertext2fa" : "dangertext";
 
       if (this.validateData()) {
         let data = {
           email: this.username,
           lang: localStorage.getItem("planguage") || "en",
         };
-        if (is2FA) data.googlecode = this.secretkeyToDisable;
+        if (this.is2FA) data.googlecode = this.secretkeyToDisable;
         if (this.captchaIsON) {
-          data["captcha"] = captcha;
+          data["captcha"] = this.captcha;
         }
         this.$http
           .post("auth/password/reset/", data)
@@ -179,13 +186,13 @@ export default {
               } else if (r.data["detail"]) {
                 if (r.data["detail"] === "2fa failed") {
                   this[dangerTextProp] = "";
-                  if (!is2FA)
+                  if (!this.is2FA)
                     setTimeout(function () {
                       this[dangerTextProp] = self.$t("common.invalid_code");
                     }, 400);
                   else this.formstatus = "2fa";
                 }
-              } else if (!is2FA) {
+              } else if (!this.is2FA) {
                 this[dangerTextProp] = "";
                 this.showBanner = true;
               }
