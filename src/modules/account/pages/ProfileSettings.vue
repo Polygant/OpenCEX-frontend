@@ -4,7 +4,6 @@
       <div>
         <setting-section></setting-section>
         <div class="walletlist" style="width: 100%; height: 500px">
-          <div class="settings__NAME">{{ $t("common.personalInfo") }}</div>
           <div style="height: 390px">
             <div class="personal-info-wrapper">
               <PersonalInfoSettings :profile="profile" />
@@ -137,7 +136,7 @@ input[type="password"]::-webkit-input-placeholder {
 }
 
 .twofaPmargintop {
-  margin-top: 100px;
+  margin-top: 60px;
   font-size: 16px;
   margin-bottom: 13px;
 }
@@ -153,13 +152,13 @@ input[type="password"]::-webkit-input-placeholder {
 }
 
 .personal-info-wrapper {
-  padding: 30px;
+  padding: 10px 0;
 }
 
 .setting-table {
   &_item {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     & > div {
       padding: 15px;
@@ -174,7 +173,13 @@ input[type="password"]::-webkit-input-placeholder {
     }
   }
 }
-
+.profile-settings__wrap {
+  max-width: 1432px;
+  margin: 0 auto;
+}
+.settings__NAME {
+  padding: 15px 15px 15px;
+}
 @media screen and (max-width: 650px) {
   .personal-info-wrapper,
   .settings__NAME,
@@ -193,10 +198,6 @@ input[type="password"]::-webkit-input-placeholder {
 }
 
 @media screen and (max-width: 500px) {
-  .walletTable__item_val1 {
-    font-size: 14px !important;
-  }
-
   .settings-block {
     button {
       width: 86px !important;

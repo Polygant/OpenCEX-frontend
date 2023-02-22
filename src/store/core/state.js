@@ -20,6 +20,7 @@ export default () => ({
   walletWithdrawalsHistory: {},
   walletTickerHistory: {},
   exchanges: [],
+  exchangesCount: null,
   orders: {},
   openorders: [],
   closedorders: {},
@@ -43,4 +44,5 @@ export default () => ({
   countriesList: [],
   userNotifications: [],
   currentPrecisions: null,
+  refresh_token_lock: false,
 });

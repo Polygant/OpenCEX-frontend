@@ -14,7 +14,7 @@
               class="register__form"
               autocomplete="off"
               novalidate
-              @submit.prevent="$refs.recaptcha.execute()"
+              @submit.prevent="handleRegister"
             >
               <div
                 class="register__input-group register__input-group--half-width"
@@ -24,17 +24,23 @@
                   <input
                     id="first_name"
                     v-model="form.first_name"
-                    v-pattern="/^[a-zA-Z\s]*$/"
                     type="text"
                     class="register__input"
                     :class="{ 'border-red': validationError.first_name }"
                     @focus="clearError('first_name')"
                   />
+                  {{ errorFirstName }}
                   <span
                     v-if="validationError.first_name"
                     class="register__input-error-hint"
                   >
                     {{ validationError.first_name }}
+                  </span>
+                  <span
+                    v-if="!validFirstName"
+                    class="register__input-error-hint"
+                  >
+                    {{ $t("common.invalidValueString") }}
                   </span>
                 </span>
               </div>
@@ -46,7 +52,6 @@
                   <input
                     id="last_name"
                     v-model="form.last_name"
-                    v-pattern="/^[a-zA-Z\s]*$/"
                     type="text"
                     class="register__input"
                     :class="{ 'border-red': validationError.last_name }"
@@ -58,6 +63,12 @@
                   >
                     {{ validationError.last_name }}
                   </span>
+                  <span
+                    v-if="!validLastName"
+                    class="register__input-error-hint"
+                  >
+                    {{ $t("common.invalidValueString") }}
+                  </span>
                 </span>
               </div>
               <div class="register__input-group">
@@ -66,7 +77,6 @@
                   <input
                     id="email"
                     v-model="form.email"
-                    v-pattern:email
                     type="text"
                     class="register__input"
                     :class="{ 'border-red': validationError.email }"
@@ -77,6 +87,9 @@
                     class="register__input-error-hint"
                   >
                     {{ validationError.email }}
+                  </span>
+                  <span v-if="validEmail" class="register__input-error-hint">
+                    {{ $t("common.invalidEmail") }}
                   </span>
                 </span>
               </div>
@@ -239,8 +252,7 @@
                   <vue-recaptcha
                     ref="recaptcha"
                     :sitekey="localConfig.recaptcha_site_key"
-                    size="invisible"
-                    @verify="handleRegister"
+                    @verify="handleCaptcha"
                     @expired="onExpired"
                   />
                 </span>
@@ -356,6 +368,9 @@ export default {
       registeredUserEmail: null,
       passwordViewType: "password",
       isValidCountry: null,
+      validFirstName: true,
+      validLastName: true,
+      captcha: "",
     };
   },
   computed: {
@@ -423,8 +438,17 @@ export default {
     "$i18n.locale": {
       immediate: true,
       handler(val) {
-        console.log(val);
         this.$store.dispatch("core/getCountryList", val);
+      },
+    },
+    "form.first_name": {
+      handler(val) {
+        this.validFirstName = this.isCorrectName(val);
+      },
+    },
+    "form.last_name": {
+      handler(val) {
+        this.validLastName = this.isCorrectName(val);
       },
     },
   },
@@ -540,7 +564,10 @@ export default {
       this.passwordViewType =
         this.passwordViewType === "password" ? "text" : "password";
     },
-    handleRegister(captchaResponse) {
+    handleCaptcha(captchaResponse) {
+      this.captcha = captchaResponse;
+    },
+    handleRegister() {
       if (this.validateData(this.form) && !this.birthRangeError) {
         const config = {
           ...this.form,
@@ -548,7 +575,7 @@ export default {
           password1: this.form.password,
           password2: this.form.password,
           username: this.form.email,
-          captchaResponse,
+          captchaResponse: this.captcha,
         };
 
         config.birth_day = new Date(

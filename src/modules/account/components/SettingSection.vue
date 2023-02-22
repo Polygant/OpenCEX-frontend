@@ -49,7 +49,8 @@
           class="walletTable__item_val1 table__status"
           style="height: 35px; line-height: 1; font-size: 15px !important"
         >
-          {{ autoLogoutTimeout }} {{ $t("common.mins") }}
+          {{ autoLogoutValue }}
+          {{ $t("common.mins") }}
         </div>
         <div class="table__button">
           <button class="opacitychangebtn" @click="startChangeTime()">
@@ -563,6 +564,7 @@ export default {
       addPhone: false,
       phoneVerifyType: null,
       qrCodeImgTag: "",
+      newAutoLogoutTimeout: 0,
     };
   },
   computed: {
@@ -578,6 +580,11 @@ export default {
       return this.enabledLoginNotificationsLive === null
         ? this.profile.email_failed_login
         : this.enabledLoginNotificationsLive;
+    },
+    autoLogoutValue() {
+      return this.newAutoLogoutTimeout > 0
+        ? this.newAutoLogoutTimeout
+        : this.autoLogoutTimeout;
     },
   },
   watch: {
@@ -713,6 +720,7 @@ export default {
             })
             .then(
               () => {
+                self.newAutoLogoutTimeout = self.newautoLogoutTimeout;
                 self.twofaStepNumber = 1;
                 self.$store.commit(PROFILE_AUTO_LOGOUT_TIMEOUT, newTime);
                 self.newautoLogoutTimeout = "";

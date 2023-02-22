@@ -255,7 +255,6 @@ export default {
     },
 
     updateOrderErrorParser(data) {
-      console.log("-", data);
       const detail = data.detail;
 
       if (detail && detail.message) return detail.message;
@@ -315,6 +314,15 @@ export default {
         case data?.message?.code === "order_price_invalid_error":
           ans = this.$t("common.order_price_invalid");
           break;
+        case data?.message?.code === "order_stop_price_invalid_error":
+          ans = this.$t("common.order_price_invalid");
+          break;
+        // case data?.message?.code === "order_price_invalid_error":
+        //   ans = this.$t("common.order_price_invalid");
+        //   break;
+        // case data?.message?.code === "order_price_invalid_error":
+        //   ans = this.$t("common.order_price_invalid");
+        //   break;
         default:
           ans = this.$t("common.order_errors.error");
       }

@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     ch(v) {
-      console.log(v);
       this.$emit("choose", v);
     },
   },
