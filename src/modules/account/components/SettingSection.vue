@@ -49,9 +49,7 @@
           class="walletTable__item_val1 table__status"
           style="height: 35px; line-height: 1; font-size: 15px !important"
         >
-          {{
-            newAutoLogoutTimeout > 0 ? newAutoLogoutTimeout : autoLogoutTimeout
-          }}
+          {{ autoLogoutValue }}
           {{ $t("common.mins") }}
         </div>
         <div class="table__button">
@@ -582,6 +580,11 @@ export default {
       return this.enabledLoginNotificationsLive === null
         ? this.profile.email_failed_login
         : this.enabledLoginNotificationsLive;
+    },
+    autoLogoutValue() {
+      return this.newAutoLogoutTimeout > 0
+        ? this.newAutoLogoutTimeout
+        : this.autoLogoutTimeout;
     },
   },
   watch: {
