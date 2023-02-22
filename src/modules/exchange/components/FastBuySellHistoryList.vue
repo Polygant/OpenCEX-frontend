@@ -31,20 +31,12 @@
             >
               <div class="walletTable__amount">
                 <span class="walletTable__column_sell">
-                  {{
-                    isFiat(ex.base_currency)
-                      ? $options.getDecimalWLength(ex.quantity)
-                      : getCoolValueForTable(ex.quantity)
-                  }}
+                  {{ getQuantityValue(ex) }}
                   {{ ex.base_currency }}
                 </span>
                 <i class="fa fa-exchange" aria-hidden="true"></i>
                 <span class="walletTable__column_buy">
-                  {{
-                    isFiat(ex.quote_currency)
-                      ? $options.getDecimalWLength(ex.cost)
-                      : getCoolValueForTable(ex.cost)
-                  }}
+                  {{ getCostValue(ex) }}
                   {{ ex.quote_currency }}
                 </span>
               </div>
@@ -146,6 +138,17 @@ export default {
       return cur === "USD" || cur === "EUR" || cur === "RUB";
     },
 
+    getQuantityValue(ex) {
+      return this.isFiat(ex.base_currency)
+        ? this.$options.getDecimalWLength(ex.quantity)
+        : this.getCoolValueForTable(ex.quantity);
+    },
+
+    getCostValue(ex) {
+      return this.isFiat(ex.quote_currency)
+        ? this.$options.getDecimalWLength(ex.cost)
+        : this.getCoolValueForTable(ex.cost);
+    },
     getCoolValueForTable(x) {
       return precision(x) > 8 ? this.getFixedDecimal(x, 8) : x;
     },
