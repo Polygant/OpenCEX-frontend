@@ -14,8 +14,7 @@
           "
           class="otc__wallet-image inline-block mr-1"
         />
-        {{ getCoolBalance(operation == "buy" ? quoteCurrency : baseCurrency) }}
-        {{ operation == "buy" ? quoteCurrency : baseCurrency }}
+        {{ balanceByOperation }}
       </div>
     </div>
     <TradeInput
@@ -177,7 +176,11 @@ export default {
     color() {
       return this.operation == "buy" ? "green" : "orange";
     },
-
+    balanceByOperation() {
+      return `${this.getCoolBalance(
+        this.operation === "buy" ? this.quoteCurrency : this.baseCurrency
+      )} ${this.operation === "buy" ? this.quoteCurrency : this.baseCurrency}`;
+    },
     limits() {
       const limitCurrency =
         this.operation == "buy" ? this.quoteCurrency : this.baseCurrency;
