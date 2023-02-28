@@ -69,6 +69,7 @@
           "
           :disabled="changePassPending"
           class="logIn__form__input logIn__form__input_button opacitychangebtn"
+          :style="mainColor ? `background: ${mainColor} !important` : {}"
           type="submit"
           @click="changePassword(false)"
         >
@@ -138,6 +139,7 @@
           "
           :disabled="changePassPending"
           class="logIn__form__input logIn__form__input_button opacitychangebtn"
+          :style="mainColor ? `background: ${mainColor} !important` : {}"
           type="submit"
           @click="changePassword(true)"
         >

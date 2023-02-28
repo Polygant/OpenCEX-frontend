@@ -1,11 +1,19 @@
 <template>
   <div class="auth">
-    <div class="register pb-5 px-1">
+    <div
+      class="register pb-5 px-1"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <ModalPagesHeader />
       <template v-if="!confirmEmailSent">
         <div class="box mt-5">
           <div class="text-center">
-            <div class="register__title inline-block">
+            <div
+              class="register__title inline-block"
+              :style="loginText ? `color: ${loginText} !important` : {}"
+            >
               {{ $t("common.createAccount") }}
             </div>
           </div>
@@ -19,7 +27,11 @@
               <div
                 class="register__input-group register__input-group--half-width"
               >
-                <label for="first_name">{{ $t("common.firstname") }}:</label>
+                <label
+                  for="first_name"
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  >{{ $t("common.firstname") }}:</label
+                >
                 <span class="register__input-wrapper">
                   <input
                     id="first_name"
@@ -47,7 +59,11 @@
               <div
                 class="register__input-group register__input-group--half-width"
               >
-                <label for="last_name">{{ $t("common.lastname") }}:</label>
+                <label
+                  for="last_name"
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  >{{ $t("common.lastname") }}:</label
+                >
                 <span class="register__input-wrapper">
                   <input
                     id="last_name"
@@ -72,7 +88,11 @@
                 </span>
               </div>
               <div class="register__input-group">
-                <label for="email">Email:</label>
+                <label
+                  for="email"
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  >Email:</label
+                >
                 <span class="register__input-wrapper">
                   <input
                     id="email"
@@ -96,7 +116,10 @@
               <div
                 class="register__input-group register__input-group--half-width"
               >
-                <label>{{ $t("common.birthday") }}:</label>
+                <label
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  >{{ $t("common.birthday") }}:</label
+                >
                 <date-picker
                   ref="datepicker"
                   v-model:value="form.birth_day"
@@ -137,7 +160,11 @@
               <div
                 class="register__input-group register__input-group--half-width register__password"
               >
-                <label for="password">{{ $t("common.password") }}:</label>
+                <label
+                  for="password"
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  >{{ $t("common.password") }}:</label
+                >
                 <span class="register__input-wrapper">
                   <input
                     id="password"
@@ -174,7 +201,9 @@
                 </span>
               </div>
               <div class="register__input-group register__input-group--country">
-                <label @click.stop="$refs.countryselect.toggle()"
+                <label
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  @click.stop="$refs.countryselect.toggle()"
                   >{{ $t("common.country") }}:</label
                 >
                 <span class="register__input-wrapper">
@@ -200,7 +229,10 @@
                     type="checkbox"
                     class="custom-control-input"
                   />
-                  <label class="custom-control-label pt-1" for="terms"
+                  <label
+                    class="custom-control-label pt-1"
+                    :style="loginText ? `color: ${loginText} !important` : {}"
+                    for="terms"
                     >{{ $t("common.agree") }}
                     <a
                       href="/public/docs/EN_User_Agreement_site.pdf"
@@ -219,7 +251,10 @@
                     type="checkbox"
                     class="custom-control-input"
                   />
-                  <label class="custom-control-label pt-1" for="privacy"
+                  <label
+                    class="custom-control-label pt-1"
+                    :style="loginText ? `color: ${loginText} !important` : {}"
+                    for="privacy"
                     >{{ $t("common.agree") }}
                     <a
                       href="/public/docs/EN_Privacy_policy_site.pdf"
@@ -238,9 +273,13 @@
                     type="checkbox"
                     class="custom-control-input"
                   />
-                  <label class="custom-control-label pt-1" for="newspaper">{{
-                    $t("common.newspaper")
-                  }}</label>
+                  <label
+                    class="custom-control-label pt-1"
+                    :style="loginText ? `color: ${loginText} !important` : {}"
+                    for="newspaper"
+                  >
+                    {{ $t("common.newspaper") }}
+                  </label>
                 </div>
               </div>
 
@@ -260,6 +299,9 @@
 
                 <button
                   class="register__button mx-auto"
+                  :style="
+                    mainColor ? `background: ${mainColor} !important` : {}
+                  "
                   :disabled="isButtonDisabled"
                   type="submit"
                 >
@@ -277,6 +319,7 @@
               <router-link
                 to="/login"
                 class="register__link register__link--hint"
+                :style="loginText ? `color: ${loginText} !important` : {}"
               >
                 <span>{{ $t("common.haveaccount") }}</span>
               </router-link>

@@ -230,6 +230,7 @@
                 line-height: 1;
                 border-radius: 3px;
               "
+              :style="mainColor ? `background: ${mainColor} !important` : {}"
               @click="payout_form_view = 'pending'"
             >
               {{ $t("common.cancel") }}

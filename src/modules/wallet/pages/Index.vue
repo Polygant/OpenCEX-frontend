@@ -123,6 +123,9 @@
                       <span
                         class="wallet__action wallet__action--deposit"
                         :class="coins[ticker].disable_topups ? 'disabled' : ''"
+                        :style="
+                          mainColor ? `color: ${mainColor} !important` : {}
+                        "
                         @click="
                           toDetails(
                             'deposit',
@@ -133,7 +136,11 @@
                       >
                         <svg width="18" height="18" class="inline">
                           <use
-                            fill="var(--theme-primary-color)"
+                            :fill="
+                              mainColor
+                                ? `${mainColor}`
+                                : 'var(--theme-primary-color)'
+                            "
                             href="/public/sprite.svg#deposit"
                           ></use>
                         </svg>

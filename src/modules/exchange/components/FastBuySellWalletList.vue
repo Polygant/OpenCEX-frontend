@@ -3,7 +3,10 @@
     <div class="wallet__title wallet__title--left">
       <span>{{ $t("common.wallet") }}</span>
       <router-link to="/wallet" class="link">
-        <button class="btn exchange__top-up-button">
+        <button
+          class="btn exchange__top-up-button"
+          :style="mainColor ? `background: ${mainColor} !important` : {}"
+        >
           {{ $t("common.topupCapitalize") }}
         </button>
       </router-link>
@@ -70,6 +73,9 @@
                       <div class="wallet-table__td">
                         <span
                           class="wallet-table__sell-buy-btn"
+                          :style="
+                            mainColor ? `color: ${mainColor} !important` : {}
+                          "
                           @click="
                             $emit('set-pair', { currency: ticker, type: 'buy' })
                           "
@@ -78,6 +84,9 @@
                         <span style="padding: 0 2px">/</span>
                         <span
                           class="wallet-table__sell-buy-btn"
+                          :style="
+                            mainColor ? `color: ${mainColor} !important` : {}
+                          "
                           @click="
                             $emit('set-pair', {
                               currency: ticker,

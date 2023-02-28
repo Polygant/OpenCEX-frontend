@@ -1,17 +1,33 @@
 <template>
   <div class="auth">
-    <div v-if="!showGoogleCodeInput" class="logIn pb-5">
+    <div
+      v-if="!showGoogleCodeInput"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <ModalPagesHeader />
       <div class="flex box white flex-col" :class="{ isBlur: isLoading }">
-        <div class="logIn__title">{{ $t("common.login") }}</div>
+        <div
+          class="logIn__title"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
+          {{ $t("common.login") }}
+        </div>
         <div
           v-if="!usernameFixed"
           class="logIn__descr"
           style="max-width: 302px"
+          :style="loginText ? `color: ${loginText} !important` : {}"
         >
           {{ $t("common.useemail") }}
         </div>
-        <div v-else class="logIn__descr">
+        <div
+          v-else
+          class="logIn__descr"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
           {{ $t("common.enterPass") }}
           <p class="mb-4">
             {{ username }}
@@ -92,8 +108,8 @@
             <input
               id="loginbtn"
               name="btn"
-              style="cursor: pointer; display: inline-block"
-              class="logIn__form__input logIn__form__input_button opacitychangebtn"
+              :style="mainColor ? `background: ${mainColor} !important` : {}"
+              class="logIn__form__input logIn__form__input_button opacitychangebtn cursor-pointer inline-block"
               :class="{ 'blocked-btn': captchaIsON && !captchaResponse }"
               type="submit"
               :disabled="captchaIsON && !captchaResponse"
@@ -103,18 +119,27 @@
               @click="handleLogin"
             />
           </div>
-          <router-link to="/forgot" class="logIn__recovery mb-4">{{
-            $t("common.passwordrecovery")
-          }}</router-link>
+          <router-link
+            to="/forgot"
+            class="logIn__recovery mb-4"
+            :style="loginText ? `color: ${loginText} !important` : {}"
+          >
+            {{ $t("common.passwordrecovery") }}
+          </router-link>
           <router-link
             to="/support"
             class="logIn__recovery mb-4"
+            :style="loginText ? `color: ${loginText} !important` : {}"
             rel="noopener noreferrer nofollow"
             target="_blank"
             >{{ $t("common.support") }}</router-link
           >
         </form>
-        <div class="logIn__or text-center" style="font-size: 14px">
+        <div
+          class="text-center mb-2"
+          style="font-size: 14px"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
           {{ $t("common.or") }}
         </div>
         <div class="text-center">

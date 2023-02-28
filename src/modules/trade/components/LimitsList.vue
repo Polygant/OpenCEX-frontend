@@ -79,6 +79,7 @@
     <button
       class="limit-list__submit-button mt-4"
       :class="`limit-list__submit-button_${color}`"
+      :style="mainColor ? `background: ${mainColor} !important` : {}"
       type="submit"
       :disabled="disableOperations"
     >

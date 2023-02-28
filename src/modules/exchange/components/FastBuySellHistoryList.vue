@@ -35,7 +35,10 @@
                   {{ ex.base_currency }}
                 </span>
                 <i class="fa fa-exchange" aria-hidden="true"></i>
-                <span class="walletTable__column_buy">
+                <span
+                  class="walletTable__column_buy"
+                  :style="mainColor ? `color: ${mainColor} !important` : {}"
+                >
                   {{ getCostValue(ex) }}
                   {{ ex.quote_currency }}
                 </span>

@@ -24,7 +24,11 @@
           {{ $t("common.twofaison") }}
         </div>
         <div v-if="is2faOff" class="table__button">
-          <button class="opacitychangebtn" @click="start2FAON()">
+          <button
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="start2FAON()"
+          >
             {{ $t("common.turnon") }}
           </button>
         </div>
@@ -32,6 +36,7 @@
           <button
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="start2FAOFF()"
           >
             {{ $t("common.turnoff") }}
@@ -53,7 +58,11 @@
           {{ $t("common.mins") }}
         </div>
         <div class="table__button">
-          <button class="opacitychangebtn" @click="startChangeTime()">
+          <button
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="startChangeTime()"
+          >
             {{ $t("common.changetime") }}
           </button>
         </div>
@@ -82,6 +91,7 @@
         <div class="table__button">
           <button
             class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="$router.push('/interface-select')"
           >
             {{ $t("common.change") }}
@@ -100,11 +110,17 @@
             v-if="enabledIpNotifications"
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="toggleIpNotification"
           >
             {{ $t("common.turnoff") }}
           </button>
-          <button v-else class="opacitychangebtn" @click="toggleIpNotification">
+          <button
+            v-else
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="toggleIpNotification"
+          >
             {{ $t("common.turnon") }}
           </button>
         </div>
@@ -121,6 +137,7 @@
             v-if="enabledLoginNotifications"
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="toggleLoginNotification"
           >
             {{ $t("common.turnoff") }}
@@ -128,6 +145,7 @@
           <button
             v-else
             class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="toggleLoginNotification"
           >
             {{ $t("common.turnon") }}
@@ -146,11 +164,17 @@
             v-if="profile.withdrawals_sms_confirmation"
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="sendPhone"
           >
             {{ $t("common.turnoff") }}
           </button>
-          <button v-else class="opacitychangebtn" @click="sendPhone">
+          <button
+            v-else
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="sendPhone"
+          >
             {{ $t("common.turnon") }}
           </button>
         </div>
@@ -231,6 +255,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finish2FAON()"
           >
             {{ $t("common.cancel") }}
@@ -248,6 +273,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="startPreCheckGoogleCode()"
           >
             {{ $t("common.next") }}
@@ -315,6 +341,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finish2FAON()"
           >
             {{ $t("common.back") }}
@@ -332,6 +359,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="checkSecret()"
           >
             {{ $t("common.turnoff") }}
@@ -395,6 +423,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finish2FAON()"
           >
             {{ $t("common.cancel") }}
@@ -412,6 +441,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="preCheckGoogleCode()"
           >
             {{ $t("common.save") }}
@@ -477,6 +507,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finishChangeTime()"
           >
             {{ $t("common.cancel") }}
@@ -494,6 +525,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="setNewLogoutTimeout()"
           >
             {{ $t("common.save") }}
@@ -534,6 +566,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="addPhone = false"
           >
             {{ $t("common.cancel") }}

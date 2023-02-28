@@ -38,6 +38,7 @@
               itemStatusUp: tx.operation_type === 1 || tx.operation_type === 3,
               itemStatusDown: tx.operation_type === 2,
             }"
+            :style="mainColor ? `color: ${mainColor} !important` : {}"
           >
             <span class="thead">{{ $t("common.operation") }}</span>
             {{ getWalletHistoryStatusOperation("operation", tx) }}
@@ -83,6 +84,7 @@
           <div
             v-else
             class="wallet-history__item wallet-history__status itemStatusUp"
+            :style="mainColor ? `color: ${mainColor} !important` : {}"
           >
             <span class="thead">{{ $t("common.status") }}</span>
             {{ getWalletHistoryStatusOperation("status", tx) }}
@@ -99,7 +101,11 @@
             class="wallet-history__item wallet-history__tx"
           >
             <span class="thead">TX</span>
-            <button v-if="tx.tx_hash" @click="goToExplorerLink(tx)">
+            <button
+              v-if="tx.tx_hash"
+              :style="mainColor ? `color: ${mainColor} !important` : {}"
+              @click="goToExplorerLink(tx)"
+            >
               Info
             </button>
           </div>
