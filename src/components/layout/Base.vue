@@ -1,7 +1,13 @@
 <template>
   <div>
     <HeaderComponent v-if="!simpleLayout" />
-    <div class="content" :class="{ 'content--simple': simpleLayout }">
+    <div
+      class="content"
+      :class="{ 'content--simple': simpleLayout }"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <slot />
     </div>
     <FooterComponent v-if="!simpleLayout" />

@@ -9,6 +9,7 @@
         : '',
       isAuthorized ? '' : 'header--no-auth',
     ]"
+    :style="mainColor ? `background: ${mainColor} !important` : {}"
   >
     <div class="header__logo">
       <a class="header__logo-link" href="/">

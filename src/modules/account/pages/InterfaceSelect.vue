@@ -1,8 +1,19 @@
 <template>
-  <div class="select non-auth-page pb-5 px-1">
+  <div
+    class="select non-auth-page pb-5 px-1"
+    :style="loginBackground ? `background: ${loginBackground} !important` : {}"
+  >
     <ModalPagesHeader />
-    <div class="non-auth-page__title">{{ $t("common.chooseInterface") }}</div>
-    <div class="non-auth-page__sub-title">
+    <div
+      class="non-auth-page__title"
+      :style="loginText ? `color: ${loginText} !important` : {}"
+    >
+      {{ $t("common.chooseInterface") }}
+    </div>
+    <div
+      class="non-auth-page__sub-title"
+      :style="loginText ? `color: ${loginText} !important` : {}"
+    >
       {{ $t("common.chooseInterfaceSubtitle") }}
     </div>
     <div class="select__container">

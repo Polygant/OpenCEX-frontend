@@ -4,7 +4,10 @@
       <FastBuySellWalletList @set-pair="setPair" />
       <div class="">
         <div class="exchange">
-          <div class="exchangeNow">
+          <div
+            class="exchangeNow"
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
+          >
             1 {{ cur1 }} =
             {{ getFixedDecimal(pricetop, coins[cur2]?.decimals || 8) }}
             {{ cur2 }}
@@ -81,6 +84,7 @@
             <div class="flex justify-center w-full">
               <div
                 class="simple-ad-search__arrows simple-ad-search__arrows_button"
+                :style="mainColor ? `background: ${mainColor} !important` : {}"
                 @click="swapPairs"
               >
                 <img
@@ -148,6 +152,9 @@
               <router-link v-if="!isLoggedIn" :to="`/login/`">
                 <button
                   class="exchange__button--normal exchange__button exchangeForm__button"
+                  :style="
+                    mainColor ? `background: ${mainColor} !important` : {}
+                  "
                 >
                   {{ $t("common.login") }}
                 </button>
@@ -167,6 +174,7 @@
                 "
                 type="button"
                 class="exchange__button exchangeForm__button"
+                :style="mainColor ? `background: ${mainColor} !important` : {}"
                 @click="doIT"
               >
                 {{ exchangePending ? "" : $t("quickBuy.to_exchange") }}

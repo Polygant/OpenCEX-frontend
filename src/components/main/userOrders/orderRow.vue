@@ -234,7 +234,11 @@
       :data-thead="$t('common.status')"
     >
       <div class="orders-table__td">
-        <span v-if="order.state === 1" class="itemStatusUp">
+        <span
+          v-if="order.state === 1"
+          class="itemStatusUp"
+          :style="mainColor ? `color: ${mainColor} !important` : {}"
+        >
           {{ getOrderWord("state", order.state) }}
         </span>
         <span v-if="order.state === 2" class="itemStatusDown">
@@ -250,7 +254,11 @@
         >
           <img src="/public/img/times.svg" width="20" />
         </button>
-        <button class="action-label update-order" @click="updateOrder(order)">
+        <button
+          class="action-label update-order"
+          :style="mainColor ? `background: ${mainColor} !important` : {}"
+          @click="updateOrder(order)"
+        >
           <img src="/public/img/pencil-square-o.svg" width="20" />
         </button>
       </div>
