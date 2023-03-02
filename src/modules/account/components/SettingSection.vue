@@ -880,6 +880,7 @@ export default {
   height: auto;
   min-height: 500px;
   width: 100%;
+  margin-bottom: 0;
 }
 
 .table__row {

@@ -4,7 +4,7 @@
       {{ $t("common.personalInfo") }}
     </div>
     <div class="px-4 pt-5">
-      <p class="pb-4 flex">
+      <p class="pb-2 flex">
         <strong class="pt-2 mr-2">{{ $t("common.firstname") }}:</strong>
         <span v-if="firstNameEdit" class="flex">
           <input
@@ -29,7 +29,7 @@
           />
         </span>
       </p>
-      <p class="pb-4 flex">
+      <p class="pb-2 flex">
         <strong class="pt-2 mr-2">{{ $t("common.lastname") }}:</strong>
         <span v-if="lastNameEdit" class="flex">
           <input
@@ -54,7 +54,7 @@
           />
         </span>
       </p>
-      <p v-if="birthday" class="pb-4 flex">
+      <p v-if="birthday" class="pb-2 flex">
         <strong class="pt-2 mr-2">{{ $t("common.birthday") }}:</strong>
         <span v-if="birthdayEdit" class="flex">
           <date-picker
@@ -88,7 +88,7 @@
           />
         </span>
       </p>
-      <p v-if="profile.country && notAfghanistan" class="pb-4 flex">
+      <p v-if="profile.country && notAfghanistan" class="pb-2 flex">
         <strong class="pt-2 mr-2">{{ $t("common.country") }}:</strong>
         <span class="p-2">
           {{ profile.country.name }}
