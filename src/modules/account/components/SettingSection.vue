@@ -880,6 +880,8 @@ export default {
   height: auto;
   min-height: 500px;
   width: 100%;
+}
+.user-account_setting {
   margin-bottom: 0;
 }
 
