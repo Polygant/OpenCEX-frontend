@@ -21,6 +21,12 @@
                       ? 'support__nav-link--active'
                       : '',
                   ]"
+                  :style="
+                    mainColor &&
+                    question.title === questions[activeQuestionIndex].title
+                      ? `color: ${mainColor} !important`
+                      : {}
+                  "
                   :to="{
                     name: 'support',
                     query: {

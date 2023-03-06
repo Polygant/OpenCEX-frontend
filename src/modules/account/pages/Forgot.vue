@@ -33,12 +33,14 @@
           <input
             id="mainbtn"
             class="forgot-password__button logIn__form__input logIn__form__input_button"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             type="submit"
             :value="$t('common.continue')"
             @click="handleRecovery"
           />
           <input
             class="forgot-password__button forgot-password__button_red logIn__form__input logIn__form__input_button"
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
             type="button"
             :value="$t('common.back_to_login')"
             @click="$router.push({ name: 'login' })"
