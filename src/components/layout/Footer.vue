@@ -139,12 +139,10 @@ export default {
 }
 .copyright {
   font-size: 15px;
-  color: #29292d;
   margin-bottom: 13px;
 }
 .rights {
   font-size: 14px;
-  color: #b4b4c2;
   margin-bottom: 22px;
 }
 .footer-langs {

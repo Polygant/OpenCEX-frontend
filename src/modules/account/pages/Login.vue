@@ -144,7 +144,14 @@
         </div>
         <div class="text-center">
           <router-link :to="'/register'" style="color: #fff">
-            <button class="logIn__register">{{ $t("common.register") }}</button>
+            <button
+              class="logIn__register"
+              :style="
+                secondColor ? `background: ${secondColor} !important` : {}
+              "
+            >
+              {{ $t("common.register") }}
+            </button>
           </router-link>
         </div>
       </div>

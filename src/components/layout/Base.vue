@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <HeaderComponent v-if="!simpleLayout" />
+  <div :style="mainText ? `color: ${mainText}` : {}">
     <div
-      class="content"
-      :class="{ 'content--simple': simpleLayout }"
       :style="
         loginBackground ? `background: ${loginBackground} !important` : {}
       "
     >
-      <slot />
+      <HeaderComponent v-if="!simpleLayout" />
+      <div class="content" :class="{ 'content--simple': simpleLayout }">
+        <slot />
+      </div>
+      <FooterComponent v-if="!simpleLayout" />
+      <notification-root />
+      <modal-root />
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div v-html="customCss"></div>
     </div>
-    <FooterComponent v-if="!simpleLayout" />
-    <notification-root />
-    <modal-root />
   </div>
 </template>
 
@@ -23,6 +25,7 @@ import ModalRoot from "~/components/modal/ModalRoot.vue";
 import HeaderComponent from "~/components/layout/Header.vue";
 import FooterComponent from "~/components/layout/Footer.vue";
 import { Init } from "~/utilities/manager";
+import localConfig from "~/local_config";
 
 export default {
   name: "LayoutComponent",
@@ -43,12 +46,24 @@ export default {
       interval: null,
       isLoading: false,
       simpleLayout: true,
+      color: "#CCC",
     };
   },
-  computed: mapGetters({
-    areCoinsLoaded: "core/areCoinsLoaded",
-    coins: "core/coins",
-  }),
+  computed: {
+    ...mapGetters({
+      areCoinsLoaded: "core/areCoinsLoaded",
+      coins: "core/coins",
+    }),
+    colorFromScript() {
+      return "red";
+    },
+    inputColor() {
+      return localConfig?.themes?.[this.currentTheme]?.input_color || "#FFF";
+    },
+    inputText() {
+      return localConfig?.themes?.[this.currentTheme]?.input_text || "#000";
+    },
+  },
   watch: {
     "$route.path": "checkLayout",
   },
@@ -88,5 +103,16 @@ export default {
 .content--simple {
   background: #36373c;
   padding-top: 0;
+}
+.changePassword__input,
+.coinSelector__elem,
+.selector__current,
+.formField__readonly,
+.formField__input,
+.modal-body input[type="text"],
+.trade-input__input,
+.mx-input {
+  color: v-bind(inputText) !important;
+  background: v-bind(inputColor) !important;
 }
 </style>

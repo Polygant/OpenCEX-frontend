@@ -276,7 +276,6 @@ export default {
 
 .changePassword__input {
   width: 100%;
-  background: #fff !important;
   height: 40px !important;
 }
 </style>
