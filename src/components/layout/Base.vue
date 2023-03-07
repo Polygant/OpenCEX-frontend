@@ -1,9 +1,8 @@
 <template>
   <div :style="mainText ? `color: ${mainText}` : {}">
+    <h1 style="color: red">{{ currentTheme }}</h1>
     <div
-      :style="
-        loginBackground ? `background: ${loginBackground} !important` : {}
-      "
+      :style="mainBackground ? `background: ${mainBackground} !important` : {}"
     >
       <HeaderComponent v-if="!simpleLayout" />
       <div class="content" :class="{ 'content--simple': simpleLayout }">
@@ -26,6 +25,7 @@ import HeaderComponent from "~/components/layout/Header.vue";
 import FooterComponent from "~/components/layout/Footer.vue";
 import { Init } from "~/utilities/manager";
 import localConfig from "~/local_config";
+import { useCookies } from "vue3-cookies";
 
 export default {
   name: "LayoutComponent",
@@ -40,6 +40,10 @@ export default {
       type: String,
       default: "",
     },
+  },
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
   },
   data() {
     return {
@@ -71,6 +75,12 @@ export default {
     clearInterval(this.interval);
   },
   mounted() {
+    let theme = this.cookies.get("theme");
+    if (theme && theme === "dark") {
+      this.$store.dispatch("core/changeTheme", "dark");
+    } else {
+      this.$store.dispatch("core/changeTheme", "light");
+    }
     this.updateCoinsData();
     this.interval = setInterval(() => this.updateCoinsData(), 5 * 60 * 1000);
   },

@@ -143,6 +143,13 @@
       </div>
       <MenuComponent />
       <LanguageSelector />
+      <div
+        class="themeSelector"
+        :class="{ dark: theme === 'dark' }"
+        @click="changeTheme"
+      >
+        <img src="/public/img/theme-dark.svg" />
+      </div>
     </div>
   </header>
 </template>
@@ -154,6 +161,7 @@ import menuHelper from "~/mixins/menuHelper";
 import helpers from "~/mixins/helpers";
 import handleLogout from "~/mixins/handleLogout";
 import LanguageSelector from "~/components/layout/parts/LanguageSelector.vue";
+import { useCookies } from "vue3-cookies";
 
 export default {
   name: "HeaderComponent",
@@ -164,6 +172,10 @@ export default {
       type: String,
       default: "",
     },
+  },
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
   },
   data() {
     return {
@@ -191,6 +203,7 @@ export default {
       isKYC: "core/isKYC",
       profile: "core/profile",
       coins: "core/coins",
+      theme: "core/theme",
     }),
     isAuthorized() {
       return this.$store.getters["core/isAuthorized"];
@@ -220,6 +233,11 @@ export default {
     }
   },
   methods: {
+    changeTheme() {
+      const newTheme = this.theme === "dark" ? "light" : "dark";
+      this.$store.dispatch("core/changeTheme", newTheme);
+      this.cookies.set("theme", newTheme);
+    },
     volume() {
       return parseFloat(
         this.getFromObj(
@@ -589,6 +607,8 @@ export default {
 }
 
 .header__etc {
+  position: relative;
+  padding-right: 35px;
   &.p-codes {
     flex: 1;
   }
@@ -667,5 +687,16 @@ export default {
 }
 .author-list__link {
   height: 50px;
+}
+.themeSelector {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.themeSelector.dark {
+  transform: scaleX(-1);
 }
 </style>

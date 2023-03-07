@@ -22,6 +22,9 @@ import { PaymentList } from "~/api/payment_list";
 import { Notifications } from "~/api/notifications";
 
 export default {
+  changeTheme({ state }, val) {
+    state.theme = val;
+  },
   async getCoins({ commit }) {
     await Coin.list().then(({ coins, commons }) => {
       commit(mutationTypes.COINS, { coins });
