@@ -36,5 +36,8 @@ export default {
     InputText() {
       return localConfig?.themes?.[this.currentTheme]?.input_text || false;
     },
+    BlockColor() {
+      return localConfig?.themes?.[this.currentTheme]?.block_color || false;
+    },
   },
 };
