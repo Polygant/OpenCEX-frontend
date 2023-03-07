@@ -67,6 +67,9 @@ export default {
     inputText() {
       return localConfig?.themes?.[this.currentTheme]?.input_text || "#000";
     },
+    blockColor() {
+      return localConfig?.themes?.[this.currentTheme]?.block_color || "#FFF";
+    },
   },
   watch: {
     "$route.path": "checkLayout",
@@ -124,5 +127,9 @@ export default {
 .mx-input {
   color: v-bind(inputText) !important;
   background: v-bind(inputColor) !important;
+}
+.plate,
+.card {
+  background: v-bind(blockColor) !important;
 }
 </style>
