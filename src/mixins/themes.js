@@ -1,9 +1,11 @@
 import localConfig from "../local_config";
+import { mapGetters } from "vuex";
 
 export default {
   computed: {
+    ...mapGetters({ theme: "core/theme" }),
     currentTheme() {
-      return 0;
+      return this.theme === "dark" ? 1 : 0;
     },
     mainColor() {
       return localConfig?.themes?.[this.currentTheme]?.main_color || false;
