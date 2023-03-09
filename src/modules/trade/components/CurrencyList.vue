@@ -35,7 +35,6 @@
           <v-icon
             :icon="starredOnly ? 'Star' : 'StarBorder'"
             color="var(--theme-primary-color)"
-            style="background: #fff"
             class="currency__filter-icon"
             @click="starredOnly = !starredOnly"
           />

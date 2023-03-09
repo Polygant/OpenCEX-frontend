@@ -187,6 +187,7 @@
           <button
             :disabled="isInvalidFaCode"
             class="logIn__form__input logIn__form__input_button block"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             type="submit"
           >
             {{ $t("common.login_upper") }}

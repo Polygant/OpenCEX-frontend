@@ -30,13 +30,13 @@ export default {
     mainText() {
       return localConfig?.themes?.[this.currentTheme]?.main_text || false;
     },
-    InputColor() {
+    inputColor() {
       return localConfig?.themes?.[this.currentTheme]?.input_color || false;
     },
-    InputText() {
+    inputText() {
       return localConfig?.themes?.[this.currentTheme]?.input_text || false;
     },
-    BlockColor() {
+    blockColor() {
       return localConfig?.themes?.[this.currentTheme]?.block_color || false;
     },
   },
