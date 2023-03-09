@@ -266,10 +266,8 @@ export default {
 
 .changePassword__field {
   width: 100%;
-  background: #fff;
   text-align: left;
   font-size: 16px;
-  color: rgb(86, 86, 86);
   margin-bottom: 5px;
   margin-top: 20px;
 }

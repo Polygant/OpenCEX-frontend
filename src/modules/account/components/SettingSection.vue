@@ -36,7 +36,7 @@
           <button
             class="opacitychangebtn"
             style="background-color: #e34848"
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="start2FAOFF()"
           >
             {{ $t("common.turnoff") }}
@@ -110,7 +110,7 @@
             v-if="enabledIpNotifications"
             class="opacitychangebtn"
             style="background-color: #e34848"
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="toggleIpNotification"
           >
             {{ $t("common.turnoff") }}
@@ -137,7 +137,7 @@
             v-if="enabledLoginNotifications"
             class="opacitychangebtn"
             style="background-color: #e34848"
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="toggleLoginNotification"
           >
             {{ $t("common.turnoff") }}
@@ -164,7 +164,7 @@
             v-if="profile.withdrawals_sms_confirmation"
             class="opacitychangebtn"
             style="background-color: #e34848"
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="sendPhone"
           >
             {{ $t("common.turnoff") }}
@@ -349,7 +349,6 @@
           <button
             class="opacitychangebtn"
             style="
-              background-color: var(--theme-primary-color);
               color: rgb(255, 255, 255);
               width: 100px;
               height: 35px;
@@ -359,7 +358,7 @@
               line-height: 1;
               border-radius: 3px;
             "
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="checkSecret()"
           >
             {{ $t("common.turnoff") }}

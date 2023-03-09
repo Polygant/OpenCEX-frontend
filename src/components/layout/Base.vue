@@ -60,25 +60,28 @@ export default {
     colorFromScript() {
       return "red";
     },
-    inputColor() {
+    inputColorLocal() {
       return localConfig?.themes?.[this.currentTheme]?.input_color || "#FFF";
     },
-    inputText() {
+    inputTextLocal() {
       return localConfig?.themes?.[this.currentTheme]?.input_text || "#000";
     },
-    loginText() {
+    loginTextLocal() {
       return localConfig?.themes?.[this.currentTheme]?.login_text || "#FFF";
     },
-    blockColor() {
+    blockColorLocal() {
       return localConfig?.themes?.[this.currentTheme]?.block_color || "#FFF";
     },
-    mainColor() {
+    mainColorLocal() {
       return localConfig?.themes?.[this.currentTheme]?.main_color || "#75147C";
     },
-    mainBackground() {
+    mainBackgroundLocal() {
       return (
         localConfig?.themes?.[this.currentTheme]?.main_background || "#75147C"
       );
+    },
+    mainTextLocal() {
+      return localConfig?.themes?.[this.currentTheme]?.main_text || "#000000";
     },
   },
   watch: {
@@ -138,9 +141,10 @@ input[type="password"],
 .formField__input,
 .trade-input__input,
 .mx-input {
-  color: v-bind(inputText) !important;
-  background: v-bind(inputColor) !important;
+  color: v-bind(inputTextLocal) !important;
+  background: v-bind(inputColorLocal) !important;
 }
+.walletlist,
 .exchange,
 .table,
 .balancelist,
@@ -151,10 +155,10 @@ input[type="password"],
 .user-orders,
 .plate,
 .card {
-  background: v-bind(blockColor) !important;
+  background: v-bind(blockColorLocal) !important;
 }
 .support__title-bar {
-  background: v-bind(mainColor) !important;
+  background: v-bind(mainColorLocal) !important;
 }
 .register__link span,
 .register__link,
@@ -163,25 +167,28 @@ input[type="password"],
 .support__nav-card--contacts a,
 .support__content-voc span,
 .support__nav-item:hover a {
-  color: v-bind(mainColor) !important;
+  color: v-bind(mainColorLocal) !important;
 }
 .support__nav-link--active .faq-icon,
 .support__nav-item:hover .faq-icon {
-  background-color: v-bind(mainColor) !important;
+  background-color: v-bind(mainColorLocal) !important;
 }
 .select__item:hover,
 .footer {
-  background-color: v-bind(mainBackground) !important;
+  background-color: v-bind(mainBackgroundLocal) !important;
 }
 .footer__social-item {
-  color: v-bind(mainColor) !important;
+  color: v-bind(mainColorLocal) !important;
 }
 .footer__social-item path {
-  fill: v-bind(mainColor) !important;
+  fill: v-bind(mainColorLocal) !important;
 }
 .non-auth-page__sub-title,
 .select__description-title,
 .select__description-subtitle {
-  color: v-bind(loginText) !important;
+  color: v-bind(loginTextLocal) !important;
+}
+p {
+  color: v-bind(mainTextLocal) !important;
 }
 </style>
