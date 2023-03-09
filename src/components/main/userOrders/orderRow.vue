@@ -119,7 +119,7 @@
       :data-thead="$t('common.amountoriginal')"
     >
       <div class="orders-table__td hideMiddleRes">
-        {{ getFixedDecimal(order.quantity, coins[base].decimals) }}
+        {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
       </div>
       <div class="orders-table__td middleRes">
         {{ order.quantity }}
@@ -136,7 +136,7 @@
             order.quantity_left !== 0 && order.quantity_left === order.quantity
           "
         >
-          {{ getFixedDecimal(order.quantity, coins[base].decimals) }}
+          {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
         </span>
         <span
           v-if="
@@ -150,10 +150,10 @@
             )
           }}
           /
-          {{ getFixedDecimal(order.quantity, coins[base].decimals) }}
+          {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
         </span>
         <span v-if="order.quantity_left === 0">
-          {{ getFixedDecimal(order.quantity, coins[base].decimals) }}
+          {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
         </span>
       </div>
     </td>
