@@ -231,7 +231,7 @@ export default {
 
 .support__content-item {
   a {
-    color: #006be5 !important;
+    color: #006be5;
     font-weight: lighter !important;
   }
   ul.dotted-list {

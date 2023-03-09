@@ -1,6 +1,5 @@
 <template>
   <div :style="mainText ? `color: ${mainText}` : {}">
-    <h1 style="color: red">{{ currentTheme }}</h1>
     <div
       :style="mainBackground ? `background: ${mainBackground} !important` : {}"
     >
@@ -67,8 +66,19 @@ export default {
     inputText() {
       return localConfig?.themes?.[this.currentTheme]?.input_text || "#000";
     },
+    loginText() {
+      return localConfig?.themes?.[this.currentTheme]?.login_text || "#FFF";
+    },
     blockColor() {
       return localConfig?.themes?.[this.currentTheme]?.block_color || "#FFF";
+    },
+    mainColor() {
+      return localConfig?.themes?.[this.currentTheme]?.main_color || "#75147C";
+    },
+    mainBackground() {
+      return (
+        localConfig?.themes?.[this.currentTheme]?.main_background || "#75147C"
+      );
     },
   },
   watch: {
@@ -115,21 +125,58 @@ export default {
 <style lang="scss">
 .content--simple {
   background: #36373c;
-  padding-top: 0;
+  padding: 0 !important;
 }
+input[type="text"],
+input[type="password"],
+.country-select__selected-country,
 .changePassword__input,
 .coinSelector__elem,
 .selector__current,
 .formField__readonly,
 .formField__input,
-.modal-body input[type="text"],
 .trade-input__input,
 .mx-input {
   color: v-bind(inputText) !important;
   background: v-bind(inputColor) !important;
 }
+.trade-menus,
+.recent-trades__title,
+.trades,
+.user-orders,
 .plate,
 .card {
   background: v-bind(blockColor) !important;
+}
+.support__title-bar {
+  background: v-bind(mainColor) !important;
+}
+.register__link span,
+.register__link,
+.footer-links-column a,
+.support__content-item a,
+.support__nav-card--contacts a,
+.support__content-voc span,
+.support__nav-item:hover a {
+  color: v-bind(mainColor) !important;
+}
+.support__nav-link--active .faq-icon,
+.support__nav-item:hover .faq-icon {
+  background-color: v-bind(mainColor) !important;
+}
+.select__item:hover,
+.footer {
+  background-color: v-bind(mainBackground) !important;
+}
+.footer__social-item {
+  color: v-bind(mainColor) !important;
+}
+.footer__social-item path {
+  fill: v-bind(mainColor) !important;
+}
+.non-auth-page__sub-title,
+.select__description-title,
+.select__description-subtitle {
+  color: v-bind(loginText) !important;
 }
 </style>

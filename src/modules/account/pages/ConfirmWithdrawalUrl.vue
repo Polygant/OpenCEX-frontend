@@ -1,8 +1,19 @@
 <template>
   <div>
-    <div v-if="!show_data" class="logIn pb-5">
+    <div
+      v-if="!show_data"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <MainLogo />
-      <div class="logIn__title">{{ $t("common.pleasewait") }}</div>
+      <div
+        class="logIn__title"
+        :style="loginText ? `color: ${loginText} !important` : {}"
+      >
+        {{ $t("common.pleasewait") }}
+      </div>
     </div>
     <div v-if="show_data && wrong_token" class="logIn pb-5">
       <MainLogo />

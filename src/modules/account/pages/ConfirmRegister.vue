@@ -1,9 +1,15 @@
 <template>
-  <div class="logIn pb-5 confirm_reg_email">
+  <div
+    class="logIn pb-5 confirm_reg_email"
+    :style="loginBackground ? `background: ${loginBackground} !important` : {}"
+  >
     <MainLogo />
     <template v-if="!showBanner">
       <div class="flex box white flex-col">
-        <div class="logIn__title">
+        <div
+          class="logIn__title"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
           {{ $t("common.confirm_reg_email") }}
         </div>
       </div>
