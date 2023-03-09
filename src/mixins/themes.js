@@ -8,36 +8,54 @@ export default {
       return this.theme === "dark" ? 1 : 0;
     },
     mainColor() {
-      return localConfig?.themes?.[this.currentTheme]?.main_color || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.main_color || false;
+      return color && color.length > 0 ? color : false;
     },
     secondColor() {
-      return localConfig?.themes?.[this.currentTheme]?.second_color || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.second_color || false;
+      return color && color.length > 0 ? color : false;
     },
     cancelColor() {
-      return localConfig?.themes?.[this.currentTheme]?.second_color || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.cancel_color || false;
+      return color && color.length > 0 ? color : false;
     },
     loginBackground() {
-      return (
-        localConfig?.themes?.[this.currentTheme]?.login_background || false
-      );
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.login_background || false;
+      return color && color.length > 0 ? color : false;
     },
     loginText() {
-      return localConfig?.themes?.[this.currentTheme]?.login_text || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.login_text || false;
+      return color && color.length > 0 ? color : false;
     },
     mainBackground() {
-      return localConfig?.themes?.[this.currentTheme]?.main_background || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.main_background || false;
+      return color && color.length > 0 ? color : false;
     },
     mainText() {
-      return localConfig?.themes?.[this.currentTheme]?.main_text || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.main_text || false;
+      return color && color.length > 0 ? color : false;
     },
     inputColor() {
-      return localConfig?.themes?.[this.currentTheme]?.input_color || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.input_color || false;
+      return color && color.length > 0 ? color : false;
     },
     inputText() {
-      return localConfig?.themes?.[this.currentTheme]?.input_text || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.input_text || false;
+      return color && color.length > 0 ? color : false;
     },
     blockColor() {
-      return localConfig?.themes?.[this.currentTheme]?.block_color || false;
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.block_color || false;
+      return color && color.length > 0 ? color : false;
     },
   },
 };
