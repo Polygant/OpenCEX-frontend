@@ -127,6 +127,7 @@ export default {
   background: #36373c;
   padding: 0 !important;
 }
+.address-text-field,
 input[type="text"],
 input[type="password"],
 .country-select__selected-country,
@@ -140,6 +141,10 @@ input[type="password"],
   color: v-bind(inputText) !important;
   background: v-bind(inputColor) !important;
 }
+.exchange,
+.table,
+.balancelist,
+.historylist,
 .trade-menus,
 .recent-trades__title,
 .trades,
