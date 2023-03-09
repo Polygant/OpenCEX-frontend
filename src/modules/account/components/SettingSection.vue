@@ -242,9 +242,8 @@
       <div style="height: 55px; border-top: 1px solid #e7f4fd">
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
@@ -409,9 +408,8 @@
       <div style="height: 55px; border-top: 1px solid #e7f4fd">
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
@@ -493,9 +491,8 @@
       <div style="height: 55px; border-top: 1px solid #e7f4fd">
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
@@ -552,9 +549,8 @@
       >
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
