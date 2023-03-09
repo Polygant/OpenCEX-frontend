@@ -96,12 +96,10 @@
       <button
         v-if="!isEverythingOk"
         type="submit"
-        class="btn"
+        class="btn btn-danger"
         style="
           font-weight: 600;
           text-align: left;
-          background: var(--theme-primary-color);
-          border: 1px solid var(--theme-primary-color);
           border-radius: 4px;
           margin-top: 20px;
           height: 50px;

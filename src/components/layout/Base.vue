@@ -83,6 +83,9 @@ export default {
     mainTextLocal() {
       return localConfig?.themes?.[this.currentTheme]?.main_text || "#000000";
     },
+    cancelLocal() {
+      return localConfig?.themes?.[this.currentTheme]?.cancel_color || "red";
+    },
   },
   watch: {
     "$route.path": "checkLayout",
@@ -173,7 +176,12 @@ input[type="password"],
 .support__nav-item:hover .faq-icon {
   background-color: v-bind(mainColorLocal) !important;
 }
-.select__item:hover,
+.select__item {
+  background-color: v-bind(blockColorLocal) !important;
+}
+.select__item:hover {
+  background-color: v-bind(mainBackgroundLocal) !important;
+}
 .footer {
   background-color: v-bind(mainBackgroundLocal) !important;
 }
@@ -188,7 +196,15 @@ input[type="password"],
 .select__description-subtitle {
   color: v-bind(loginTextLocal) !important;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
 p {
   color: v-bind(mainTextLocal) !important;
+}
+.btn-danger {
+  background: v-bind(cancelLocal) !important;
 }
 </style>
