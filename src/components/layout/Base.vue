@@ -180,7 +180,7 @@ input[type="password"],
   background-color: v-bind(blockColorLocal) !important;
 }
 .select__item:hover {
-  background-color: v-bind(mainBackgroundLocal) !important;
+  background-color: v-bind(mainColorLocal) !important;
 }
 .footer {
   background-color: v-bind(mainBackgroundLocal) !important;
