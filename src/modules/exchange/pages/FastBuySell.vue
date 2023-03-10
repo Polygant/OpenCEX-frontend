@@ -1152,10 +1152,6 @@ export default {
     cursor: pointer;
     height: 70px;
 
-    &--normal {
-      box-shadow: 0 6px 15px 0 #bfbfbf;
-    }
-
     &--pending {
       cursor: default !important;
       box-shadow: none;
@@ -1270,7 +1266,6 @@ export default {
   margin: 0px auto 20px auto;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #faebcc;
   background-color: #fcf8e3;
   color: #8a6d3b;
 }

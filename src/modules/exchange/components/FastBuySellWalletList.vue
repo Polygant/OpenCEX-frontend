@@ -155,7 +155,6 @@ export default {
   display: flex;
   margin: auto;
   justify-content: center;
-  box-shadow: 0 2px 5px 0 #bfbfbf;
   font-size: 0.7em;
 
   &:hover {
