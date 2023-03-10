@@ -73,18 +73,20 @@ export default {
       return localConfig?.themes?.[this.currentTheme]?.block_color || "#FFF";
     },
     mainColorLocal() {
-      return localConfig?.themes?.[this.currentTheme]?.main_color || "#75147C";
+      return localConfig?.themes?.[this.currentTheme]?.main_color || "#6352cd";
     },
     mainBackgroundLocal() {
       return (
-        localConfig?.themes?.[this.currentTheme]?.main_background || "#75147C"
+        localConfig?.themes?.[this.currentTheme]?.main_background || "#edf1fa"
       );
     },
     mainTextLocal() {
       return localConfig?.themes?.[this.currentTheme]?.main_text || "#000000";
     },
     cancelLocal() {
-      return localConfig?.themes?.[this.currentTheme]?.cancel_color || "red";
+      return (
+        localConfig?.themes?.[this.currentTheme]?.cancel_color || "#ff0000"
+      );
     },
   },
   watch: {
