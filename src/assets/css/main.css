@@ -1034,7 +1034,6 @@ img {
 }
 
 .wallet-list .wallet-table__td {
-  color: #38393a;
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
   height: 32px;
@@ -2327,7 +2326,6 @@ button:active {
 
 .wallet__title {
   padding-left: 30px;
-  color: #2b395b;
   font-family: "Open Sans", arial, sans-serif;
   font-size: 22px;
   font-weight: 700;

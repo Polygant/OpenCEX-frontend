@@ -182,6 +182,7 @@ input[type="password"],
 .select__item:hover {
   background-color: v-bind(mainColorLocal) !important;
 }
+.alert-container,
 .footer {
   background-color: v-bind(mainBackgroundLocal) !important;
 }
