@@ -22,9 +22,9 @@
                       : '',
                   ]"
                   :style="
-                    mainColor &&
+                    secondColor &&
                     question.title === questions[activeQuestionIndex].title
-                      ? `color: ${mainColor} !important`
+                      ? `color: ${secondColor} !important`
                       : {}
                   "
                   :to="{
@@ -280,7 +280,6 @@ export default {
     text-align: center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    box-shadow: 0 2px 5px 0 #bfbfbf;
   }
 
   &__sidebar {
@@ -298,7 +297,6 @@ export default {
     margin-bottom: 15px;
     background-color: #ffffff;
     border-radius: 5px;
-    box-shadow: 0 2px 5px 0 #bfbfbf;
 
     &--contacts {
       padding: 20px;
@@ -313,7 +311,6 @@ export default {
     flex-grow: 1;
     background: #ffffff;
     border-radius: 5px;
-    box-shadow: 0 2px 5px 0 #bfbfbf;
 
     @media screen and (max-width: 800px) {
       width: 100%;

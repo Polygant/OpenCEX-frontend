@@ -5,7 +5,7 @@
       <router-link to="/wallet" class="link">
         <button
           class="btn exchange__top-up-button"
-          :style="mainColor ? `background: ${mainColor} !important` : {}"
+          :style="secondColor ? `background: ${secondColor} !important` : {}"
         >
           {{ $t("common.topupCapitalize") }}
         </button>
@@ -156,10 +156,6 @@ export default {
   margin: auto;
   justify-content: center;
   font-size: 0.7em;
-
-  &:hover {
-    box-shadow: 0 4px 7px 0 #bfbfbf;
-  }
 }
 
 .link {

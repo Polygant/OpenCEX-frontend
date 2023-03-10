@@ -9,7 +9,7 @@
         : '',
       isAuthorized ? '' : 'header--no-auth',
     ]"
-    :style="mainColor ? `background: ${mainColor} !important` : {}"
+    :style="blockColor ? `background: ${blockColor} !important` : {}"
   >
     <div class="header__logo">
       <a class="header__logo-link" href="/">
@@ -86,12 +86,28 @@
           <span class="header__author-name">
             {{ username }}
           </span>
-          <img
-            src="/public/img/caret-white.svg"
-            alt="caret"
+          <svg
             class="header__author-image"
+            width="10"
+            height="10"
+            viewBox="0 0 21 21"
             @click.stop="toggleIsSettingsOpen"
-          />
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="" transform="translate(-254 -232)">
+              <rect
+                data-name="Rectangle 1"
+                width="21"
+                height="21"
+                transform="translate(254 232)"
+                style="fill: transparent"
+              />
+              <path
+                d="M107.741,10.99l-8.3,8.6a1.318,1.318,0,0,1-1.911,0,1.437,1.437,0,0,1,0-1.981L104.875,10,97.535,2.391a1.437,1.437,0,0,1,0-1.981,1.318,1.318,0,0,1,1.911,0l8.3,8.6a1.436,1.436,0,0,1,0,1.98Z"
+                transform="translate(274.5 139.862) rotate(90)"
+              />
+            </g>
+          </svg>
           <ul
             v-if="isAuthorized"
             class="author-list"

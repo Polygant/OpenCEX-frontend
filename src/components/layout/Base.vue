@@ -92,6 +92,9 @@ export default {
         localConfig?.themes?.[this.currentTheme]?.cancel_color || "#ff0000"
       );
     },
+    secondLocal() {
+      return localConfig?.themes?.[this.currentTheme]?.second_color || "#000";
+    },
   },
   watch: {
     "$route.path": "checkLayout",
@@ -173,15 +176,14 @@ input[type="password"],
 .register__link,
 .footer-links-column a,
 .support__content-item a,
-.support__nav-card--contacts a,
-.support__content-voc span,
 .support__nav-item:hover a {
   color: v-bind(mainColorLocal) !important;
 }
-.support__nav-link--active .faq-icon,
 .support__nav-item:hover .faq-icon {
   background-color: v-bind(mainColorLocal) !important;
 }
+.support__content-card,
+.support__nav-card,
 .select__item {
   background-color: v-bind(blockColorLocal) !important;
 }
@@ -203,6 +205,8 @@ input[type="password"],
 .select__description-subtitle {
   color: v-bind(loginTextLocal) !important;
 }
+.header__author-name,
+.burger__text,
 h1,
 h2,
 h3,
@@ -211,7 +215,18 @@ h5,
 p {
   color: v-bind(mainTextLocal) !important;
 }
+.header__author-image {
+  fill: v-bind(mainTextLocal) !important;
+}
 .btn-danger {
   background: v-bind(cancelLocal) !important;
+}
+.support__nav-link--active .faq-icon {
+  background: v-bind(secondLocal) !important;
+}
+.support__content-item a,
+.support__nav-card--contacts a,
+.support__content-voc span {
+  color: v-bind(secondLocal) !important;
 }
 </style>
