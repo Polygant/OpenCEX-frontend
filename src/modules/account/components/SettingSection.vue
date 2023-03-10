@@ -254,7 +254,6 @@
               line-height: 1;
               border-radius: 3px;
             "
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finish2FAON()"
           >
             {{ $t("common.cancel") }}
@@ -262,7 +261,6 @@
           <button
             class="opacitychangebtn"
             style="
-              background-color: var(--theme-primary-color);
               color: rgb(255, 255, 255);
               width: 100px;
               height: 35px;
@@ -272,7 +270,7 @@
               line-height: 1;
               border-radius: 3px;
             "
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
             @click="startPreCheckGoogleCode()"
           >
             {{ $t("common.next") }}
@@ -420,7 +418,6 @@
               line-height: 1;
               border-radius: 3px;
             "
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finish2FAON()"
           >
             {{ $t("common.cancel") }}
@@ -503,7 +500,6 @@
               line-height: 1;
               border-radius: 3px;
             "
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finishChangeTime()"
           >
             {{ $t("common.cancel") }}
@@ -561,7 +557,6 @@
               line-height: 1;
               border-radius: 3px;
             "
-            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="addPhone = false"
           >
             {{ $t("common.cancel") }}
