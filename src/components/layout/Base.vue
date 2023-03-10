@@ -1,7 +1,11 @@
 <template>
-  <div :style="mainText ? `color: ${mainText}` : {}">
+  <div :style="mainTextLocal ? `color: ${mainTextLocal}` : {}">
     <div
-      :style="mainBackground ? `background: ${mainBackground} !important` : {}"
+      :style="
+        mainBackgroundLocal
+          ? `background: ${mainBackgroundLocal} !important`
+          : {}
+      "
     >
       <HeaderComponent v-if="!simpleLayout" />
       <div class="content" :class="{ 'content--simple': simpleLayout }">
