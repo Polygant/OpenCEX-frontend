@@ -142,6 +142,7 @@ export default {
   background: #36373c;
   padding: 0 !important;
 }
+.stack-precision #select-stack-precision,
 .address-text-field,
 input[type="text"],
 input[type="password"],
@@ -156,6 +157,12 @@ input[type="password"],
   color: v-bind(inputTextLocal) !important;
   background: v-bind(inputColorLocal) !important;
 }
+.wallet,
+.tab-block__nav,
+.table-list,
+.otc,
+.limit-list,
+#header,
 .navigation-language__link.selected,
 .navigation-language,
 .author-list,
@@ -186,6 +193,10 @@ input[type="password"],
 .support__nav-item:hover .faq-icon {
   background-color: v-bind(mainColorLocal) !important;
 }
+.stack-precision,
+.wallet-list--tooltip-layer,
+.currency-list,
+.wallet-list,
 .support__content-card,
 .support__nav-card,
 .select__item {
