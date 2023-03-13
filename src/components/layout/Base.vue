@@ -204,7 +204,11 @@ input[type="password"],
 .footer__social-item path {
   fill: v-bind(mainColorLocal) !important;
 }
-
+.header__ether-info-text,
+.header__links-link:before,
+.header__links-link,
+.header__ether-info-title,
+.middle-list__title,
 .burger__text,
 .header__author-name,
 .non-auth-page__sub-title,
@@ -212,6 +216,8 @@ input[type="password"],
 .select__description-subtitle {
   color: v-bind(loginTextLocal) !important;
 }
+.header__author-img path,
+.burger__image,
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
