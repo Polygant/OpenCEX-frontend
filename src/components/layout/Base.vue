@@ -156,6 +156,7 @@ input[type="password"],
   color: v-bind(inputTextLocal) !important;
   background: v-bind(inputColorLocal) !important;
 }
+.navigation__open,
 .walletlist,
 .exchange,
 .table,
@@ -205,6 +206,7 @@ input[type="password"],
 .select__description-subtitle {
   color: v-bind(loginTextLocal) !important;
 }
+.navigation__link,
 .header__author-name,
 .burger__text,
 h1,
@@ -215,6 +217,7 @@ h5,
 p {
   color: v-bind(mainTextLocal) !important;
 }
+.navigation__link__img,
 .header__author-image {
   fill: v-bind(mainTextLocal) !important;
 }
