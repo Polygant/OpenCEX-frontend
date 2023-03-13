@@ -156,6 +156,9 @@ input[type="password"],
   color: v-bind(inputTextLocal) !important;
   background: v-bind(inputColorLocal) !important;
 }
+.navigation-language__link.selected,
+.navigation-language,
+.author-list,
 .navigation__open,
 .walletlist,
 .exchange,
@@ -201,14 +204,21 @@ input[type="password"],
 .footer__social-item path {
   fill: v-bind(mainColorLocal) !important;
 }
+
+.burger__text,
+.header__author-name,
 .non-auth-page__sub-title,
 .select__description-title,
 .select__description-subtitle {
   color: v-bind(loginTextLocal) !important;
 }
+.header__author-image {
+  fill: v-bind(loginTextLocal) !important;
+}
+.navigation-language__link,
+.navigation-language__link.selected,
+.author-list__link,
 .navigation__link,
-.header__author-name,
-.burger__text,
 h1,
 h2,
 h3,
@@ -216,9 +226,13 @@ h4,
 h5,
 p {
   color: v-bind(mainTextLocal) !important;
+  opacity: 1;
 }
-.navigation__link__img,
-.header__author-image {
+.navigation-language__link {
+  opacity: 0.5;
+}
+.author-list__link-icon,
+.navigation__link__img {
   fill: v-bind(mainTextLocal) !important;
 }
 .btn-danger {
