@@ -162,7 +162,6 @@ input[type="password"],
 .table-list,
 .otc,
 .limit-list,
-#header,
 .navigation-language__link.selected,
 .navigation-language,
 .author-list,
@@ -180,6 +179,7 @@ input[type="password"],
 .card {
   background: v-bind(blockColorLocal) !important;
 }
+#header,
 .support__title-bar {
   background: v-bind(mainColorLocal) !important;
 }
