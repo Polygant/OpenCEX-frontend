@@ -129,8 +129,6 @@ export default {
   &__table-td,
   &__table-th {
     font-size: 12px;
-    font-family: "Open Sans", sans-serif;
-    color: #38393a;
     line-height: 1.25;
     height: 32px;
     display: flex;

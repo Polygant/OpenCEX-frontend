@@ -236,8 +236,6 @@ export default {
 <style lang="scss" scoped>
 .otc {
   line-height: initial;
-  color: #38393a;
-  font-family: "Open Sans", sans-serif;
   background: white;
   padding: 15px 2rem 10px;
   &__row {
@@ -277,7 +275,6 @@ export default {
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    color: #38393a;
     font-size: 12px;
     font-weight: bold;
     display: inline-block;
