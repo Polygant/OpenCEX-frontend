@@ -898,9 +898,7 @@ button[disabled] {
 }
 .tab-pane__search {
   background: url("/public/img/searchicon.png") no-repeat 15px center;
-  color: #38393a;
   font-size: 14px;
-  font-family: "Open Sans", arial, sans-serif;
   height: 37px;
   padding: 5px 40px 5px;
   width: 280px;

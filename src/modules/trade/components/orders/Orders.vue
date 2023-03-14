@@ -180,11 +180,9 @@ export default {
   background: #fff;
   border-bottom: 1px solid #e0e0e0;
   span.order-book-title {
-    color: #38393a;
     font-weight: 700;
     font-size: 14px;
     display: block;
-    font-family: "Open Sans", arial, sans-serif;
     text-transform: uppercase;
   }
 

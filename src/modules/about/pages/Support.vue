@@ -349,7 +349,6 @@ export default {
 
   &__nav-link {
     cursor: pointer;
-    color: #38393a;
     white-space: nowrap;
     font-weight: lighter;
 
