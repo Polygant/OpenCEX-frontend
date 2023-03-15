@@ -193,6 +193,11 @@ input[type="password"],
 .support__nav-item:hover .faq-icon {
   background-color: v-bind(mainColorLocal) !important;
 }
+.tab-block__nav-link.active,
+.tab-block__nav-link,
+.trade-menus__link,
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active,
 .stack-precision,
 .wallet-list--tooltip-layer,
 .currency-list,
