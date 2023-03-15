@@ -205,6 +205,9 @@ input[type="password"],
 .select__item:hover {
   background-color: v-bind(mainColorLocal) !important;
 }
+.order-tables__sell-buy,
+.currency-list .currency-table .table tbody tr.active,
+.wallet-list .currency-table .table tbody tr.active,
 .alert-container,
 .footer {
   background-color: v-bind(mainBackgroundLocal) !important;
