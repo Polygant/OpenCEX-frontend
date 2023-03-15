@@ -103,8 +103,8 @@ export default {
         timezone: "Etc/UTC",
         priceScaleSelectionStrategyName: "auto",
         dataWindowProperties: {
-          background: "rgba( 255, 254, 206, 0.2)",
-          border: "rgba( 96, 96, 144, 1)",
+          background: this.blockColorLocal,
+          border: this.blockColorLocal,
           font: "Verdana",
           fontBold: false,
           fontItalic: false,
@@ -115,8 +115,8 @@ export default {
         paneProperties: {
           backgroundType: "solid",
           background: this.blockColorLocal,
-          backgroundGradientStartColor: "#ffffff",
-          backgroundGradientEndColor: "#ffffff",
+          backgroundGradientStartColor: this.blockColorLocal,
+          backgroundGradientEndColor: this.blockColorLocal,
           vertGridProperties: {
             color: "rgba(42, 46, 57, 0.06)",
             style: 0,
@@ -159,7 +159,7 @@ export default {
           },
         },
         scalesProperties: {
-          backgroundColor: "#ffffff",
+          backgroundColor: this.blockColorLocal,
           lineColor: "rgba(42, 46, 57, 0.14)",
           textColor: "#131722",
           fontSize: 12,
