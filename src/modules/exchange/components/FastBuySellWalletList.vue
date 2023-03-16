@@ -73,9 +73,6 @@
                       <div class="wallet-table__td">
                         <span
                           class="wallet-table__sell-buy-btn"
-                          :style="
-                            mainColor ? `color: ${mainColor} !important` : {}
-                          "
                           @click="
                             $emit('set-pair', { currency: ticker, type: 'buy' })
                           "
@@ -84,9 +81,6 @@
                         <span style="padding: 0 2px">/</span>
                         <span
                           class="wallet-table__sell-buy-btn"
-                          :style="
-                            mainColor ? `color: ${mainColor} !important` : {}
-                          "
                           @click="
                             $emit('set-pair', {
                               currency: ticker,
