@@ -81,7 +81,6 @@ export default {
     padding-right: 45px;
     height: 31px;
     font-size: 14px;
-    border: 1px solid #eceeef !important;
     &_disabled {
       font-weight: normal;
     }

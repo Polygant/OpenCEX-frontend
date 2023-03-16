@@ -22,6 +22,9 @@ export default {
     blockColorLocal() {
       return localConfig?.themes?.[this.currentTheme]?.block_color || "#FFF";
     },
+    mainTextLocal() {
+      return localConfig?.themes?.[this.currentTheme]?.main_text || "#000000";
+    },
     lang() {
       return this.$locale;
     },
@@ -160,7 +163,7 @@ export default {
         scalesProperties: {
           backgroundColor: "#ffffff",
           lineColor: "rgba(42, 46, 57, 0.14)",
-          textColor: "#131722",
+          textColor: this.mainTextLocal,
           fontSize: 12,
           scaleSeriesOnly: false,
           showSeriesLastValue: true,
