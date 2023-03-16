@@ -234,11 +234,7 @@
       :data-thead="$t('common.status')"
     >
       <div class="orders-table__td">
-        <span
-          v-if="order.state === 1"
-          class="itemStatusUp"
-          :style="mainColor ? `color: ${mainColor} !important` : {}"
-        >
+        <span v-if="order.state === 1" class="itemStatusUp">
           {{ getOrderWord("state", order.state) }}
         </span>
         <span v-if="order.state === 2" class="itemStatusDown">

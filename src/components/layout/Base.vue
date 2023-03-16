@@ -193,6 +193,8 @@ input[type="password"],
 .support__nav-item:hover .faq-icon {
   background-color: v-bind(mainColorLocal) !important;
 }
+.wallet-history__header,
+.walletTable__header,
 .tab-block__nav-link.active,
 .tab-block__nav-link,
 .trade-menus__link,
@@ -240,6 +242,8 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
+.wallet-table__sell-buy-btn,
+.itemStatusUp,
 .navigation-language__link,
 .navigation-language__link.selected,
 .author-list__link,
