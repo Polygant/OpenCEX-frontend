@@ -212,6 +212,8 @@ input[type="password"],
 .select__item:hover {
   background-color: v-bind(mainColorLocal) !important;
 }
+.address_btn,
+.address-text-field,
 .order-tables__sell-buy,
 .currency-list .currency-table .table tbody tr.active,
 .wallet-list .currency-table .table tbody tr.active,
@@ -219,6 +221,8 @@ input[type="password"],
 .footer {
   background-color: v-bind(mainBackgroundLocal) !important;
 }
+.receivedBlock label,
+.receivedBlock div,
 .footer__social-item {
   color: v-bind(mainColorLocal) !important;
 }
@@ -242,6 +246,14 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
+
+.plate-back,
+.coinSelector__title,
+.walletTable__coin span,
+.walletTable__coin strong,
+.wallet-table__td-name,
+::placeholder,
+.page-item-custom a,
 .wallet-table__sell-buy-btn,
 .itemStatusUp,
 .navigation-language__link,
@@ -260,6 +272,13 @@ p {
 .navigation-language__link {
   opacity: 0.5;
 }
+.tab-pane__search {
+  border: 1px solid v-bind(mainTextLocal) !important;
+}
+.walletTable__item,
+.wallet-history__items {
+  border-top: 1px solid v-bind(mainTextLocal) !important;
+}
 .author-list__link-icon,
 .navigation__link__img {
   fill: v-bind(mainTextLocal) !important;
@@ -270,9 +289,16 @@ p {
 .support__nav-link--active .faq-icon {
   background: v-bind(secondLocal) !important;
 }
+.wallet-history__items .wallet-history__tx button,
+.wallet-history__items .wallet-history__operation,
+.wallet-history__items .wallet-history__status,
 .support__content-item a,
 .support__nav-card--contacts a,
 .support__content-voc span {
   color: v-bind(secondLocal) !important;
+}
+
+.wallet__action--deposit use {
+  fill: v-bind(secondLocal) !important;
 }
 </style>

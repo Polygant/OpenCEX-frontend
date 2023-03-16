@@ -124,7 +124,7 @@
                         class="wallet__action wallet__action--deposit"
                         :class="coins[ticker].disable_topups ? 'disabled' : ''"
                         :style="
-                          mainColor ? `color: ${mainColor} !important` : {}
+                          mainColor ? `color: ${secondColor} !important` : {}
                         "
                         @click="
                           toDetails(
