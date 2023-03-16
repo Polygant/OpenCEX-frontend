@@ -53,7 +53,6 @@ export default {
     font-size: 14px;
     line-height: 143%;
     letter-spacing: 0.05em;
-    color: #33abef;
     outline: none;
     border: none;
     padding: 0 20px;

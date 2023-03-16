@@ -156,6 +156,7 @@ input[type="password"],
 .mx-input {
   color: v-bind(inputTextLocal) !important;
   background: v-bind(inputColorLocal) !important;
+  border-color: v-bind(mainTextLocal) !important;
 }
 .wallet,
 .tab-block__nav,
@@ -244,6 +245,9 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
+.trade-input__caption,
+.tab-block__nav-link.active,
+.currency-list .nav-link,
 .history__coin,
 .receivedBlock,
 .receivedBlock label,
@@ -305,5 +309,16 @@ p {
 .wallet__action--withdrawal path,
 .wallet__action--history path {
   fill: v-bind(mainTextLocal) !important;
+}
+.currency-table svg {
+  fill: v-bind(secondLocal) !important;
+}
+.trade-menus__nav-item,
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active,
+.trade-menus__links,
+.trade-menus__content,
+.trade-menus__block {
+  border-color: v-bind(mainTextLocal) !important;
 }
 </style>
