@@ -221,8 +221,6 @@ input[type="password"],
 .footer {
   background-color: v-bind(mainBackgroundLocal) !important;
 }
-.receivedBlock label,
-.receivedBlock div,
 .footer__social-item {
   color: v-bind(mainColorLocal) !important;
 }
@@ -246,7 +244,10 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
-
+.history__coin,
+.receivedBlock,
+.receivedBlock label,
+.receivedBlock div,
 .plate-back,
 .coinSelector__title,
 .walletTable__coin span,
@@ -300,5 +301,9 @@ p {
 
 .wallet__action--deposit use {
   fill: v-bind(secondLocal) !important;
+}
+.wallet__action--withdrawal path,
+.wallet__action--history path {
+  fill: v-bind(mainTextLocal) !important;
 }
 </style>
