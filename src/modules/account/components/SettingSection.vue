@@ -200,7 +200,13 @@
                 <h3 class="secret-key secret-key__profile">{{ secretkey }}</h3>
               </div>
             </div>
-            <div style="border-left: 1px solid #e7f4fd">
+            <div
+              :style="
+                mainColor
+                  ? `border-left: 1px solid ${borderColor} !important`
+                  : {}
+              "
+            >
               <div></div>
               <p
                 class="twofaPmargintop"
@@ -239,7 +245,12 @@
           </div>
         </div>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          mainColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
             class="opacitychangebtn btn-danger"
@@ -305,7 +316,6 @@
               height: 70px;
               text-align: center;
               max-width: 491px;
-              -webkit-box-shadow: 0px 0px 20px 1px #d8d8d8 inset;
               box-shadow: 0px 0px 20px 1px #d8d8d8 inset;
               color: #313948;
               font-weight: 600;
@@ -315,6 +325,9 @@
               border: 2px solid #e0e0e0;
               margin-bottom: 10px;
             "
+            :style="
+              borderColor ? `border: 1px solid ${borderColor} !important` : {}
+            "
             @keyup="checkFaLength('secretkeyToDisable')"
           />
           <p class="text-danger" style="margin-top: 20px; text-align: center">
@@ -322,7 +335,12 @@
           </p>
         </form>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          borderColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
             class="opacitychangebtn"
@@ -394,7 +412,9 @@
               font-size: 33px;
               background-color: #f3f3f3;
               border-radius: 6px;
-              border: 2px solid #e0e0e0;
+            "
+            :style="
+              borderColor ? `border: 2px solid ${borderColor} !important` : {}
             "
             @keyup="checkFaLength('googleCodeToPreCheck')"
           />
@@ -403,7 +423,12 @@
           </p>
         </form>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          borderColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
             class="opacitychangebtn btn-danger"

@@ -29,7 +29,13 @@
               </tr>
             </thead>
 
-            <tbody style="border-top: 2px solid #adb4c3">
+            <tbody
+              :style="
+                borderColor
+                  ? `border-top: 1px solid ${borderColor} !important`
+                  : {}
+              "
+            >
               <tr v-for="item in tradingVolume" :key="item.id">
                 <td
                   class="walletTable__item1 walletTable__item_val1"
@@ -173,7 +179,13 @@
               </tr>
             </thead>
 
-            <tbody style="border-top: 2px solid #adb4c3">
+            <tbody
+              :style="
+                borderColor
+                  ? `border-top: 1px solid ${borderColor} !important`
+                  : {}
+              "
+            >
               <tr v-for="(coin, ticker) in getFilteredCoins" :key="ticker">
                 <td
                   class="walletTable__item1 walletTable__item_val1"
