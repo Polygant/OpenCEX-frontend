@@ -289,6 +289,7 @@ p {
 .stack-precision {
   border-bottom: 1px solid v-bind(borderLocal) !important;
 }
+
 .order-tables__sell-buy,
 .footer,
 .sell-orders-sell-buy hr,
