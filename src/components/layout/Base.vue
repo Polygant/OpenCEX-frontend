@@ -283,6 +283,16 @@ p {
 .tab-pane__search {
   border: 1px solid v-bind(borderLocal) !important;
 }
+.order-tables__sell-buy,
+.tab-block__nav-link.active,
+.settings__NAME,
+.stack-precision {
+  border-bottom: 1px solid v-bind(borderLocal) !important;
+}
+.order-tables__sell-buy,
+.footer,
+.sell-orders-sell-buy hr,
+.walletTable__item1,
 .walletTable__item,
 .wallet-history__items {
   border-top: 1px solid v-bind(borderLocal) !important;
