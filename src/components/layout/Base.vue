@@ -283,6 +283,9 @@ p {
 .tab-pane__search {
   border: 1px solid v-bind(borderLocal) !important;
 }
+.walletTable__column,
+th.walletTable__header,
+.currency__filter-search,
 .order-tables__sell-buy,
 .tab-block__nav-link.active,
 .settings__NAME,
