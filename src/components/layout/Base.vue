@@ -95,6 +95,9 @@ export default {
     secondLocal() {
       return localConfig?.themes?.[this.currentTheme]?.second_color || "#000";
     },
+    borderLocal() {
+      return localConfig?.themes?.[this.currentTheme]?.border_color || "#CCC";
+    },
   },
   watch: {
     "$route.path": "checkLayout",
@@ -156,7 +159,7 @@ input[type="password"],
 .mx-input {
   color: v-bind(inputTextLocal) !important;
   background: v-bind(inputColorLocal) !important;
-  border-color: v-bind(mainTextLocal) !important;
+  border-color: v-bind(borderLocal) !important;
 }
 .wallet,
 .tab-block__nav,
@@ -278,11 +281,11 @@ p {
   opacity: 0.5;
 }
 .tab-pane__search {
-  border: 1px solid v-bind(mainTextLocal) !important;
+  border: 1px solid v-bind(borderLocal) !important;
 }
 .walletTable__item,
 .wallet-history__items {
-  border-top: 1px solid v-bind(mainTextLocal) !important;
+  border-top: 1px solid v-bind(borderLocal) !important;
 }
 .author-list__link-icon,
 .navigation__link__img {
@@ -319,6 +322,6 @@ p {
 .trade-menus__links,
 .trade-menus__content,
 .trade-menus__block {
-  border-color: v-bind(mainTextLocal) !important;
+  border-color: v-bind(borderLocal) !important;
 }
 </style>

@@ -57,5 +57,10 @@ export default {
         localConfig?.themes?.[this.currentTheme]?.block_color || false;
       return color && color.length > 0 ? color : false;
     },
+    borderColor() {
+      const color =
+        localConfig?.themes?.[this.currentTheme]?.border_color || false;
+      return color && color.length > 0 ? color : false;
+    },
   },
 };
