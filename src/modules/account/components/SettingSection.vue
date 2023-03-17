@@ -322,7 +322,6 @@
               font-size: 33px;
               background-color: #f3f3f3;
               border-radius: 6px;
-              border: 2px solid #e0e0e0;
               margin-bottom: 10px;
             "
             :style="
@@ -502,7 +501,6 @@
               font-size: 33px;
               background-color: #f3f3f3;
               border-radius: 6px;
-              border: 2px solid #e0e0e0;
             "
           />
           <p class="text-danger" style="margin-top: 20px; text-align: center">
@@ -510,7 +508,12 @@
           </p>
         </form>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          borderColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
             class="opacitychangebtn btn-danger"
