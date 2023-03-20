@@ -161,6 +161,8 @@ input[type="password"],
   background: v-bind(inputColorLocal) !important;
   border-color: v-bind(borderLocal) !important;
 }
+.update-order-modal,
+.modal-window,
 .wallet,
 .tab-block__nav,
 .table-list,
@@ -183,6 +185,8 @@ input[type="password"],
 .card {
   background: v-bind(blockColorLocal) !important;
 }
+.btn-primary,
+.withdrawal__btn,
 #header,
 .support__title-bar {
   background: v-bind(mainColorLocal) !important;
@@ -248,6 +252,7 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
+.sell-orders__td,
 .coinSelector__price,
 .totalBalance,
 .trade-input__caption,
@@ -303,6 +308,7 @@ th.walletTable__header,
 .wallet-history__items {
   border-top: 1px solid v-bind(borderLocal) !important;
 }
+#themeSelector,
 .author-list__link-icon,
 .navigation__link__img {
   fill: v-bind(mainTextLocal) !important;
@@ -313,6 +319,7 @@ th.walletTable__header,
 .support__nav-link--active .faq-icon {
   background: v-bind(secondLocal) !important;
 }
+.exchange__not-enough .link,
 .width-button-link,
 .wallet-history__items .wallet-history__tx button,
 .wallet-history__items .wallet-history__operation,
