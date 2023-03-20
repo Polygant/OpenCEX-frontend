@@ -149,6 +149,7 @@ export default {
 .address-text-field,
 input[type="text"],
 input[type="password"],
+.logIn__form__input,
 .country-select__selected-country,
 .changePassword__input,
 .coinSelector__elem,
@@ -185,6 +186,7 @@ input[type="password"],
 .card {
   background: v-bind(blockColorLocal) !important;
 }
+.logIn__popup,
 .btn-primary,
 .withdrawal__btn,
 #header,
@@ -235,6 +237,7 @@ input[type="password"],
 .footer__social-item path {
   fill: v-bind(mainColorLocal) !important;
 }
+.logIn__title,
 .header__ether-info-text,
 .header__links-link:before,
 .header__links-link,

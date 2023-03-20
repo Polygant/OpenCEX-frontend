@@ -15,11 +15,17 @@
         {{ $t("common.pleasewait") }}
       </div>
     </div>
-    <div v-if="show_data && wrong_token" class="logIn pb-5">
+    <div
+      v-if="show_data && wrong_token"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <MainLogo />
       <div class="logIn__title">{{ $t("common.wrongtoken") }}</div>
       <br />
-      <button class="btn btn--wallet" @click="goToWallet()">
+      <button class="btn btn--wallet btn-primary" @click="goToWallet()">
         {{ $t("common.wallet") }}
         <img
           width="20"
@@ -29,7 +35,13 @@
         />
       </button>
     </div>
-    <div v-if="show_data && !wrong_token" class="logIn pb-5">
+    <div
+      v-if="show_data && !wrong_token"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <MainLogo />
       <div v-if="!isEverythingOk" class="logIn__title" style="max-width: 426px">
         {{ $t("common.withdreq") }}
@@ -71,18 +83,8 @@
       <button
         v-if="!isEverythingOk"
         type="submit"
-        class="btn"
-        style="
-          font-weight: 600;
-          text-align: left;
-          background: var(--theme-primary-color);
-          border: 1px solid var(--theme-primary-color);
-          border-radius: 4px;
-          margin-top: 20px;
-          height: 50px;
-          width: 200px;
-          color: white;
-        "
+        class="btn btn-primary"
+        style="margin-top: 20px; height: 50px; width: 200px"
         @click="confirmWithdrawal()"
       >
         {{ $t("common.confirm") }}
@@ -97,15 +99,7 @@
         v-if="!isEverythingOk"
         type="submit"
         class="btn btn-danger"
-        style="
-          font-weight: 600;
-          text-align: left;
-          border-radius: 4px;
-          margin-top: 20px;
-          height: 50px;
-          width: 200px;
-          color: white;
-        "
+        style="text-align: left; margin-top: 20px; height: 50px; width: 200px"
         @click="cancelWithdrawal()"
       >
         {{ $t("common.cancel") }}
@@ -138,7 +132,7 @@
       </div>
       <button
         v-if="isEverythingOk"
-        class="btn btn--wallet"
+        class="btn btn--wallet btn-primary"
         @click="goToWallet()"
       >
         {{ $t("common.wallet") }}

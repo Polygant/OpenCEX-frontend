@@ -157,7 +157,14 @@
       </div>
     </div>
     <!--GOOGLE AUTH-->
-    <div v-else class="logIn pb-5" style="text-align: center">
+    <div
+      v-else
+      class="logIn pb-5"
+      style="text-align: center"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <ModalPagesHeader />
       <div class="flex flex-col box white">
         <div class="logIn__title" style="max-width: 600px">2FA</div>
