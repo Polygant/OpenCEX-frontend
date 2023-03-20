@@ -4207,7 +4207,7 @@ main-new {
 }
 
 #currencyTabsContent {
-  border-top: none;
+  border: none !important;
 }
 
 .highcharts-button-normal .highcharts-button-box {
