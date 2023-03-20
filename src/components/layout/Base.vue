@@ -248,6 +248,8 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
+.coinSelector__price,
+.totalBalance,
 .trade-input__caption,
 .tab-block__nav-link.active,
 .currency-list .nav-link,
@@ -311,6 +313,7 @@ th.walletTable__header,
 .support__nav-link--active .faq-icon {
   background: v-bind(secondLocal) !important;
 }
+.width-button-link,
 .wallet-history__items .wallet-history__tx button,
 .wallet-history__items .wallet-history__operation,
 .wallet-history__items .wallet-history__status,
@@ -327,6 +330,7 @@ th.walletTable__header,
 .wallet__action--history path {
   fill: v-bind(mainTextLocal) !important;
 }
+.search-input-icon path,
 .currency-table svg {
   fill: v-bind(secondLocal) !important;
 }

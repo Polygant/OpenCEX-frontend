@@ -79,6 +79,7 @@
               v-for="address in lastWithdrawalAdresses[ticker]"
               :key="address"
               type="button"
+              class="width-button-link"
               style="
                 font-size: 11px;
                 margin: 0px auto;
