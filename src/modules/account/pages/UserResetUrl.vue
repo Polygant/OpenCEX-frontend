@@ -1,5 +1,8 @@
 <template>
-  <div class="logIn pb-5 reset-password">
+  <div
+    class="logIn pb-5 reset-password"
+    :style="loginBackground ? `background: ${loginBackground} !important` : {}"
+  >
     <MainLogo />
     <template v-if="!showBanner">
       <div class="logIn__title">
