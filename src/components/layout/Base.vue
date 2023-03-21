@@ -186,6 +186,8 @@ input[type="password"],
 .card {
   background: v-bind(blockColorLocal) !important;
 }
+.big_btn,
+.modal-action-button,
 .logIn__popup,
 .btn-primary,
 .withdrawal__btn,
@@ -224,7 +226,6 @@ input[type="password"],
 }
 .address_btn,
 .address-text-field,
-.order-tables__sell-buy,
 .currency-list .currency-table .table tbody tr.active,
 .wallet-list .currency-table .table tbody tr.active,
 .alert-container,
@@ -255,6 +256,8 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
+.wr-line,
+.wr-line b,
 .sell-orders__td,
 .coinSelector__price,
 .totalBalance,

@@ -50,19 +50,19 @@
       <div v-if="!isEverythingOk">
         <div class="grid grid-cols-2">
           <div class="col-xs-6" style="text-align: left">
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.date") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.currency") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.amount") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.method") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.dest") }}:</b>
             </div>
           </div>
@@ -287,5 +287,8 @@ export default {
     width: 200px;
     color: white;
   }
+}
+.btn--wallet {
+  border: none !important;
 }
 </style>
