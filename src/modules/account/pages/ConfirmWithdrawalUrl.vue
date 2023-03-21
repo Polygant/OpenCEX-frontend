@@ -67,13 +67,19 @@
             </div>
           </div>
           <div class="col-xs-6" style="text-align: left; max-width: 200px">
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               {{ convertDate(request_data["created"]) }}
             </div>
-            <div style="max-width: 426px">{{ request_data["currency"] }}</div>
-            <div style="max-width: 426px">{{ request_data["amount"] }}</div>
-            <div style="max-width: 426px">{{ request_data["method"] }}</div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
+              {{ request_data["currency"] }}
+            </div>
+            <div style="max-width: 426px" class="wr-line">
+              {{ request_data["amount"] }}
+            </div>
+            <div style="max-width: 426px" class="wr-line">
+              {{ request_data["method"] }}
+            </div>
+            <div style="max-width: 426px" class="wr-line">
               {{ request_data["destination"] }}
             </div>
           </div>
