@@ -39,6 +39,7 @@ export default {
     },
     currentTheme() {
       this.setGraphColor();
+      this.makeChart();
     },
   },
 

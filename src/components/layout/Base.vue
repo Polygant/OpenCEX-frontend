@@ -314,7 +314,6 @@ th.walletTable__header,
 .wallet-history__items {
   border-top: 1px solid v-bind(borderLocal) !important;
 }
-#themeSelector,
 .author-list__link-icon,
 .navigation__link__img {
   fill: v-bind(mainTextLocal) !important;
@@ -335,7 +334,7 @@ th.walletTable__header,
 .support__content-voc span {
   color: v-bind(secondLocal) !important;
 }
-
+#themeSelector,
 .wallet__action--deposit use {
   fill: v-bind(secondLocal) !important;
 }
