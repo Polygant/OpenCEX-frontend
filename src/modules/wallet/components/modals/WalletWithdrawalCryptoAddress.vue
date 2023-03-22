@@ -563,8 +563,8 @@ input.address {
 }
 .stake-field_input-max {
   position: absolute;
-  right: 4px;
-  top: 18px;
+  right: 8px;
+  top: 20px;
   transform: translateY(-50%);
   background: #e7e9ee;
   border-radius: 5px;

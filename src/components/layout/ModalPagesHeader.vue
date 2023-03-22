@@ -596,7 +596,6 @@ button {
   background-color: var(--theme-primary-color);
 }
 .input-group-append {
-  background-color: #ffffff;
   margin-left: -2px;
 }
 </style>

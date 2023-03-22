@@ -354,4 +354,16 @@ th.walletTable__header,
 .trade-menus__block {
   border-color: v-bind(borderLocal) !important;
 }
+
+.stake-field_input-max {
+  background: v-bind(mainColorLocal) !important;
+  color: v-bind(mainTextLocal) !important;
+  border-color: v-bind(borderLocal) !important;
+}
+.eye-pass,
+.show-password-icon-btn,
+.show-password-icon path {
+  background: v-bind(mainColorLocal) !important;
+  fill: v-bind(mainTextLocal) !important;
+}
 </style>
