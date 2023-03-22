@@ -1016,4 +1016,7 @@ button[disabled] {
     width: 100%;
   }
 }
+.wallets-list .plate {
+  padding-bottom: 4px;
+}
 </style>
