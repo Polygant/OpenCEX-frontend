@@ -822,6 +822,7 @@ button[disabled] {
 
 .wallet-button-desktop {
   white-space: nowrap;
+  padding-right: 20px;
 }
 
 .wallet-button-desktop {
