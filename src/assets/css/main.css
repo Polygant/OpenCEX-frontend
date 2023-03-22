@@ -2406,7 +2406,9 @@ button:active {
 .select2-selection__arrow b {
   display: none;
 }
-
+#walletTabsContent {
+  padding: 0 20px;
+}
 .exchange {
   transition: all 0.3s linear;
   overflow: hidden;

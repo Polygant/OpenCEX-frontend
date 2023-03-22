@@ -27,6 +27,11 @@
     />
     <div class="otc__row otc__row_to-top mt-1">
       <div class="otc__min-max">
+        <span>
+          {{ $t("common.min") }}:
+          {{ limits?.min }}
+          {{ limits.currency }}
+        </span>
         <span class="mt-1">
           {{ $t("common.max") }}:
           {{ limits?.max }}
@@ -158,7 +163,8 @@ export default {
       const limitCurrency =
         this.operation == "buy" ? this.quoteCurrency : this.baseCurrency;
       return {
-        max: this.coins[limitCurrency].limits?.order.max,
+        min: this.coins[limitCurrency]?.limits?.order.min,
+        max: this.coins[limitCurrency]?.limits?.order.max,
         currency: limitCurrency,
       };
     },
