@@ -238,6 +238,8 @@ input[type="password"],
 .footer__social-item path {
   fill: v-bind(mainColorLocal) !important;
 }
+.wr-line,
+.wr-line b,
 .logIn__title,
 .header__ether-info-text,
 .header__links-link:before,
@@ -256,8 +258,6 @@ input[type="password"],
 .header__author-image {
   fill: v-bind(loginTextLocal) !important;
 }
-.wr-line,
-.wr-line b,
 .sell-orders__td,
 .coinSelector__price,
 .totalBalance,
