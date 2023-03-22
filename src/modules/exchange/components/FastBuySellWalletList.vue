@@ -28,9 +28,6 @@
                 <thead>
                   <tr>
                     <td>
-                      <div class="sell-orders__td"></div>
-                    </td>
-                    <td>
                       <div class="sell-orders__td">
                         <b>{{ $t("common.currency") }}</b>
                       </div>
@@ -57,11 +54,9 @@
                           "
                           :alt="ticker"
                         />
-                      </div>
-                    </td>
-                    <td>
-                      <div class="wallet-table__td wallet-table__td-name">
-                        {{ ticker }}
+                        <div class="inline-block ml-2">
+                          {{ ticker }}
+                        </div>
                       </div>
                     </td>
                     <td>

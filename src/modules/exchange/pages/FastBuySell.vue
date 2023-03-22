@@ -1053,7 +1053,7 @@ export default {
 
 .exchange {
   padding: 0;
-  min-height: 820px;
+  min-height: 760px;
 
   &__top-up-button {
     color: #ffffff;
@@ -1142,6 +1142,7 @@ export default {
     font-size: 25px;
     margin-right: 10px;
     font-weight: 400;
+    margin-bottom: 5px;
     @media (min-width: 1200px) and (max-width: 1380px) {
       width: 100%;
     }
