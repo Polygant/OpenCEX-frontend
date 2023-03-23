@@ -77,7 +77,7 @@ export default {
       return localConfig?.themes?.[this.currentTheme]?.block_color || "#FFF";
     },
     mainColorLocal() {
-      return localConfig?.themes?.[this.currentTheme]?.main_color || "#6352cd";
+      return localConfig?.themes?.[this.currentTheme]?.main_color || "#2A2259";
     },
     mainBackgroundLocal() {
       return (
