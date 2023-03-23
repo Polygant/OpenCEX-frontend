@@ -15,7 +15,7 @@ export default {
     secondColor() {
       const color =
         localConfig?.themes?.[this.currentTheme]?.second_color || false;
-      return color && color.length > 0 ? color : "#000000";
+      return color && color.length > 0 ? color : "#ffac2a";
     },
     cancelColor() {
       const color =
