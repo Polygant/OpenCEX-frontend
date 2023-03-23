@@ -63,7 +63,7 @@ export default {
   [mutationTypes.COINS_BALANCE](state, balance) {
     Object.keys(balance).map(function (objectKey) {
       let value = balance[objectKey];
-      if (typeof state.coins[objectKey] === "undefined") {
+      if (typeof state.coins?.[objectKey] === "undefined") {
         errorLoggers.noCoin(
           mutationTypes.COINS_BALANCE,
           objectKey,
@@ -71,9 +71,11 @@ export default {
         );
         return;
       }
-      state.coins[objectKey]["actual"] = value["actual"];
-      state.coins[objectKey]["orders"] = value["orders"];
-      state.balanceSum += value["actual"];
+      if (state.coins?.[objectKey]) {
+        state.coins[objectKey]["actual"] = value["actual"];
+        state.coins[objectKey]["orders"] = value["orders"];
+        state.balanceSum += value["actual"];
+      }
     });
   },
   [mutationTypes.COINS_COMMONS](state, { commons }) {

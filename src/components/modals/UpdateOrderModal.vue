@@ -106,6 +106,7 @@
             type="submit"
             :disabled="isFormDisabled"
             class="btn update-order-modal__submit-button"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
           >
             {{ $t("common.updateord") }}
             <i class="fa fa-long-arrow-right pull-right"></i>
@@ -358,7 +359,6 @@ export default {
     font-weight: 600;
     text-align: left;
     background: rgb(60, 191, 141);
-    border: 1px solid rgb(60, 191, 141);
     border-radius: 4px;
     margin-top: 20px;
     height: 50px;

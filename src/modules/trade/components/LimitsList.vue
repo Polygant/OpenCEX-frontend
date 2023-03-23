@@ -79,6 +79,13 @@
     <button
       class="limit-list__submit-button mt-4"
       :class="`limit-list__submit-button_${color}`"
+      :style="
+        mainColor
+          ? color === 'green'
+            ? `background: ${mainColor} !important`
+            : `background: ${secondolor} !important`
+          : {}
+      "
       type="submit"
       :disabled="disableOperations"
     >
@@ -296,8 +303,6 @@ export default {
 <style lang="scss" scoped>
 .limit-list {
   line-height: initial;
-  color: #38393a;
-  font-family: "Open Sans", sans-serif;
   background: white;
   padding: 15px 2rem 10px;
   &__row {
@@ -340,7 +345,6 @@ export default {
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    color: #38393a;
     font-size: 12px;
     font-weight: bold;
     display: inline-block;

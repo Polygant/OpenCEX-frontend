@@ -21,6 +21,12 @@
                       ? 'support__nav-link--active'
                       : '',
                   ]"
+                  :style="
+                    secondColor &&
+                    question.title === questions[activeQuestionIndex].title
+                      ? `color: ${secondColor} !important`
+                      : {}
+                  "
                   :to="{
                     name: 'support',
                     query: {
@@ -225,7 +231,7 @@ export default {
 
 .support__content-item {
   a {
-    color: #006be5 !important;
+    color: #006be5;
     font-weight: lighter !important;
   }
   ul.dotted-list {
@@ -274,7 +280,6 @@ export default {
     text-align: center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    box-shadow: 0 2px 5px 0 #bfbfbf;
   }
 
   &__sidebar {
@@ -292,7 +297,6 @@ export default {
     margin-bottom: 15px;
     background-color: #ffffff;
     border-radius: 5px;
-    box-shadow: 0 2px 5px 0 #bfbfbf;
 
     &--contacts {
       padding: 20px;
@@ -307,7 +311,6 @@ export default {
     flex-grow: 1;
     background: #ffffff;
     border-radius: 5px;
-    box-shadow: 0 2px 5px 0 #bfbfbf;
 
     @media screen and (max-width: 800px) {
       width: 100%;
@@ -346,7 +349,6 @@ export default {
 
   &__nav-link {
     cursor: pointer;
-    color: #38393a;
     white-space: nowrap;
     font-weight: lighter;
 

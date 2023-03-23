@@ -27,6 +27,11 @@
     />
     <div class="otc__row otc__row_to-top mt-1">
       <div class="otc__min-max">
+        <span>
+          {{ $t("common.min") }}:
+          {{ limits?.min }}
+          {{ limits.currency }}
+        </span>
         <span class="mt-1">
           {{ $t("common.max") }}:
           {{ limits?.max }}
@@ -83,6 +88,13 @@
     <button
       class="otc__submit-button"
       :class="`otc__submit-button_${color}`"
+      :style="
+        mainColor
+          ? color === 'green'
+            ? `background: ${mainColor} !important`
+            : `background: ${secondolor} !important`
+          : {}
+      "
       type="submit"
       :disabled="disableOperations"
     >
@@ -151,7 +163,8 @@ export default {
       const limitCurrency =
         this.operation == "buy" ? this.quoteCurrency : this.baseCurrency;
       return {
-        max: this.coins[limitCurrency].limits?.order.max,
+        min: this.coins[limitCurrency]?.limits?.order.min,
+        max: this.coins[limitCurrency]?.limits?.order.max,
         currency: limitCurrency,
       };
     },
@@ -229,8 +242,6 @@ export default {
 <style lang="scss" scoped>
 .otc {
   line-height: initial;
-  color: #38393a;
-  font-family: "Open Sans", sans-serif;
   background: white;
   padding: 15px 2rem 10px;
   &__row {
@@ -270,7 +281,6 @@ export default {
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    color: #38393a;
     font-size: 12px;
     font-weight: bold;
     display: inline-block;

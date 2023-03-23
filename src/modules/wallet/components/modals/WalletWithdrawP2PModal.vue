@@ -95,9 +95,8 @@
             />
             <div style="text-align: right">
               <button
-                class="opacitychangebtn"
+                class="opacitychangebtn btn-danger"
                 style="
-                  background-color: #19243c;
                   opacity: 0.85;
                   color: rgb(255, 255, 255);
                   width: 100px;

@@ -313,7 +313,6 @@ export default {
     padding: 0.5em 2em;
     border-top-right-radius: unset;
     border-top-left-radius: unset;
-    color: #38393a;
     font-weight: bold;
     background-color: #f6f6f8;
     border: none;

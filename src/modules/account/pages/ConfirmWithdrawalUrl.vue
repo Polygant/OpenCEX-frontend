@@ -1,14 +1,31 @@
 <template>
   <div>
-    <div v-if="!show_data" class="logIn pb-5">
+    <div
+      v-if="!show_data"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <MainLogo />
-      <div class="logIn__title">{{ $t("common.pleasewait") }}</div>
+      <div
+        class="logIn__title"
+        :style="loginText ? `color: ${loginText} !important` : {}"
+      >
+        {{ $t("common.pleasewait") }}
+      </div>
     </div>
-    <div v-if="show_data && wrong_token" class="logIn pb-5">
+    <div
+      v-if="show_data && wrong_token"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <MainLogo />
       <div class="logIn__title">{{ $t("common.wrongtoken") }}</div>
       <br />
-      <button class="btn btn--wallet" @click="goToWallet()">
+      <button class="btn btn--wallet btn-primary" @click="goToWallet()">
         {{ $t("common.wallet") }}
         <img
           width="20"
@@ -18,7 +35,13 @@
         />
       </button>
     </div>
-    <div v-if="show_data && !wrong_token" class="logIn pb-5">
+    <div
+      v-if="show_data && !wrong_token"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <MainLogo />
       <div v-if="!isEverythingOk" class="logIn__title" style="max-width: 426px">
         {{ $t("common.withdreq") }}
@@ -27,30 +50,36 @@
       <div v-if="!isEverythingOk">
         <div class="grid grid-cols-2">
           <div class="col-xs-6" style="text-align: left">
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.date") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.currency") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.amount") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.method") }}:</b>
             </div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               <b>{{ $t("common.dest") }}:</b>
             </div>
           </div>
           <div class="col-xs-6" style="text-align: left; max-width: 200px">
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
               {{ convertDate(request_data["created"]) }}
             </div>
-            <div style="max-width: 426px">{{ request_data["currency"] }}</div>
-            <div style="max-width: 426px">{{ request_data["amount"] }}</div>
-            <div style="max-width: 426px">{{ request_data["method"] }}</div>
-            <div style="max-width: 426px">
+            <div style="max-width: 426px" class="wr-line">
+              {{ request_data["currency"] }}
+            </div>
+            <div style="max-width: 426px" class="wr-line">
+              {{ request_data["amount"] }}
+            </div>
+            <div style="max-width: 426px" class="wr-line">
+              {{ request_data["method"] }}
+            </div>
+            <div style="max-width: 426px" class="wr-line">
               {{ request_data["destination"] }}
             </div>
           </div>
@@ -60,18 +89,8 @@
       <button
         v-if="!isEverythingOk"
         type="submit"
-        class="btn"
-        style="
-          font-weight: 600;
-          text-align: left;
-          background: var(--theme-primary-color);
-          border: 1px solid var(--theme-primary-color);
-          border-radius: 4px;
-          margin-top: 20px;
-          height: 50px;
-          width: 200px;
-          color: white;
-        "
+        class="btn btn-primary"
+        style="margin-top: 20px; height: 50px; width: 200px"
         @click="confirmWithdrawal()"
       >
         {{ $t("common.confirm") }}
@@ -85,18 +104,8 @@
       <button
         v-if="!isEverythingOk"
         type="submit"
-        class="btn"
-        style="
-          font-weight: 600;
-          text-align: left;
-          background: var(--theme-primary-color);
-          border: 1px solid var(--theme-primary-color);
-          border-radius: 4px;
-          margin-top: 20px;
-          height: 50px;
-          width: 200px;
-          color: white;
-        "
+        class="btn btn-danger"
+        style="text-align: left; margin-top: 20px; height: 50px; width: 200px"
         @click="cancelWithdrawal()"
       >
         {{ $t("common.cancel") }}
@@ -129,7 +138,7 @@
       </div>
       <button
         v-if="isEverythingOk"
-        class="btn btn--wallet"
+        class="btn btn--wallet btn-primary"
         @click="goToWallet()"
       >
         {{ $t("common.wallet") }}
@@ -284,5 +293,8 @@ export default {
     width: 200px;
     color: white;
   }
+}
+.btn--wallet {
+  border: none !important;
 }
 </style>
