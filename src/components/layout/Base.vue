@@ -356,7 +356,7 @@ th.walletTable__header,
 }
 
 .stake-field_input-max {
-  background: v-bind(mainColorLocal) !important;
+  background: v-bind(blockColorLocal) !important;
   color: v-bind(mainTextLocal) !important;
   border-color: v-bind(borderLocal) !important;
 }
