@@ -93,7 +93,9 @@ export default {
       );
     },
     secondLocal() {
-      return localConfig?.themes?.[this.currentTheme]?.second_color || "#000";
+      return (
+        localConfig?.themes?.[this.currentTheme]?.second_color || "#ffac2a"
+      );
     },
     borderLocal() {
       return localConfig?.themes?.[this.currentTheme]?.border_color || "#CCC";
@@ -162,6 +164,8 @@ input[type="password"],
   background: v-bind(inputColorLocal) !important;
   border-color: v-bind(borderLocal) !important;
 }
+.eye-pass,
+.show-password-icon-btn,
 .update-order-modal,
 .modal-window,
 .wallet,
@@ -195,8 +199,6 @@ input[type="password"],
 .support__title-bar {
   background: v-bind(mainColorLocal) !important;
 }
-.register__link span,
-.register__link,
 .footer-links-column a,
 .support__content-item a,
 .support__nav-item:hover a {
@@ -324,6 +326,8 @@ th.walletTable__header,
 .support__nav-link--active .faq-icon {
   background: v-bind(secondLocal) !important;
 }
+.register__link span,
+.register__link,
 .exchange__not-enough .link,
 .width-button-link,
 .wallet-history__items .wallet-history__tx button,
@@ -360,8 +364,6 @@ th.walletTable__header,
   color: v-bind(mainTextLocal) !important;
   border-color: v-bind(borderLocal) !important;
 }
-.eye-pass,
-.show-password-icon-btn,
 .show-password-icon path {
   background: v-bind(mainColorLocal) !important;
   fill: v-bind(mainTextLocal) !important;
