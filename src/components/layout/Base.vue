@@ -223,8 +223,14 @@ input[type="password"],
 .select__item {
   background-color: v-bind(blockColorLocal) !important;
 }
+.select__item p {
+  color: v-bind(mainTextLocal) !important;
+}
 .select__item:hover {
   background-color: v-bind(mainColorLocal) !important;
+}
+.select__item:hover p {
+  color: v-bind(loginTextLocal) !important;
 }
 .address_btn,
 .address-text-field,
