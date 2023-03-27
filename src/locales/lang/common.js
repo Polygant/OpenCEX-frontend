@@ -762,6 +762,10 @@ const common = {
     resend_reg_email_after: "Повторная отправка через",
     send: "Отправить",
     copyright: "{title} Криптовалютная платформа",
+    password_upper: "Хотя бы одну заглавную букву",
+    password_lower: "Хотя бы одну строчную",
+    password_number: "Хотя бы одну цифру",
+    password_chars: "8-30 символов",
   },
 
   en: {
@@ -1578,6 +1582,10 @@ const common = {
       6: "Su",
     },
     copyright: "{title}. Cryptocurrency Platform",
+    password_upper: "At least one uppercase letter",
+    password_lower: "At least one lowercase letter",
+    password_number: "At least one number",
+    password_chars: "8-30 Characters",
   },
 };
 

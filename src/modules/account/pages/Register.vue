@@ -210,6 +210,31 @@
                     {{ validationError.password }}
                   </span>
                 </span>
+                <div
+                  v-if="showPassPopup"
+                  class="pass-error-block"
+                  @click="showPassPopup = false"
+                >
+                  <div class="arrow"></div>
+                  <ul>
+                    <li>
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_upper") }}
+                    </li>
+                    <li>
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_lower") }}
+                    </li>
+                    <li>
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_number") }}
+                    </li>
+                    <li>
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_chars") }}
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="register__input-group register__input-group--country">
                 <label
@@ -411,6 +436,7 @@ export default {
         country: "",
         subscription: false,
       },
+      showPassPopup: false,
       validationError: {},
       terms: false,
       privacyPolicy: false,
@@ -486,6 +512,12 @@ export default {
       }
 
       return false;
+    },
+    isCorrectPassword() {
+      let hasUpperCase = /[A-Z]/.test(this.form.password);
+      let hasLowerCase = /[a-z]/.test(this.form.password);
+      let hasNumber = /\d/.test(this.form.password);
+      return hasUpperCase && hasLowerCase && hasNumber;
     },
   },
   watch: {
@@ -575,7 +607,7 @@ export default {
         password: {
           required: true,
           minLength: 6,
-          maxLength: 50,
+          maxLength: 350,
         },
         birth_day: {
           required: true,
@@ -622,7 +654,11 @@ export default {
       this.captcha = captchaResponse;
     },
     handleRegister() {
-      if (this.validateData(this.form) && !this.birthRangeError) {
+      if (
+        this.validateData(this.form) &&
+        !this.birthRangeError &&
+        this.isCorrectPassword
+      ) {
         const config = {
           ...this.form,
           lang: localStorage.getItem("planguage") || "en",
@@ -692,6 +728,9 @@ export default {
           }
         );
       } else {
+        if (!this.isCorrectPassword) {
+          this.showPassPopup = true;
+        }
         console.error("Not validated");
       }
     },
@@ -770,5 +809,50 @@ $red: #e93a3a;
   width: 41px;
   height: 30px;
   padding: 5px 0 0 11px;
+}
+.pass-error-block {
+  background-color: #323433;
+  border-radius: 10px;
+  position: absolute;
+  padding: 10px;
+  top: 25px;
+  right: -245px;
+  width: 245px;
+}
+
+.pass-error-block .arrow {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #323433;
+  position: absolute;
+  left: -10px;
+  top: 10px;
+}
+
+.pass-error-block ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pass-error-block li {
+  display: flex;
+  align-items: center;
+}
+
+.pass-error-block .icon {
+  background-color: #56ba57;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  font-weight: bold;
+  font-size: 8px;
 }
 </style>
