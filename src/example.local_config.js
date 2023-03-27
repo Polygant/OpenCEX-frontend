@@ -32,7 +32,7 @@ const localConfig = {
       input_color: "white",
       input_text: "#2a2259",
       block_color: "white",
-      border_color: "#353535",
+      border_color: "#f0f0f0",
     },
     {
       main_color: "#2A2259",
