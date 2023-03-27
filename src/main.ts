@@ -7,7 +7,8 @@ import Base from "~/components/layout/Base.vue";
 import { initRouter } from "~/router";
 // @ts-ignore
 import store from "~/store";
-
+// @ts-ignore
+import themes from "~/mixins/themes";
 import "~/assets/css/tailwind.css";
 import "~/assets/css/main.css";
 import "~/assets/css/theme.scss";
@@ -26,7 +27,7 @@ export const app = createApp(App);
 app.use(initRouter);
 app.use(store);
 app.use(initPlugins);
-
+app.mixin(themes);
 app.config.globalProperties.$store = store;
 app.config.globalProperties.$notify = (n: any) => {
   useNotifications.show({ type: n.type, title: n.title, description: n.text });

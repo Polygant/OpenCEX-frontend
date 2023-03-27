@@ -79,6 +79,7 @@
               v-for="address in lastWithdrawalAdresses[ticker]"
               :key="address"
               type="button"
+              class="width-button-link"
               style="
                 font-size: 11px;
                 margin: 0px auto;
@@ -218,9 +219,8 @@
           />
           <div style="text-align: right">
             <button
-              class="opacitychangebtn"
+              class="opacitychangebtn btn-danger"
               style="
-                background-color: #19243c;
                 opacity: 0.85;
                 color: rgb(255, 255, 255);
                 width: 100px;
@@ -563,8 +563,8 @@ input.address {
 }
 .stake-field_input-max {
   position: absolute;
-  right: 4px;
-  top: 18px;
+  right: 8px;
+  top: 20px;
   transform: translateY(-50%);
   background: #e7e9ee;
   border-radius: 5px;

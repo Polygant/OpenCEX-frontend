@@ -1,4 +1,5 @@
 export default {
+  theme: (state) => state.theme,
   countriesList: (state) => state.countriesList,
   isLoggedIn: (state) => state.isLoggedIn,
   isAuthorized: (state) => state.profile.user.username,

@@ -1,17 +1,33 @@
 <template>
   <div class="auth">
-    <div v-if="!showGoogleCodeInput" class="logIn pb-5">
+    <div
+      v-if="!showGoogleCodeInput"
+      class="logIn pb-5"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <ModalPagesHeader />
       <div class="flex box white flex-col" :class="{ isBlur: isLoading }">
-        <div class="logIn__title">{{ $t("common.login") }}</div>
+        <div
+          class="logIn__title"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
+          {{ $t("common.login") }}
+        </div>
         <div
           v-if="!usernameFixed"
           class="logIn__descr"
           style="max-width: 302px"
+          :style="loginText ? `color: ${loginText} !important` : {}"
         >
           {{ $t("common.useemail") }}
         </div>
-        <div v-else class="logIn__descr">
+        <div
+          v-else
+          class="logIn__descr"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
           {{ $t("common.enterPass") }}
           <p class="mb-4">
             {{ username }}
@@ -47,24 +63,37 @@
             />
             <div
               class="input-group-append absolute"
-              style="top: 4px; right: 4px"
+              style="top: 6px; right: 4px"
             >
               <button
-                class="btn border-0"
+                class="btn border-0 show-password-icon-btn"
                 type="button"
                 @click="showPassword = !showPassword"
               >
-                <img
+                <svg
                   v-show="!showPassword"
+                  class="show-password-icon"
                   width="20"
-                  src="/public/img/eye-slash.svg"
-                  alt=""
-                />
-                <img
+                  height="20"
+                  viewBox="0 0 1792 1792"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M555 1335l78-141q-87-63-136-159t-49-203q0-121 61-225-229 117-381 353 167 258 427 375zm389-759q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm363-191q0 7-1 9-106 189-316 567t-315 566l-49 89q-10 16-28 16-12 0-134-70-16-10-16-28 0-12 44-87-143-65-263.5-173t-208.5-245q-20-31-20-69t20-69q153-235 380-371t496-136q89 0 180 17l54-97q10-16 28-16 5 0 18 6t31 15.5 33 18.5 31.5 18.5 19.5 11.5q16 10 16 27zm37 447q0 139-79 253.5t-209 164.5l280-502q8 45 8 84zm448 128q0 35-20 69-39 64-109 145-150 172-347.5 267t-419.5 95l74-132q212-18 392.5-137t301.5-307q-115-179-282-294l63-112q95 64 182.5 153t144.5 184q20 34 20 69z"
+                  />
+                </svg>
+                <svg
                   v-show="showPassword"
+                  class="show-password-icon"
                   width="20"
-                  src="/public/img/eye.svg"
-                />
+                  height="20"
+                  viewBox="0 0 1792 1792"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -92,8 +121,8 @@
             <input
               id="loginbtn"
               name="btn"
-              style="cursor: pointer; display: inline-block"
-              class="logIn__form__input logIn__form__input_button opacitychangebtn"
+              :style="mainColor ? `background: ${mainColor} !important` : {}"
+              class="logIn__form__input logIn__form__input_button opacitychangebtn cursor-pointer inline-block"
               :class="{ 'blocked-btn': captchaIsON && !captchaResponse }"
               type="submit"
               :disabled="captchaIsON && !captchaResponse"
@@ -103,29 +132,52 @@
               @click="handleLogin"
             />
           </div>
-          <router-link to="/forgot" class="logIn__recovery mb-4">{{
-            $t("common.passwordrecovery")
-          }}</router-link>
+          <router-link
+            to="/forgot"
+            class="logIn__recovery mb-4"
+            :style="loginText ? `color: ${loginText} !important` : {}"
+          >
+            {{ $t("common.passwordrecovery") }}
+          </router-link>
           <router-link
             to="/support"
             class="logIn__recovery mb-4"
+            :style="loginText ? `color: ${loginText} !important` : {}"
             rel="noopener noreferrer nofollow"
             target="_blank"
             >{{ $t("common.support") }}</router-link
           >
         </form>
-        <div class="logIn__or text-center" style="font-size: 14px">
+        <div
+          class="text-center mb-2"
+          style="font-size: 14px"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
           {{ $t("common.or") }}
         </div>
         <div class="text-center">
           <router-link :to="'/register'" style="color: #fff">
-            <button class="logIn__register">{{ $t("common.register") }}</button>
+            <button
+              class="logIn__register"
+              :style="
+                secondColor ? `background: ${secondColor} !important` : {}
+              "
+            >
+              {{ $t("common.register") }}
+            </button>
           </router-link>
         </div>
       </div>
     </div>
     <!--GOOGLE AUTH-->
-    <div v-else class="logIn pb-5" style="text-align: center">
+    <div
+      v-else
+      class="logIn pb-5"
+      style="text-align: center"
+      :style="
+        loginBackground ? `background: ${loginBackground} !important` : {}
+      "
+    >
       <ModalPagesHeader />
       <div class="flex flex-col box white">
         <div class="logIn__title" style="max-width: 600px">2FA</div>
@@ -155,6 +207,7 @@
           <button
             :disabled="isInvalidFaCode"
             class="logIn__form__input logIn__form__input_button block"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             type="submit"
           >
             {{ $t("common.login_upper") }}

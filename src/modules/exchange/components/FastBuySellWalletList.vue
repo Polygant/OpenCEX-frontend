@@ -3,7 +3,10 @@
     <div class="wallet__title wallet__title--left">
       <span>{{ $t("common.wallet") }}</span>
       <router-link to="/wallet" class="link">
-        <button class="btn exchange__top-up-button">
+        <button
+          class="btn exchange__top-up-button"
+          :style="secondColor ? `background: ${secondColor} !important` : {}"
+        >
           {{ $t("common.topupCapitalize") }}
         </button>
       </router-link>
@@ -24,9 +27,6 @@
               <table class="table table-hover table-striped">
                 <thead>
                   <tr>
-                    <td>
-                      <div class="sell-orders__td"></div>
-                    </td>
                     <td>
                       <div class="sell-orders__td">
                         <b>{{ $t("common.currency") }}</b>
@@ -54,11 +54,9 @@
                           "
                           :alt="ticker"
                         />
-                      </div>
-                    </td>
-                    <td>
-                      <div class="wallet-table__td wallet-table__td-name">
-                        {{ ticker }}
+                        <div class="inline-block ml-2">
+                          {{ ticker }}
+                        </div>
                       </div>
                     </td>
                     <td>
@@ -146,12 +144,7 @@ export default {
   display: flex;
   margin: auto;
   justify-content: center;
-  box-shadow: 0 2px 5px 0 #bfbfbf;
   font-size: 0.7em;
-
-  &:hover {
-    box-shadow: 0 4px 7px 0 #bfbfbf;
-  }
 }
 
 .link {

@@ -1,5 +1,8 @@
 <template>
-  <div class="logIn pb-5 reset-password">
+  <div
+    class="logIn pb-5 reset-password"
+    :style="loginBackground ? `background: ${loginBackground} !important` : {}"
+  >
     <MainLogo />
     <template v-if="!showBanner">
       <div class="logIn__title">
@@ -34,6 +37,7 @@
         <input
           style=""
           class="reset-password__button logIn__form__input logIn__form__input_button opacitychangebtn"
+          :style="mainColor ? `background: ${mainColor} !important` : {}"
           type="submit"
           :value="$t('common.change')"
           @click="resetPassword"

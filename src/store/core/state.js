@@ -1,5 +1,6 @@
 export default () => ({
   locale: "",
+  theme: "",
   isLoggedIn: !!localStorage.getItem("token") || null,
   userEmail: null,
   headerAccountData: null,

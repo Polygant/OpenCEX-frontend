@@ -118,7 +118,6 @@ export default {
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
 
   &__link {
-    color: #38393a;
     display: flex;
     height: 100%;
     align-items: center;
@@ -134,7 +133,6 @@ export default {
     }
 
     &:hover {
-      color: #38393a;
       text-decoration: none;
       background-color: #dcdcdc;
     }

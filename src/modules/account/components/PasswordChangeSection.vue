@@ -69,6 +69,7 @@
           "
           :disabled="changePassPending"
           class="logIn__form__input logIn__form__input_button opacitychangebtn"
+          :style="mainColor ? `background: ${mainColor} !important` : {}"
           type="submit"
           @click="changePassword(false)"
         >
@@ -118,7 +119,6 @@
             font-size: 33px;
             background-color: #f3f3f3;
             border-radius: 6px;
-            border: 2px solid #e0e0e0;
           "
         />
         <p
@@ -138,6 +138,7 @@
           "
           :disabled="changePassPending"
           class="logIn__form__input logIn__form__input_button opacitychangebtn"
+          :style="mainColor ? `background: ${mainColor} !important` : {}"
           type="submit"
           @click="changePassword(true)"
         >
@@ -264,17 +265,14 @@ export default {
 
 .changePassword__field {
   width: 100%;
-  background: #fff;
   text-align: left;
   font-size: 16px;
-  color: rgb(86, 86, 86);
   margin-bottom: 5px;
   margin-top: 20px;
 }
 
 .changePassword__input {
   width: 100%;
-  background: #fff !important;
   height: 40px !important;
 }
 </style>

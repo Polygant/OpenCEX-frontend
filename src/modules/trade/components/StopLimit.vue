@@ -81,6 +81,13 @@
     <button
       class="otc__submit-button mt-3"
       :class="`otc__submit-button_${color}`"
+      :style="
+        mainColor
+          ? color === 'green'
+            ? `background: ${mainColor} !important`
+            : `background: ${secondolor} !important`
+          : {}
+      "
       type="submit"
       :disabled="disableOperations"
     >
@@ -226,7 +233,6 @@ export default {
 <style lang="scss" scoped>
 .otc {
   line-height: initial;
-  color: #38393a;
   background: white;
   padding: 15px 2rem 10px;
   &__row {
@@ -272,7 +278,6 @@ export default {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    color: #38393a;
     font-size: 12px;
     font-weight: bold;
     display: inline-block;

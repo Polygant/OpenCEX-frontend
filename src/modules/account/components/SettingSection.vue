@@ -24,7 +24,11 @@
           {{ $t("common.twofaison") }}
         </div>
         <div v-if="is2faOff" class="table__button">
-          <button class="opacitychangebtn" @click="start2FAON()">
+          <button
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="start2FAON()"
+          >
             {{ $t("common.turnon") }}
           </button>
         </div>
@@ -32,6 +36,7 @@
           <button
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="start2FAOFF()"
           >
             {{ $t("common.turnoff") }}
@@ -53,7 +58,11 @@
           {{ $t("common.mins") }}
         </div>
         <div class="table__button">
-          <button class="opacitychangebtn" @click="startChangeTime()">
+          <button
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="startChangeTime()"
+          >
             {{ $t("common.changetime") }}
           </button>
         </div>
@@ -82,6 +91,7 @@
         <div class="table__button">
           <button
             class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="$router.push('/interface-select')"
           >
             {{ $t("common.change") }}
@@ -100,11 +110,17 @@
             v-if="enabledIpNotifications"
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="toggleIpNotification"
           >
             {{ $t("common.turnoff") }}
           </button>
-          <button v-else class="opacitychangebtn" @click="toggleIpNotification">
+          <button
+            v-else
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="toggleIpNotification"
+          >
             {{ $t("common.turnon") }}
           </button>
         </div>
@@ -121,6 +137,7 @@
             v-if="enabledLoginNotifications"
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="toggleLoginNotification"
           >
             {{ $t("common.turnoff") }}
@@ -128,6 +145,7 @@
           <button
             v-else
             class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="toggleLoginNotification"
           >
             {{ $t("common.turnon") }}
@@ -146,11 +164,17 @@
             v-if="profile.withdrawals_sms_confirmation"
             class="opacitychangebtn"
             style="background-color: #e34848"
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="sendPhone"
           >
             {{ $t("common.turnoff") }}
           </button>
-          <button v-else class="opacitychangebtn" @click="sendPhone">
+          <button
+            v-else
+            class="opacitychangebtn"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
+            @click="sendPhone"
+          >
             {{ $t("common.turnon") }}
           </button>
         </div>
@@ -176,7 +200,13 @@
                 <h3 class="secret-key secret-key__profile">{{ secretkey }}</h3>
               </div>
             </div>
-            <div style="border-left: 1px solid #e7f4fd">
+            <div
+              :style="
+                mainColor
+                  ? `border-left: 1px solid ${borderColor} !important`
+                  : {}
+              "
+            >
               <div></div>
               <p
                 class="twofaPmargintop"
@@ -215,12 +245,16 @@
           </div>
         </div>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          mainColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
@@ -238,7 +272,6 @@
           <button
             class="opacitychangebtn"
             style="
-              background-color: var(--theme-primary-color);
               color: rgb(255, 255, 255);
               width: 100px;
               height: 35px;
@@ -248,6 +281,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
             @click="startPreCheckGoogleCode()"
           >
             {{ $t("common.next") }}
@@ -282,15 +316,16 @@
               height: 70px;
               text-align: center;
               max-width: 491px;
-              -webkit-box-shadow: 0px 0px 20px 1px #d8d8d8 inset;
               box-shadow: 0px 0px 20px 1px #d8d8d8 inset;
               color: #313948;
               font-weight: 600;
               font-size: 33px;
               background-color: #f3f3f3;
               border-radius: 6px;
-              border: 2px solid #e0e0e0;
               margin-bottom: 10px;
+            "
+            :style="
+              borderColor ? `border: 1px solid ${borderColor} !important` : {}
             "
             @keyup="checkFaLength('secretkeyToDisable')"
           />
@@ -299,7 +334,12 @@
           </p>
         </form>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          borderColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
             class="opacitychangebtn"
@@ -315,6 +355,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="finish2FAON()"
           >
             {{ $t("common.back") }}
@@ -322,7 +363,6 @@
           <button
             class="opacitychangebtn"
             style="
-              background-color: var(--theme-primary-color);
               color: rgb(255, 255, 255);
               width: 100px;
               height: 35px;
@@ -332,6 +372,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${cancelColor} !important` : {}"
             @click="checkSecret()"
           >
             {{ $t("common.turnoff") }}
@@ -370,7 +411,9 @@
               font-size: 33px;
               background-color: #f3f3f3;
               border-radius: 6px;
-              border: 2px solid #e0e0e0;
+            "
+            :style="
+              borderColor ? `border: 2px solid ${borderColor} !important` : {}
             "
             @keyup="checkFaLength('googleCodeToPreCheck')"
           />
@@ -379,12 +422,16 @@
           </p>
         </form>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          borderColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
@@ -412,6 +459,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="preCheckGoogleCode()"
           >
             {{ $t("common.save") }}
@@ -453,7 +501,6 @@
               font-size: 33px;
               background-color: #f3f3f3;
               border-radius: 6px;
-              border: 2px solid #e0e0e0;
             "
           />
           <p class="text-danger" style="margin-top: 20px; text-align: center">
@@ -461,12 +508,16 @@
           </p>
         </form>
       </div>
-      <div style="height: 55px; border-top: 1px solid #e7f4fd">
+      <div
+        style="height: 55px"
+        :style="
+          borderColor ? `border-top: 1px solid ${borderColor} !important` : {}
+        "
+      >
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
@@ -494,6 +545,7 @@
               line-height: 1;
               border-radius: 3px;
             "
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             @click="setNewLogoutTimeout()"
           >
             {{ $t("common.save") }}
@@ -521,9 +573,8 @@
       >
         <div class="fa-buttons">
           <button
-            class="opacitychangebtn"
+            class="opacitychangebtn btn-danger"
             style="
-              background-color: #19243c;
               opacity: 0.85;
               color: rgb(255, 255, 255);
               width: 100px;
@@ -847,6 +898,9 @@ export default {
   height: auto;
   min-height: 500px;
   width: 100%;
+}
+.user-account_setting {
+  margin-bottom: 0;
 }
 
 .table__row {

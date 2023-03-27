@@ -177,7 +177,6 @@ img {
   height: 32px;
   margin-right: 10px;
   padding-left: 30px;
-  background: url("/public/img/author.png") no-repeat 10px center;
 }
 .header__author:before {
   content: "";
@@ -614,7 +613,6 @@ img {
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.5);
 }
 .navigation-language__link {
-  color: #38393a;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -638,7 +636,6 @@ img {
   background-color: #ece7f1;
 }
 .navigation-language__link:hover {
-  color: #38393a;
   text-decoration: none;
   background-color: #dcdcdc;
 }
@@ -723,7 +720,6 @@ img {
 .table-list__table-td span {
   font-size: 12px !important;
   font-weight: 400;
-  color: #38393a;
 }
 
 .currency-list:hover,
@@ -737,7 +733,6 @@ img {
 .wallet-list .nav-tabs .nav-item.show .nav-link,
 .wallet-list .nav-tabs .nav-link.active {
   border-bottom: 2px solid var(--theme-primary-color);
-  color: #38393a;
   font-weight: bold;
 }
 
@@ -796,12 +791,12 @@ img {
 .wallet-list .tab-pane__search {
   background: url("/public/img/searchicon.png") no-repeat 15px center;
   border: none;
-  color: #38393a;
   font-size: 14px;
   font-family: "Open Sans", arial, sans-serif;
   width: 100%;
   height: 37px;
   padding: 5px 40px 5px;
+  border-radius: 0;
 }
 
 .currency-list .tab-pane__icon,
@@ -835,7 +830,6 @@ img {
 
 .currency-list .currency-table__name,
 .wallet-list .currency-table__name {
-  color: #38393a;
   font-weight: bold;
   font-size: 14px;
   display: block;
@@ -867,7 +861,6 @@ img {
   align-items: center;
   font-size: 12px;
   font-family: "Open Sans", arial, sans-serif;
-  color: #38393a;
   line-height: 1.25;
 }
 
@@ -966,7 +959,6 @@ img {
 .wallet-list .nav-tabs .nav-item.show .nav-link,
 .wallet-list .nav-tabs .nav-link.active {
   border-bottom: 2px solid var(--theme-primary-color);
-  color: #38393a;
   font-weight: bold;
 }
 
@@ -1010,7 +1002,6 @@ img {
 
 .wallet-list .tab-pane__search {
   border: none;
-  color: #38393a;
   font-size: 14px;
   font-family: "Open Sans", arial, sans-serif;
   width: 100%;
@@ -1034,7 +1025,6 @@ img {
 }
 
 .wallet-list .wallet-table__td {
-  color: #38393a;
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
   height: 32px;
@@ -1130,7 +1120,6 @@ img {
   border-top-left-radius: 3px;
   -webkit-border-top-right-radius: 3px;
   border-top-right-radius: 3px;
-  background-color: white;
   max-height: 350px;
   margin-top: 15px;
 }
@@ -1147,8 +1136,6 @@ img {
   display: flex;
   flex-wrap: wrap;
   font-size: 14px;
-  font-family: "Open Sans", sans-serif;
-  color: #38393a;
   font-weight: bold;
   line-height: 1.429;
 }
@@ -1171,16 +1158,12 @@ img {
 }
 
 .sell-orders__date-filter {
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #38393a;
 }
 
 .sell-orders__td {
   font-size: 12px;
-  font-family: "Open Sans", sans-serif;
-  color: #38393a;
   line-height: 1.25;
 }
 
@@ -1192,8 +1175,6 @@ img {
 
 .sell-orders__text {
   font-size: 13px;
-  font-family: "Open Sans", sans-serif;
-  color: #38393a;
   line-height: 1.538;
 }
 
@@ -1233,9 +1214,7 @@ img {
 .total__sum {
   display: inline-block;
   font-size: 16px;
-  font-family: "Open Sans", sans-serif;
   font-weight: bold;
-  color: #38393a;
   line-height: 1.563;
 }
 
@@ -1244,8 +1223,6 @@ img {
 }
 .sell-orders__td {
   font-size: 12px;
-  font-family: "Open Sans", sans-serif;
-  color: #38393a;
   line-height: 1.25;
 }
 thead .sell-orders__td b {
@@ -1362,8 +1339,6 @@ thead .sell-orders__td b {
 .trades-table__td {
   font-size: 12px !important;
   font-weight: 400;
-  color: #38393a;
-  /*font-size: 14px;*/
   height: 24px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1564,7 +1539,6 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  color: #38393a;
 }
 
 body:after {
@@ -2227,7 +2201,13 @@ button:active {
 }
 
 .walletTable__item_balans {
-  width: 13%;
+  width: 23%;
+}
+
+@media(max-width: 1100px) {
+  .walletTable__item_balans {
+    width: 13%;
+  }
 }
 
 .walletTable__header_order {
@@ -2328,7 +2308,6 @@ button:active {
 
 .wallet__title {
   padding-left: 30px;
-  color: #2b395b;
   font-family: "Open Sans", arial, sans-serif;
   font-size: 22px;
   font-weight: 700;
@@ -2427,7 +2406,9 @@ button:active {
 .select2-selection__arrow b {
   display: none;
 }
-
+#walletTabsContent {
+  padding: 0 20px;
+}
 .exchange {
   transition: all 0.3s linear;
   overflow: hidden;
@@ -4234,7 +4215,7 @@ main-new {
 }
 
 #currencyTabsContent {
-  border-top: 1px solid rgba(199, 201, 204, 0.5);
+  border: none !important;
 }
 
 .highcharts-button-normal .highcharts-button-box {
@@ -4592,7 +4573,6 @@ iframe.wizard {
 }
 .tab-block__nav-link.active {
   border-bottom: 2px solid var(--theme-primary-color);
-  color: #38393a;
   font-weight: bold !important;
 }
 .tab-block__nav-link.active a {
@@ -4603,7 +4583,6 @@ iframe.wizard {
 }
 .tab-block.active {
   border-bottom: 2px solid var(--theme-primary-color);
-  color: #38393a;
   font-weight: bold;
 }
 
@@ -4614,7 +4593,6 @@ iframe.wizard {
 
 .currency-list .currency-table__name,
 .wallet-list .currency-table__name {
-  color: #38393a;
   font-weight: bold;
   font-size: 14px;
   display: block;
@@ -4762,7 +4740,6 @@ iframe.wizard {
   padding: 0.5em 2em;
   border-top-right-radius: unset;
   border-top-left-radius: unset;
-  color: #38393a;
   font-weight: bold;
   background-color: #f6f6f8;
   border: none;
@@ -4807,17 +4784,18 @@ iframe.wizard {
   color: #fff;
   background: var(--theme-primary-color);
   border: 1px solid var(--theme-primary-color);
+  border: none;
 }
 
 .btn-danger {
   background: #ff5d55;
-  border: 1px solid #ff5d55;
   color: #fff;
+  border: none;
 }
 
 .btn-success {
   background: #53c599;
-  border: 1px solid #53c599;
+  border: none;
   color: #fff;
 }
 

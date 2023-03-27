@@ -1,9 +1,17 @@
 <template>
-  <div class="auth forgot-password logIn pb-5">
+  <div
+    class="auth forgot-password logIn pb-5"
+    :style="loginBackground ? `background: ${loginBackground} !important` : {}"
+  >
     <ModalPagesHeader />
     <div class="flex flex-col white mt-5">
       <template v-if="!showBanner">
-        <div class="logIn__title">{{ $t("common.passwordrecovery") }}</div>
+        <div
+          class="logIn__title"
+          :style="loginText ? `color: ${loginText} !important` : {}"
+        >
+          {{ $t("common.passwordrecovery") }}
+        </div>
         <form
           v-if="formstatus === 'pending'"
           class="logIn__form"
@@ -33,12 +41,14 @@
           <input
             id="mainbtn"
             class="forgot-password__button logIn__form__input logIn__form__input_button"
+            :style="mainColor ? `background: ${mainColor} !important` : {}"
             type="submit"
             :value="$t('common.continue')"
             @click="handleRecovery"
           />
           <input
             class="forgot-password__button forgot-password__button_red logIn__form__input logIn__form__input_button"
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
             type="button"
             :value="$t('common.back_to_login')"
             @click="$router.push({ name: 'login' })"
@@ -64,12 +74,14 @@
           <input
             id="mainbtn1"
             class="forgot-password__button logIn__form__input logIn__form__input_button"
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
             type="submit"
             :value="$t('common.continue')"
             @click="() => handleRecovery(true)"
           />
           <input
             class="forgot-password__button forgot-password__button_red logIn__form__input logIn__form__input_button"
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
             type="button"
             :value="$t('common.back_to_login')"
             @click="$router.push({ name: 'login' })"
@@ -90,6 +102,7 @@
         </div>
         <input
           class="forgot-password__button forgot-password__button_red logIn__form__input logIn__form__input_button"
+          :style="secondColor ? `background: ${secondColor} !important` : {}"
           type="button"
           :value="$t('common.back_to_login')"
           @click="$router.push({ name: 'login' })"

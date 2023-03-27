@@ -4,7 +4,10 @@
       <FastBuySellWalletList @set-pair="setPair" />
       <div class="">
         <div class="exchange">
-          <div class="exchangeNow">
+          <div
+            class="exchangeNow"
+            :style="secondColor ? `background: ${secondColor} !important` : {}"
+          >
             1 {{ cur1 }} =
             {{ getFixedDecimal(pricetop, coins[cur2]?.decimals || 8) }}
             {{ cur2 }}
@@ -81,6 +84,7 @@
             <div class="flex justify-center w-full">
               <div
                 class="simple-ad-search__arrows simple-ad-search__arrows_button"
+                :style="mainColor ? `background: ${mainColor} !important` : {}"
                 @click="swapPairs"
               >
                 <img
@@ -148,6 +152,9 @@
               <router-link v-if="!isLoggedIn" :to="`/login/`">
                 <button
                   class="exchange__button--normal exchange__button exchangeForm__button"
+                  :style="
+                    mainColor ? `background: ${mainColor} !important` : {}
+                  "
                 >
                   {{ $t("common.login") }}
                 </button>
@@ -167,6 +174,7 @@
                 "
                 type="button"
                 class="exchange__button exchangeForm__button"
+                :style="mainColor ? `background: ${mainColor} !important` : {}"
                 @click="doIT"
               >
                 {{ exchangePending ? "" : $t("quickBuy.to_exchange") }}
@@ -1045,7 +1053,7 @@ export default {
 
 .exchange {
   padding: 0;
-  min-height: 820px;
+  min-height: 760px;
 
   &__top-up-button {
     color: #ffffff;
@@ -1134,6 +1142,7 @@ export default {
     font-size: 25px;
     margin-right: 10px;
     font-weight: 400;
+    margin-bottom: 5px;
     @media (min-width: 1200px) and (max-width: 1380px) {
       width: 100%;
     }
@@ -1143,10 +1152,6 @@ export default {
     border: none;
     cursor: pointer;
     height: 70px;
-
-    &--normal {
-      box-shadow: 0 6px 15px 0 #bfbfbf;
-    }
 
     &--pending {
       cursor: default !important;
@@ -1262,7 +1267,6 @@ export default {
   margin: 0px auto 20px auto;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #faebcc;
   background-color: #fcf8e3;
   color: #8a6d3b;
 }

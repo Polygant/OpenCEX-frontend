@@ -7,10 +7,6 @@ body {
     --theme-secondary-color: #{$theme-secondary-color};
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: color.adjust($theme-background-color, $lightness: 1.5%);
-}
-
 .currency-list .currency-table .table tbody tr.active,
 .wallet-list .currency-table .table tbody tr.active {
   background-color: color.change($theme-primary-color, $lightness: 90%);

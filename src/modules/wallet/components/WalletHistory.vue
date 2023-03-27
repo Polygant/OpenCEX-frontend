@@ -139,7 +139,7 @@
             </button>
             <button
               v-if="tx.state === 6"
-              class="btn btn-sm btn-link text-danger"
+              class="btn btn-sm btn-danger btn-link text-danger"
               :title="$t('common.cancel')"
               @click="cancelWithdraw(tx)"
             >

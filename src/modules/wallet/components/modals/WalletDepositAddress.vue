@@ -134,6 +134,7 @@
       <button
         class="btn btn-create"
         :class="{ 'fs-0': isLoading }"
+        :style="mainColor ? `background: ${mainColor} !important` : {}"
         :disabled="isLoading"
         @click="createAddress(ticker)"
       >
@@ -262,7 +263,6 @@ export default {
   font-weight: 600;
   text-align: center;
   background: var(--theme-primary-color);
-  border: 1px solid var(--theme-primary-color);
   border-radius: 4px;
   margin-top: 59px;
   height: 80px;
