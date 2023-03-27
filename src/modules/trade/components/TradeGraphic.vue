@@ -69,7 +69,7 @@ export default {
           .getElementsByTagName("iframe")[0];
         let element = document.createElement("style");
         element.innerHTML = `.layout__area--top { background: ${this.blockColorLocal}; height: 39px !important;} .layout__area--top * { color: ${this.mainTextLocal} !important; }`;
-        iframe.contentWindow.document.body.appendChild(element);
+        if (iframe) iframe.contentWindow.document.body.appendChild(element);
       }, 1000);
     },
     makeChart() {
