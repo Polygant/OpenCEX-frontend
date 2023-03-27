@@ -1,5 +1,5 @@
 <template>
-  <div ref="graphic" class="graphic"></div>
+  <div id="graphic" ref="graphic" class="graphic"></div>
 </template>
 
 <script>
@@ -62,6 +62,16 @@ export default {
   },
 
   methods: {
+    changeTopColor() {
+      setTimeout(() => {
+        let iframe = document
+          .getElementById("graphic")
+          .getElementsByTagName("iframe")[0];
+        let element = document.createElement("style");
+        element.innerHTML = `.layout__area--top { background: ${this.blockColorLocal}; height: 39px !important;} .layout__area--top * { color: ${this.mainTextLocal} !important; }`;
+        iframe.contentWindow.document.body.appendChild(element);
+      }, 1000);
+    },
     makeChart() {
       const intervalFromLocalStorage =
           localStorage.getItem("chart_interval") || "5",
@@ -106,7 +116,7 @@ export default {
         timezone: "Etc/UTC",
         priceScaleSelectionStrategyName: "auto",
         dataWindowProperties: {
-          background: "rgba( 255, 254, 206, 0.2)",
+          background: this.blockColorLocal,
           border: "rgba( 96, 96, 144, 1)",
           font: "Verdana",
           fontBold: false,
@@ -118,8 +128,8 @@ export default {
         paneProperties: {
           backgroundType: "solid",
           background: this.blockColorLocal,
-          backgroundGradientStartColor: "#ffffff",
-          backgroundGradientEndColor: "#ffffff",
+          backgroundGradientStartColor: this.blockColorLocal,
+          backgroundGradientEndColor: this.blockColorLocal,
           vertGridProperties: {
             color: "rgba(42, 46, 57, 0.06)",
             style: 0,
@@ -518,6 +528,7 @@ export default {
         );
         // eslint-disable-next-line no-empty
       } catch {}
+      this.changeTopColor();
     },
   },
 };
