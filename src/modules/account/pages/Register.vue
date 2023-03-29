@@ -276,32 +276,17 @@
                       rel="noopener noreferrer nofollow"
                       class="register__link"
                       >{{ $t("common.terms") }}</a
-                    ></label
-                  >
-                </div>
-
-                <div class="custom-control custom-switch">
-                  <input
-                    id="privacy"
-                    v-model="privacyPolicy"
-                    type="checkbox"
-                    class="custom-control-input"
-                  />
-                  <label
-                    class="custom-control-label pt-1"
-                    :style="loginText ? `color: ${loginText} !important` : {}"
-                    for="privacy"
-                    >{{ $t("common.agree") }}
+                    >
+                    &
                     <a
                       href="/public/docs/EN_Privacy_policy_site.pdf"
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       class="register__link"
                       >{{ $t("common.privacy") }}</a
-                    ></label
-                  >
+                    >
+                  </label>
                 </div>
-
                 <div class="custom-control custom-switch">
                   <input
                     id="newspaper"
@@ -439,7 +424,6 @@ export default {
       showPassPopup: false,
       validationError: {},
       terms: false,
-      privacyPolicy: false,
       confirmEmailSent: false,
       refCode: "",
       isReferral: false,
@@ -467,7 +451,7 @@ export default {
       return /[\d]/.test(this.form.password);
     },
     isPassAnouth() {
-      return this.form.password.length > 8 && this.form.password.length < 30;
+      return this.form.password.length > 7 && this.form.password.length < 31;
     },
     datePickerOptions() {
       return {
@@ -482,7 +466,6 @@ export default {
       return (
         !!Object.keys(this.validationError).length ||
         !this.terms ||
-        !this.privacyPolicy ||
         !this.isValidCountry
       );
     },
