@@ -466,7 +466,12 @@ export default {
       return (
         !!Object.keys(this.validationError).length ||
         !this.terms ||
-        !this.isValidCountry
+        !this.isValidCountry ||
+        !this.isPassNoEmpty ||
+        !this.isPassHasUppercase ||
+        !this.isPassHasLowercase ||
+        !this.isPassHasNumbercase ||
+        !this.isPassAnouth
       );
     },
     passwordStrengthLevel() {
@@ -726,9 +731,6 @@ export default {
           }
         );
       } else {
-        if (!this.isCorrectPassword) {
-          this.showPassPopup = true;
-        }
         console.error("Not validated");
       }
     },
