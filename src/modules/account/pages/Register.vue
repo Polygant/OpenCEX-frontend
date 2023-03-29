@@ -211,25 +211,25 @@
                   </span>
                 </span>
                 <div
-                  v-if="showPassPopup"
+                  v-if="isPassNoEmpty"
                   class="pass-error-block"
                   @click="showPassPopup = false"
                 >
                   <div class="arrow"></div>
                   <ul>
-                    <li>
+                    <li :class="{ 'no-correct': !isPassHasUppercase }">
                       <span class="icon">&#x2714;</span>
                       {{ $t("common.password_upper") }}
                     </li>
-                    <li>
+                    <li :class="{ 'no-correct': !isPassHasLowercase }">
                       <span class="icon">&#x2714;</span>
                       {{ $t("common.password_lower") }}
                     </li>
-                    <li>
+                    <li :class="{ 'no-correct': !isPassHasNumbercase }">
                       <span class="icon">&#x2714;</span>
                       {{ $t("common.password_number") }}
                     </li>
-                    <li>
+                    <li :class="{ 'no-correct': !isPassAnouth }">
                       <span class="icon">&#x2714;</span>
                       {{ $t("common.password_chars") }}
                     </li>
@@ -454,6 +454,21 @@ export default {
     };
   },
   computed: {
+    isPassNoEmpty() {
+      return this.form.password.length > 0;
+    },
+    isPassHasUppercase() {
+      return /[A-Z]/.test(this.form.password);
+    },
+    isPassHasLowercase() {
+      return /[a-z]/.test(this.form.password);
+    },
+    isPassHasNumbercase() {
+      return /[\d]/.test(this.form.password);
+    },
+    isPassAnouth() {
+      return this.form.password.length > 8 && this.form.password.length < 30;
+    },
     datePickerOptions() {
       return {
         isClearable: false,
@@ -819,7 +834,9 @@ $red: #e93a3a;
   right: -245px;
   width: 245px;
 }
-
+.pass-error-block .no-correct {
+  color: red;
+}
 .pass-error-block .arrow {
   width: 0;
   height: 0;
@@ -854,5 +871,8 @@ $red: #e93a3a;
   margin-right: 5px;
   font-weight: bold;
   font-size: 8px;
+}
+.pass-error-block .no-correct .icon {
+  background: red;
 }
 </style>
