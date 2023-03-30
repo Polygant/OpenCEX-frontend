@@ -74,6 +74,7 @@
         </div>
       </div>
     </div>
+    <div v-if="!isAuthorized" class="wallet-list--tooltip-layer"></div>
     <div v-if="showActivePairs">
       <orders-table
         v-if="currentOrdersTab == 'open'"
@@ -156,7 +157,9 @@ export default {
       openOrdersByPair: "core/openOrdersByPair",
       closedOrdersByPair: "core/closedOrdersByPair",
     }),
-
+    isAuthorized() {
+      return !!this.$store.getters["core/isAuthorized"];
+    },
     ordersFilter() {
       return {
         date_from:
@@ -286,6 +289,7 @@ export default {
   box-shadow: 0.53px -0.848px 6px 0 rgba(0, 0, 0, 0.14);
   border-radius: 3px;
   background: #fff;
+  position: relative;
 }
 
 .cursor-pointer {
@@ -346,5 +350,15 @@ export default {
   content: "";
   position: absolute;
   display: none;
+}
+.wallet-list--tooltip-layer {
+  z-index: 2;
+  background: #fff;
+  opacity: 0.4;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 </style>
