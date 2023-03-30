@@ -190,6 +190,9 @@ input[type="password"],
 .card {
   background: v-bind(blockColorLocal) !important;
 }
+.smile-st3 {
+  fill: v-bind(blockColorLocal) !important;
+}
 .big_btn,
 .modal-action-button,
 .logIn__popup,
@@ -202,7 +205,7 @@ input[type="password"],
 .footer-links-column a,
 .support__content-item a,
 .support__nav-item:hover a {
-  color: v-bind(mainColorLocal) !important;
+  color: v-bind(mainTextLocal) !important;
 }
 .support__nav-item:hover .faq-icon {
   background-color: v-bind(mainColorLocal) !important;
@@ -241,10 +244,10 @@ input[type="password"],
   background-color: v-bind(mainBackgroundLocal) !important;
 }
 .footer__social-item {
-  color: v-bind(mainColorLocal) !important;
+  color: v-bind(mainTextLocal) !important;
 }
 .footer__social-item path {
-  fill: v-bind(mainColorLocal) !important;
+  fill: v-bind(mainTextLocal) !important;
 }
 .wr-line,
 .wr-line b,

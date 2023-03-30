@@ -408,9 +408,12 @@ tr.disabled {
 }
 .currency__filter-icon {
   position: relative;
-  top: 5px;
+  top: 6px;
   height: 10px;
+  display: block;
   left: 2px;
+  width: 24px;
+  height: 23px;
 }
 .currency__filter-search {
   border-bottom: 1px solid #dfe2e6;
