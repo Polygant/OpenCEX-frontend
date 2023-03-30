@@ -76,9 +76,6 @@
           >
         </div>
       </div>
-      <pre style="display: none">
-        <div>{{ coin?.fee }}</div>
-      </pre>
       <p
         class="text-danger mb-3 px-4 block font-weight-bold"
         style="text-transform: uppercase; font-size: 16px"
