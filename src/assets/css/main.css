@@ -1265,10 +1265,7 @@ thead .sell-orders__td b {
 }
 
 .graphic {
-  background-color: #fff;
   height: 458px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
   overflow: hidden;
   margin-top: 15px;
   -webkit-transition: all 0.3s linear;
@@ -1279,6 +1276,22 @@ thead .sell-orders__td b {
 .graphic:hover {
   -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.smile-st0,
+.smile-st1 {
+  fill: #d8dbde;
+}
+.smile-st1,
+.smile-st2 {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+}
+.smile-st2 {
+  fill: #fff;
+}
+.smile-st3 {
+  fill: #000;
 }
 
 .wrapper {

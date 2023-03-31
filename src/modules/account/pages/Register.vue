@@ -210,6 +210,31 @@
                     {{ validationError.password }}
                   </span>
                 </span>
+                <div
+                  v-if="isPassNoEmpty"
+                  class="pass-error-block"
+                  @click="showPassPopup = false"
+                >
+                  <div class="arrow"></div>
+                  <ul>
+                    <li :class="{ 'no-correct': !isPassHasUppercase }">
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_upper") }}
+                    </li>
+                    <li :class="{ 'no-correct': !isPassHasLowercase }">
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_lower") }}
+                    </li>
+                    <li :class="{ 'no-correct': !isPassHasNumbercase }">
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_number") }}
+                    </li>
+                    <li :class="{ 'no-correct': !isPassAnouth }">
+                      <span class="icon">&#x2714;</span>
+                      {{ $t("common.password_chars") }}
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="register__input-group register__input-group--country">
                 <label
@@ -251,32 +276,17 @@
                       rel="noopener noreferrer nofollow"
                       class="register__link"
                       >{{ $t("common.terms") }}</a
-                    ></label
-                  >
-                </div>
-
-                <div class="custom-control custom-switch">
-                  <input
-                    id="privacy"
-                    v-model="privacyPolicy"
-                    type="checkbox"
-                    class="custom-control-input"
-                  />
-                  <label
-                    class="custom-control-label pt-1"
-                    :style="loginText ? `color: ${loginText} !important` : {}"
-                    for="privacy"
-                    >{{ $t("common.agree") }}
+                    >
+                    &
                     <a
                       href="/public/docs/EN_Privacy_policy_site.pdf"
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       class="register__link"
                       >{{ $t("common.privacy") }}</a
-                    ></label
-                  >
+                    >
+                  </label>
                 </div>
-
                 <div class="custom-control custom-switch">
                   <input
                     id="newspaper"
@@ -411,9 +421,9 @@ export default {
         country: "",
         subscription: false,
       },
+      showPassPopup: false,
       validationError: {},
       terms: false,
-      privacyPolicy: false,
       confirmEmailSent: false,
       refCode: "",
       isReferral: false,
@@ -428,6 +438,21 @@ export default {
     };
   },
   computed: {
+    isPassNoEmpty() {
+      return this.form.password.length > 0;
+    },
+    isPassHasUppercase() {
+      return /[A-Z]/.test(this.form.password);
+    },
+    isPassHasLowercase() {
+      return /[a-z]/.test(this.form.password);
+    },
+    isPassHasNumbercase() {
+      return /[\d]/.test(this.form.password);
+    },
+    isPassAnouth() {
+      return this.form.password.length > 7 && this.form.password.length < 31;
+    },
     datePickerOptions() {
       return {
         isClearable: false,
@@ -441,8 +466,12 @@ export default {
       return (
         !!Object.keys(this.validationError).length ||
         !this.terms ||
-        !this.privacyPolicy ||
-        !this.isValidCountry
+        !this.isValidCountry ||
+        !this.isPassNoEmpty ||
+        !this.isPassHasUppercase ||
+        !this.isPassHasLowercase ||
+        !this.isPassHasNumbercase ||
+        !this.isPassAnouth
       );
     },
     passwordStrengthLevel() {
@@ -486,6 +515,12 @@ export default {
       }
 
       return false;
+    },
+    isCorrectPassword() {
+      let hasUpperCase = /[A-Z]/.test(this.form.password);
+      let hasLowerCase = /[a-z]/.test(this.form.password);
+      let hasNumber = /\d/.test(this.form.password);
+      return hasUpperCase && hasLowerCase && hasNumber;
     },
   },
   watch: {
@@ -575,7 +610,7 @@ export default {
         password: {
           required: true,
           minLength: 6,
-          maxLength: 50,
+          maxLength: 350,
         },
         birth_day: {
           required: true,
@@ -622,7 +657,11 @@ export default {
       this.captcha = captchaResponse;
     },
     handleRegister() {
-      if (this.validateData(this.form) && !this.birthRangeError) {
+      if (
+        this.validateData(this.form) &&
+        !this.birthRangeError &&
+        this.isCorrectPassword
+      ) {
         const config = {
           ...this.form,
           lang: localStorage.getItem("planguage") || "en",
@@ -770,5 +809,55 @@ $red: #e93a3a;
   width: 41px;
   height: 30px;
   padding: 5px 0 0 11px;
+}
+.pass-error-block {
+  background-color: #323433;
+  border-radius: 10px;
+  position: absolute;
+  padding: 10px;
+  top: 25px;
+  right: -245px;
+  width: 245px;
+}
+.pass-error-block .no-correct {
+  color: red;
+}
+.pass-error-block .arrow {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #323433;
+  position: absolute;
+  left: -10px;
+  top: 10px;
+}
+
+.pass-error-block ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pass-error-block li {
+  display: flex;
+  align-items: center;
+}
+
+.pass-error-block .icon {
+  background-color: #56ba57;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  font-weight: bold;
+  font-size: 8px;
+}
+.pass-error-block .no-correct .icon {
+  background: red;
 }
 </style>
