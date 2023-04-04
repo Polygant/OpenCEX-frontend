@@ -67,7 +67,11 @@
         </div>
       </div>
       <div class="header__author-wrap">
-        <router-link to="/wallet/deposit" class="header-deopsit-btn">
+        <router-link
+          v-if="isAuthorized"
+          to="/wallet/deposit/USDT"
+          class="header-deopsit-btn"
+        >
           {{ $t("common.deposit") }}
         </router-link>
         <router-link
