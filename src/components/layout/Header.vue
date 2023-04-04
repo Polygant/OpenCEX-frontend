@@ -67,6 +67,9 @@
         </div>
       </div>
       <div class="header__author-wrap">
+        <router-link to="/wallet/deposit" class="header-deopsit-btn">
+          {{ $t("common.deposit") }}
+        </router-link>
         <router-link
           v-if="!isAuthorized"
           to="/login"
@@ -774,5 +777,23 @@ export default {
 }
 .themeSelector.dark {
   transform: scaleX(-1);
+}
+.header-deopsit-btn {
+  position: relative;
+  left: -40px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  height: 33px;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffffff;
+  padding: 7px 13px 10px;
+}
+@media (max-width: 800px) {
+  .header-deopsit-btn {
+    display: none;
+  }
 }
 </style>

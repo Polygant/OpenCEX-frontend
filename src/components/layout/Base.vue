@@ -332,6 +332,7 @@ th.walletTable__header,
 .btn-danger {
   background: v-bind(cancelLocal) !important;
 }
+.header-deopsit-btn,
 .support__nav-link--active .faq-icon {
   background: v-bind(secondLocal) !important;
 }
