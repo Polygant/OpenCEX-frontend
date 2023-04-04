@@ -76,11 +76,15 @@
           >
         </div>
       </div>
-      <div class="pb-4">
-        {{ $t("common.second_table_deposit_fee") }} <br />
-        <strong class="font-weight-bold">{{
-          toFxd(getRegularNumber(coin?.fee?.deposit?.address), 8)
-        }}</strong>
+      <div class="pb-4 flex justify-center">
+        <img src="/public/img/minmax.svg" class="mr-8" width="30" height="30" />
+        <div class="text-left">
+          {{ $t("common.second_table_deposit_fee") }} <br />
+          <strong class="font-weight-bold">
+            {{ toFxd(getRegularNumber(coin?.fee?.deposit?.address), 8) }}
+            {{ ticker }}
+          </strong>
+        </div>
       </div>
       <p
         class="text-danger mb-3 px-4 block font-weight-bold"
