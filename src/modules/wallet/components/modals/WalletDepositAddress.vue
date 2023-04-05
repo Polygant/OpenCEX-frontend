@@ -76,6 +76,16 @@
           >
         </div>
       </div>
+      <div class="pb-4 flex justify-center">
+        <img src="/public/img/minmax.svg" class="mr-8" width="30" height="30" />
+        <div class="text-left">
+          {{ $t("common.second_table_deposit_fee") }} <br />
+          <strong class="font-weight-bold">
+            {{ toFxd(getRegularNumber(coin?.fee?.deposit?.address), 8) }}
+            {{ ticker }}
+          </strong>
+        </div>
+      </div>
       <p
         class="text-danger mb-3 px-4 block font-weight-bold"
         style="text-transform: uppercase; font-size: 16px"
@@ -151,11 +161,12 @@ import qrCode from "qrcode-generator";
 import copyToBuffer from "~/mixins/copyToBuffer";
 import { mapGetters } from "vuex";
 import AddressTextField from "@/components/AddressTextField.vue";
+import getRegularNumber from "~/mixins/getRegularNumber";
 
 export default {
   name: "WalletDepositAddress",
   components: { AddressTextField },
-  mixins: [copyToBuffer],
+  mixins: [copyToBuffer, getRegularNumber],
   props: {
     coin: {
       type: Object,
@@ -218,6 +229,9 @@ export default {
     }
   },
   methods: {
+    toFxd(value, decimals) {
+      return value ? parseFloat(value).toFixed(decimals) : 0;
+    },
     createAddress(ticker) {
       let data = {
         currency: ticker,
