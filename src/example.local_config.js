@@ -20,6 +20,7 @@ const localConfig = {
   site_domain: "${DOMAIN}",
   host: "${DOMAIN}",
   help_widget: "${HELP_WIDGET}",
+  logo: "${LOGO}",
   themes: [
     {
       main_color: "#2A2259",
