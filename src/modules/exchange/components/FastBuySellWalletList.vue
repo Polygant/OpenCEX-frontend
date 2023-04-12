@@ -48,9 +48,11 @@
                       <div class="wallet-table__td">
                         <img
                           :src="
-                            '/public/img/common/svgcrypto/' +
-                            ticker.toLowerCase().trim() +
-                            '.svg'
+                            coins[ticker].logo.length > 0
+                              ? coins[ticker].logo
+                              : `/public/img/common/svgcrypto/${ticker
+                                  .toLowerCase()
+                                  .trim()}.svg`
                           "
                           :alt="ticker"
                         />

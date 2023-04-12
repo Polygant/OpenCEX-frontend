@@ -15,6 +15,7 @@
                   :items="filteredCoins"
                   :selected-default="selectedDefault"
                   :image="true"
+                  :all-coins="coins"
                   @select="coinChoose"
                 />
               </div>

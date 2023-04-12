@@ -57,6 +57,7 @@ export default {
         disable_stack: received.disable_stack,
         disable_topups: received.disable_topups,
         disable_withdrawals: received.disable_withdrawals,
+        logo: received.logo,
       };
     }
   },

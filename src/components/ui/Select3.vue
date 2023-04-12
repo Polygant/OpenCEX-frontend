@@ -2,12 +2,13 @@
   <div v-click-outside="closeSelect">
     <div v-if="currentOption" class="coinSelector">
       <div class="selector__current" @click="open">
+        {{ allCoins[currentOption.id].logo }}
         <img
           width="50"
           :src="
-            '/public/img/common/svgcrypto/' +
-            currentOption.id.toLowerCase() +
-            '.svg'
+            allCoins[currentOption.id].logo.length > 0
+              ? allCoins[currentOption.id].logo
+              : `/public/img/common/svgcrypto/${currentOption.id.toLowerCase()}.svg`
           "
           :alt="currentOption.id.toUpperCase()"
           class="mCS_img_loaded walletTable__item_img coinSelector__img"
@@ -24,7 +25,9 @@
             <img
               width="50"
               :src="
-                '/public/img/common/svgcrypto/' + coin.id.toLowerCase() + '.svg'
+                allCoins[coin.id].logo.length > 0
+                  ? allCoins[coin.id].logo
+                  : `/public/img/common/svgcrypto/${coin.id.toLowerCase()}.svg`
               "
               :alt="coin.id.toUpperCase()"
               class="mCS_img_loaded walletTable__item_img coinSelector__img"
@@ -53,6 +56,10 @@ export default {
       type: String,
       default: "",
     },
+    allCoins: {
+      type: Array,
+      default: () => [],
+    },
   },
   emits: ["input"],
   data() {
@@ -69,12 +76,14 @@ export default {
     },
     optionsList() {
       let list = [];
+      console.log("this.options", this.options);
       // eslint-disable-next-line no-unused-vars
       for (const [key, value] of Object.entries(this.options)) {
         list.push({
           id: key,
           selected: this.value === key || this.selected === key,
           title: key,
+          icon: value.icon,
         });
       }
       return list;
