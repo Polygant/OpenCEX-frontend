@@ -10,6 +10,7 @@
           <select-advanced
             :items="blockChains"
             :image="false"
+            :all-coins="coins"
             @select="blockchainChoose"
           />
         </div>
@@ -277,7 +278,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ balance: "core/balance" }),
+    ...mapGetters({ balance: "core/balance", coins: "core/coins" }),
     blockChains() {
       let blockChainsObj = {};
       this.currentBlockchainList.map((item) => {
@@ -317,9 +318,6 @@ export default {
     },
     coin() {
       return this.coins[this.ticker];
-    },
-    coins() {
-      return this.$store.getters["core/coins"];
     },
     finalAmount() {
       if (this.amountToPayMe >= this.coin.limits.withdrawal.min) {
