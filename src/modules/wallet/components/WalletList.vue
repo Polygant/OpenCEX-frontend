@@ -63,7 +63,9 @@ export default {
           });
           result.currency = ticker;
           result.icon =
-            "/public/img/common/svgcrypto/" + ticker.toLowerCase() + ".svg";
+            coin.logo.length > 0
+              ? coin.logo
+              : "/public/img/common/svgcrypto/" + ticker.toLowerCase() + ".svg";
           finalResult.push(result);
         }
       });

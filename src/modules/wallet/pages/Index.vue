@@ -98,9 +98,9 @@
                       <img
                         width="50"
                         :src="
-                          '/public/img/common/svgcrypto/' +
-                          ticker.toLowerCase() +
-                          '.svg'
+                          coin.logo.length > 0
+                            ? coin.logo
+                            : `/public/img/common/svgcrypto/${ticker.toLowerCase()}.svg`
                         "
                         :alt="ticker.toUpperCase()"
                         class="mCS_img_loaded walletTable__item_img"

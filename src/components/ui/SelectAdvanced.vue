@@ -6,9 +6,9 @@
           v-if="image"
           width="50"
           :src="
-            '/public/img/common/svgcrypto/' +
-            currentOption.id.toLowerCase() +
-            '.svg'
+            allCoins[currentOption.id].logo.length > 0
+              ? allCoins[currentOption.id].logo
+              : `/public/img/common/svgcrypto/${currentOption.id.toLowerCase()}.svg`
           "
           :alt="currentOption.id.toUpperCase()"
           class="mCS_img_loaded walletTable__item_img walletTable__item_img_small coinSelector__img"
@@ -42,7 +42,9 @@
               v-if="image"
               width="50"
               :src="
-                '/public/img/common/svgcrypto/' + coin.id.toLowerCase() + '.svg'
+                allCoins[coin.id].logo.length > 0
+                  ? allCoins[coin.id].logo
+                  : `/public/img/common/svgcrypto/${coin.id.toLowerCase()}.svg`
               "
               :alt="coin.id.toUpperCase()"
               class="mCS_img_loaded walletTable__item_img walletTable__item_img_small coinSelector__img"
@@ -90,6 +92,10 @@ export default {
       type: String,
       required: false,
       default: "",
+    },
+    allCoins: {
+      type: Array,
+      default: () => [],
     },
   },
   emits: ["select"],

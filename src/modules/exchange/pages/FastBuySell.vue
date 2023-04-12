@@ -44,6 +44,7 @@
                     :value="cur1"
                     :options="activeCoinsSelect3"
                     class="qExchangeSelect"
+                    :all-coins="coins"
                     @input="cur1 = $event"
                   />
                 </div>
@@ -54,7 +55,11 @@
                     class="relative ml-2 inline-block"
                     style="top: -2px"
                     width="13"
-                    :src="`/public/img/coin/${cur1.toLowerCase()}.svg`"
+                    :src="
+                      coins[cur1].logo.length > 0
+                        ? coins[cur1].logo
+                        : `/public/img/coin/${cur1.toLowerCase()}.svg`
+                    "
                     alt=""
                   />
                   {{ cur1 }}
@@ -65,7 +70,11 @@
                     class="relative ml-2 inline-block"
                     style="top: -2px"
                     width="13"
-                    :src="`/public/img/coin/${cur1.toLowerCase()}.svg`"
+                    :src="
+                      coins[cur1].logo.length > 0
+                        ? coins[cur1].logo
+                        : `/public/img/coin/${cur1.toLowerCase()}.svg`
+                    "
                     alt=""
                   />
                   {{ cur1 }}
@@ -120,6 +129,7 @@
                     :value="cur2"
                     :options="relatedCoinsSelect3"
                     class="qExchangeSelect"
+                    :all-coins="coins"
                     @input="cur2 = $event"
                   />
                 </div>
@@ -130,7 +140,11 @@
                     class="relative ml-2 inline-block"
                     style="top: -2px"
                     width="13"
-                    :src="`/public/img/coin/${cur2?.toLowerCase()}.svg`"
+                    :src="
+                      coins[cur2].logo.length > 0
+                        ? coins[curw].logo
+                        : `/public/img/coin/${cur2.toLowerCase()}.svg`
+                    "
                     alt=""
                   />
                   {{ cur2 }}
