@@ -26,9 +26,9 @@
         <img
           style="height: 46px"
           :src="
-            '/public/img/common/svgcrypto/' +
-            accountData?.currentBaseCurrency?.toLowerCase() +
-            '.svg'
+            coins[accountData?.currentBaseCurrency].logo.length > 0
+              ? coins[accountData?.currentBaseCurrency].logo
+              : `/public/img/common/svgcrypto/${accountData?.currentBaseCurrency?.toLowerCase()}.svg`
           "
           :alt="accountData.currentBaseCurrency"
         />

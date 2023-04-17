@@ -30,30 +30,36 @@
         class="tab-pane__search"
       />
     </div>
-    <table class="table-striped table-list__table" :class="tableClass">
-      <thead>
-        <th v-for="col in colsList" :key="col">
-          <div class="table-list__table-th">
-            {{ $te(`common.${col}`) ? $t(`common.${col}`) : null }}
-          </div>
-        </th>
-      </thead>
-      <tbody>
-        <tr v-for="(row, idx) in filteredList" :key="idx" :data-num="idx">
-          <td v-for="column in colsList" :key="column" :class="`${column}-td`">
-            <div class="table-list__table-td">
-              <img
-                v-if="isImgField({ [column]: row[column] })"
-                :src="row[column]"
-              />
-              <span v-else-if="row.hasOwnProperty(column)">
-                {{ row[column] }}
-              </span>
+    <perfect-scrollbar>
+      <table class="table-striped table-list__table" :class="tableClass">
+        <thead>
+          <th v-for="col in colsList" :key="col">
+            <div class="table-list__table-th">
+              {{ $te(`common.${col}`) ? $t(`common.${col}`) : null }}
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </th>
+        </thead>
+        <tbody>
+          <tr v-for="(row, idx) in filteredList" :key="idx" :data-num="idx">
+            <td
+              v-for="column in colsList"
+              :key="column"
+              :class="`${column}-td`"
+            >
+              <div class="table-list__table-td">
+                <img
+                  v-if="isImgField({ [column]: row[column] })"
+                  :src="row[column]"
+                />
+                <span v-else-if="row.hasOwnProperty(column)">
+                  {{ row[column] }}
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </perfect-scrollbar>
   </div>
 </template>
 
@@ -231,5 +237,8 @@ export default {
   z-index: 2;
   top: 50px;
   left: 7px;
+}
+.ps {
+  height: 250px;
 }
 </style>
