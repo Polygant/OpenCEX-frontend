@@ -61,6 +61,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      coins: "core/coins",
       profile: "core/profile",
       isConnectedSocket: "isConnectedSocket",
       wsUserIsAuthenticated: "wsUserIsAuthenticated",
@@ -70,7 +71,9 @@ export default {
       lockedBalance: "core/lockedBalance",
     }),
     coinImg() {
-      return `/public/img/common/svgcrypto/${this.$route.params.walletitem.toLowerCase()}.svg`;
+      return this.coins[this.$route.params.walletitem]?.logo?.length > 0
+        ? this.coins[this.$route.params.walletitem]?.logo
+        : `/public/img/common/svgcrypto/${this.$route.params.walletitem.toLowerCase()}.svg`;
     },
   },
   watch: {
