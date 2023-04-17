@@ -106,9 +106,9 @@
                 >
                   <img
                     :src="
-                      '/public/img/common/svgcrypto/' +
-                      ticker.toLowerCase() +
-                      '.svg'
+                      coins[ticker].logo.length > 0
+                        ? coins[ticker].logo
+                        : `/public/img/common/svgcrypto/${ticker.toLowerCase()}.svg`
                     "
                     width="30"
                     class="inline-block mr-2"
@@ -193,9 +193,9 @@
                 >
                   <img
                     :src="
-                      '/public/img/common/svgcrypto/' +
-                      ticker.toLowerCase() +
-                      '.svg'
+                      coins[ticker].logo.length > 0
+                        ? coins[ticker].logo
+                        : `/public/img/common/svgcrypto/${ticker.toLowerCase()}.svg`
                     "
                     width="30"
                     class="inline-block mr-2"

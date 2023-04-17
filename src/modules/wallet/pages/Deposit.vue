@@ -15,6 +15,7 @@
                   :image="true"
                   :selected-default="selectedDefault"
                   :total-title="$t('common.allbalance')"
+                  :all-coins="coins"
                   @select="coinChoose"
                 />
               </div>
@@ -22,6 +23,7 @@
                 <label>{{ $t("common.select_network_selector") }}</label>
                 <SelectAdvanced
                   :items="networksList"
+                  :all-coins="coins"
                   @select="networkSelected"
                 />
               </div>

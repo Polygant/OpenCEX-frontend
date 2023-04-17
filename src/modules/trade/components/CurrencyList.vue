@@ -472,4 +472,7 @@ tr.disabled {
   top: 8px;
   left: 7px;
 }
+.ps {
+  height: 378px;
+}
 </style>
