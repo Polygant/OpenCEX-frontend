@@ -97,6 +97,7 @@
                   <input
                     id="email"
                     v-model="form.email"
+                    v-pattern:email
                     type="text"
                     class="register__input"
                     :class="{ 'border-red': validationError.email }"
