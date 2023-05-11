@@ -127,7 +127,6 @@ export default {
         "YE",
         "SG",
         "KR",
-        "HK",
         "CN",
         "CH",
         "TW",
