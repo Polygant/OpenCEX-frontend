@@ -2,7 +2,6 @@
   <div v-click-outside="closeSelect">
     <div v-if="currentOption" class="coinSelector">
       <div class="selector__current" @click="open">
-        {{ allCoins[currentOption.id].logo }}
         <img
           width="50"
           :src="
