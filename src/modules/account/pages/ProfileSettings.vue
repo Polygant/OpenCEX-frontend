@@ -29,7 +29,7 @@
                   >KYC {{ $t("common.verificationTitle") }}</span
                 >
               </div>
-              <div class="setting-table_item-actions">
+              <div class="setting-table_item-actions" style="text-align: right">
                 <span
                   v-if="profile.kyc_status === 'green'"
                   class="itemStatusUp"
