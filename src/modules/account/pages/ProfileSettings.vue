@@ -158,7 +158,7 @@ input[type="password"]::-webkit-input-placeholder {
 .setting-table {
   &_item {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     & > div {
       padding: 15px;
@@ -169,6 +169,7 @@ input[type="password"]::-webkit-input-placeholder {
       text-align: center;
       .btn {
         width: 100px;
+        font-size: 14px !important;
       }
     }
   }
