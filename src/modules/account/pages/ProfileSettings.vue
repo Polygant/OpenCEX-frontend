@@ -15,11 +15,11 @@
       <div>
         <password-change-section></password-change-section>
         <div
-          v-if="profile?.kyс_enabled"
-          class="block-white"
-          style="height: 500px"
+          v-if="profile?.kyc_enabled"
+          class="walletlist"
+          style="width: 100%; height: 500px; padding-top: 10px"
         >
-          <div class="settings__NAME text-capitalize">
+          <div class="settings__NAME">
             {{ $t("common.verificationTitle") }}
           </div>
           <div class="setting-table">

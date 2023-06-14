@@ -1,5 +1,5 @@
 <template>
-  <div class="walletlist" style="width: 100%; height: 500px">
+  <div class="walletlist" style="width: 100%; height: 500px; margin-bottom: 0">
     <div v-if="passChangeFormStatus === 'pending'">
       <div class="settings__NAME">{{ $t("common.passchange") }}</div>
       <form
