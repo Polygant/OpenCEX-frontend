@@ -15,11 +15,11 @@
       <div>
         <password-change-section></password-change-section>
         <div
-          v-if="profile?.kyс_enabled"
-          class="block-white"
-          style="height: 500px"
+          v-if="profile?.kyc_enabled"
+          class="walletlist"
+          style="width: 100%; height: 500px; padding-top: 10px"
         >
-          <div class="settings__NAME text-capitalize">
+          <div class="settings__NAME">
             {{ $t("common.verificationTitle") }}
           </div>
           <div class="setting-table">
@@ -29,7 +29,7 @@
                   >KYC {{ $t("common.verificationTitle") }}</span
                 >
               </div>
-              <div class="setting-table_item-actions">
+              <div class="setting-table_item-actions" style="text-align: right">
                 <span
                   v-if="profile.kyc_status === 'green'"
                   class="itemStatusUp"
@@ -158,7 +158,7 @@ input[type="password"]::-webkit-input-placeholder {
 .setting-table {
   &_item {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     & > div {
       padding: 15px;
@@ -169,6 +169,7 @@ input[type="password"]::-webkit-input-placeholder {
       text-align: center;
       .btn {
         width: 100px;
+        font-size: 14px !important;
       }
     }
   }
