@@ -3,7 +3,7 @@ import { Decimal } from "decimal.js";
 export default {
   methods: {
     getFixedDecimal(val, precision = 8, toClosest = false) {
-      return val
+      let res = val
         ? new Decimal(
             new Decimal(val).toFixed(
               precision,
@@ -11,6 +11,7 @@ export default {
             )
           ).toNumber()
         : 0;
+      return val > 0 && res === 0 ? val : res;
     },
   },
 };
