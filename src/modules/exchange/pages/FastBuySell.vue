@@ -56,8 +56,8 @@
                     style="top: -2px"
                     width="13"
                     :src="
-                      coins[cur1].logo.length > 0
-                        ? coins[cur1].logo
+                      coins?.[cur1]?.logo?.length > 0
+                        ? coins?.[cur1]?.logo
                         : `/public/img/coin/${cur1.toLowerCase()}.svg`
                     "
                     alt=""
@@ -71,8 +71,8 @@
                     style="top: -2px"
                     width="13"
                     :src="
-                      coins[cur1].logo.length > 0
-                        ? coins[cur1].logo
+                      coins?.[cur1]?.logo?.length > 0
+                        ? coins?.[cur1]?.logo
                         : `/public/img/coin/${cur1.toLowerCase()}.svg`
                     "
                     alt=""
@@ -141,8 +141,8 @@
                     style="top: -2px"
                     width="13"
                     :src="
-                      coins[cur2].logo.length > 0
-                        ? coins[curw].logo
+                      coins?.[cur2]?.logo?.length > 0
+                        ? coins[cur2].logo
                         : `/public/img/coin/${cur2.toLowerCase()}.svg`
                     "
                     alt=""
