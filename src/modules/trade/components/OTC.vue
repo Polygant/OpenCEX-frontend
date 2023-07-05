@@ -176,25 +176,29 @@ export default {
     },
 
     fee() {
-      if (this.operation == "buy")
-        return Number(
-          (
-            this.operationData.quantity *
-            (this.profile.user.user_fee !== "undefined"
-              ? this.profile.user.user_fee
-              : this.coins[this.baseCurrency]?.fee?.order.limits)
-          ).toFixed(8)
-        );
-      else
-        return Number(
-          (
-            this.operationData.quantity *
-            Math.max(+this.operationData.limit, this.bitfinexPrice) *
-            (this.profile.user.user_fee !== "undefined"
-              ? this.profile.user.user_fee
-              : this.coins[this.quoteCurrency].fee?.order.limits)
-          ).toFixed(8)
-        );
+      if (this.profile.user.user_fee === 0) {
+        return 0;
+      } else {
+        if (this.operation == "buy")
+          return Number(
+            (
+              this.operationData.quantity *
+              (this.profile.user.user_fee !== "undefined"
+                ? this.profile.user.user_fee
+                : this.coins[this.baseCurrency]?.fee?.order.limits)
+            ).toFixed(8)
+          );
+        else
+          return Number(
+            (
+              this.operationData.quantity *
+              Math.max(+this.operationData.limit, this.bitfinexPrice) *
+              (this.profile.user.user_fee !== "undefined"
+                ? this.profile.user.user_fee
+                : this.coins[this.quoteCurrency].fee?.order.limits)
+            ).toFixed(8)
+          );
+      }
     },
   },
   methods: {
