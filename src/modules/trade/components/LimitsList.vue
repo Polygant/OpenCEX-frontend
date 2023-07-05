@@ -181,8 +181,11 @@ export default {
               ? this.profile.user.user_fee
               : this.coins[this.quoteCurrency].fee?.order.limit)
         );
-
-      return output || 0;
+      if (this.profile.user.user_fee === 0) {
+        return 0;
+      } else {
+        return output || 0;
+      }
     },
 
     limits() {
