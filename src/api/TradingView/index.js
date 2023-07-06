@@ -21,6 +21,10 @@ export default {
   },
   resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
     var splitData = symbolName.split(/[:/]/);
+    var projectTitle = localStorage.getItem("project_title");
+    if (!projectTitle) {
+      projectTitle = "Crypto exchange";
+    }
     var symbolStub = {
       name: symbolName,
       description: "",
@@ -29,7 +33,7 @@ export default {
       timezone: "Etc/UTC",
       has_empty_bars: true,
       ticker: symbolName,
-      exchange: "OpenCEX",
+      exchange: projectTitle,
       minmov: 1,
       pricescale: 100000,
       has_intraday: true,
