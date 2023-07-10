@@ -1,5 +1,6 @@
 const common = {
   ru: {
+    country_not_support: "Регистрация пользователей из данной страны запрещена",
     rights: "Все права защищены",
     tradeOn: "Торгуй в пару кликов с {trade}",
     allDay: "Круглосуточная клиентская поддержка в чате к вашим услугам.",
@@ -769,6 +770,7 @@ const common = {
   },
 
   en: {
+    country_not_support: "Users from this country are not allowed to register",
     rights: "All Rights Reserved",
     tradeOn: "Trade on the go with {trade}",
     allDay:
