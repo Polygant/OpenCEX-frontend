@@ -45,6 +45,10 @@ export default {
     },
   },
   mounted() {
+    localStorage.setItem(
+      "project_title",
+      localConfig.project_title ? localConfig.project_title : "OpenCex"
+    );
     let s = document.createElement("script");
     s.type = "text/javascript";
     s.async = true;

@@ -1,5 +1,12 @@
 const common = {
   ru: {
+    deposit_modal: {
+      title: "Внимание!",
+      text: "Адрес для пополнения для каждой монеты уникален.",
+      subtext: "Будьте внимательны!",
+    },
+    ok: "OK",
+    country_not_support: "Регистрация пользователей из данной страны запрещена",
     rights: "Все права защищены",
     tradeOn: "Торгуй в пару кликов с {trade}",
     allDay: "Круглосуточная клиентская поддержка в чате к вашим услугам.",
@@ -769,6 +776,13 @@ const common = {
   },
 
   en: {
+    deposit_modal: {
+      title: "Attention!",
+      text: "The deposit address for each coin is unique.",
+      subtext: "Be careful!",
+    },
+    ok: "OK",
+    country_not_support: "Users from this country are not allowed to register",
     rights: "All Rights Reserved",
     tradeOn: "Trade on the go with {trade}",
     allDay:

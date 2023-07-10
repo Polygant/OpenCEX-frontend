@@ -69,6 +69,7 @@ import WalletHistory from "../components/WalletHistory.vue";
 
 import WalletDepositAddress from "../components/modals/WalletDepositAddress.vue";
 import SecurityNoticeModal from "../components/modals/SecurityNoticeModal.vue";
+import DepositNoticeModal from "../components/modals/DepositNoticeModal.vue";
 import InfoModal from "../components/modals/InfoModal.vue";
 import SelectAdvanced from "~/components/ui/SelectAdvanced.vue";
 
@@ -172,6 +173,10 @@ export default {
     deep: true,
   },
   mounted() {
+    if (localStorage.getItem("showDepositNoticeModal")) {
+      this.showDepositNoticeModal();
+      localStorage.removeItem("showDepositNoticeModal");
+    }
     this.$store.dispatch("core/getCoinsLimits");
     this.loadWallets();
     this.showSecurityNotice();
@@ -200,6 +205,18 @@ export default {
     }
   },
   methods: {
+    showDepositNoticeModal() {
+      this.$modal.show(
+        DepositNoticeModal,
+        {},
+        {
+          adaptive: true,
+          height: "auto",
+          scrollable: true,
+          width: 500,
+        }
+      );
+    },
     coinChoose(value) {
       this.$store.dispatch("core/getCoinsLimits");
       if (this.$route.params.walletitem !== value) {

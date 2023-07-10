@@ -729,6 +729,13 @@ export default {
                 });
               }
             });
+
+            if (r.data?.type[0]?.message === "country_not_support") {
+              this.$notify({
+                type: "error",
+                text: this.$t("common.country_not_support"),
+              });
+            }
           }
         );
       } else {
