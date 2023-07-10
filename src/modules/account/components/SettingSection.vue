@@ -54,7 +54,7 @@
           class="walletTable__item_val1 table__status"
           style="height: 35px; line-height: 1; font-size: 15px !important"
         >
-          {{ autoLogoutValue }}
+          {{ addSpace(autoLogoutValue) }}
           {{ $t("common.mins") }}
         </div>
         <div class="table__button">
@@ -596,6 +596,7 @@
 </template>
 
 <script>
+import getFixedDecimal from "~/mixins/getFixedDecimal";
 import qrcode from "qrcode-generator";
 import accountSettingMixin from "./mixin";
 import { PROFILE_AUTO_LOGOUT_TIMEOUT } from "~/store/core/mutation-types";
@@ -605,7 +606,7 @@ export default {
   components: {
     phoneVerify,
   },
-  mixins: [accountSettingMixin],
+  mixins: [accountSettingMixin, getFixedDecimal],
   data() {
     return {
       is2faOff: true,

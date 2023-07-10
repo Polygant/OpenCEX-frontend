@@ -14,7 +14,11 @@
           "
           class="limit-list__wallet-image inline-block mr-1"
         />
-        {{ getCoolBalance(operation == "buy" ? quoteCurrency : baseCurrency) }}
+        {{
+          addSpace(
+            getCoolBalance(operation == "buy" ? quoteCurrency : baseCurrency)
+          )
+        }}
         {{ operation == "buy" ? quoteCurrency : baseCurrency }}
       </div>
     </div>
@@ -39,12 +43,12 @@
       <div class="limit-list__min-max">
         <span>
           {{ $t("common.min") }}:
-          {{ limits?.min }}
+          {{ addSpaceFixDecimal(limits?.min, coins[limits.currency].decimals) }}
           {{ limits.currency }}
         </span>
         <span class="mt-1">
           {{ $t("common.max") }}:
-          {{ limits?.max }}
+          {{ addSpaceFixDecimal(limits?.max, coins[limits.currency].decimals) }}
           {{ limits.currency }}
         </span>
       </div>
@@ -165,7 +169,7 @@ export default {
       let output = 0;
 
       if (this.operation === "buy")
-        output = this.getMax8Digits(
+        output = this.addSpace(
           this.operationData.quantity *
             (typeof this.profile.user.user_fee !== "undefined" &&
             this.profile.user.user_fee !== 0
@@ -173,7 +177,7 @@ export default {
               : this.coins[this.baseCurrency]?.fee?.order.limit)
         );
       else
-        output = this.getMax8Digits(
+        output = this.addSpace(
           this.operationData.quantity *
             this.operationData.price *
             (typeof this.profile.user.user_fee !== "undefined" &&
@@ -239,8 +243,8 @@ export default {
     onSubmit() {
       this.$emit("add-order", {
         orderData: {
-          price: this.getFixedDecimal(+this.operationData.price),
-          quantity: this.getFixedDecimal(+this.operationData.quantity),
+          price: this.addSpaceFixDecimal(+this.operationData.price),
+          quantity: this.addSpaceFixDecimal(+this.operationData.quantity),
         },
         type: 0,
         callback: () => {
@@ -254,14 +258,14 @@ export default {
         case "buy":
           this.lastEditedField = FIELDS.SUM;
           this.resultedQuoteSum =
-            this.getFixedDecimal(
+            this.addSpaceFixDecimal(
               this.getCoolBalance(this.quoteCurrency) * fraction,
               this.coins[this.quoteCurrency].decimals
             ) + "";
           break;
         case "sell":
           this.operationData.quantity =
-            this.getFixedDecimal(
+            this.addSpaceFixDecimal(
               this.getCoolBalance(this.baseCurrency) * fraction,
               this.coins[this.baseCurrency].decimals
             ) + "";
@@ -272,7 +276,7 @@ export default {
     updateResultedSum: debounce(function () {
       if (this.lastEditedField === FIELDS.QUANTITY)
         this.resultedQuoteSum = String(
-          this.getFixedDecimal(
+          this.addSpaceFixDecimal(
             this.operationData.price * this.operationData.quantity,
             this.coins[this.quoteCurrency].decimals
           )
@@ -288,7 +292,7 @@ export default {
           !Number.isNaN(this.resultedQuoteSum)
         )
           this.operationData.quantity = String(
-            this.getFixedDecimal(
+            this.addSpaceFixDecimal(
               this.resultedQuoteSum / this.operationData.price || 0,
               this.coins[this.baseCurrency].decimals
             )

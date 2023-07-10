@@ -126,7 +126,9 @@
             </div>
             <div class="withdrawal__minMax-blockCenter">
               {{ $t("common.minamount") }}: <br />
-              <strong>{{ coin.limits.withdrawal.min }} {{ ticker }}</strong>
+              <strong
+                >{{ addSpace(coin.limits.withdrawal.min) }} {{ ticker }}</strong
+              >
               <br />
               <br />
               {{ $t("common.second_table_withdraw_fee") }}: <br />
@@ -142,7 +144,9 @@
             </div>
             <div class="withdrawal__minMax-blockRight">
               {{ $t("common.maxamount") }}: <br />
-              <strong>{{ coin.limits.withdrawal.max }} {{ ticker }}</strong>
+              <strong
+                >{{ addSpace(coin.limits.withdrawal.max) }} {{ ticker }}</strong
+              >
             </div>
           </div>
 
@@ -152,7 +156,7 @@
               {{
                 parseFloat(toFxd(getRegularNumber(finalAmount), 8)) < 0
                   ? 0
-                  : parseFloat(toFxd(getRegularNumber(finalAmount), 8))
+                  : addSpaceFixDecimal(finalAmount)
               }}
             </div>
           </div>
@@ -386,11 +390,11 @@ export default {
       if (
         this.amountToPayMe &&
         !isNaN(this.amountToPayMe) &&
-        this.getFixedDecimal(this.amountToPayMe) > 0
+        this.addSpaceFixDecimal(this.amountToPayMe) > 0
       ) {
         this.setErrorMessage("");
         let data = {
-          amount: this.getFixedDecimal(this.amountToPayMe),
+          amount: this.addSpaceFixDecimal(this.amountToPayMe),
           currency: this.ticker,
           destination: this.addrToPayMe,
         };

@@ -63,29 +63,23 @@
               <td>
                 <div class="orders-table__td">
                   {{
-                    getFixedDecimal(
-                      trade.price,
-                      coins[currentBaseCurrency].decimals
-                    )
+                    addSpace(getCoolTrade(trade.price, currentQuoteCurrency))
                   }}
                 </div>
               </td>
               <td>
                 <div class="orders-table__td">
-                  {{
-                    getFixedDecimal(
-                      trade.quantity,
-                      coins[currentBaseCurrency].decimals
-                    )
-                  }}
+                  {{ addSpace(getCoolTrade(trade.quantity)) }}
                 </div>
               </td>
               <td>
                 <div class="orders-table__td">
                   {{
-                    getFixedDecimal(
-                      trade.quantity * trade.price,
-                      coins[currentBaseCurrency].decimals
+                    addSpace(
+                      getCoolTrade(
+                        trade.quantity * trade.price,
+                        currentQuoteCurrency
+                      )
                     )
                   }}
                 </div>

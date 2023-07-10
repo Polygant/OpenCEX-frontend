@@ -66,13 +66,13 @@
         <div class="deposit__minMax-blockCenter">
           {{ $t("common.mindepositamount") }} <br />
           <strong class="font-weight-bold"
-            >{{ coin?.limits?.deposit.min }} {{ ticker }}</strong
+            >{{ addSpace(coin?.limits?.deposit.min) }} {{ ticker }}</strong
           >
         </div>
         <div class="deposit__minMax-blockRight">
           {{ $t("common.maxdepositamount") }} <br />
           <strong class="font-weight-bold"
-            >{{ coin?.limits?.deposit.max }} {{ ticker }}</strong
+            >{{ addSpace(coin?.limits?.deposit.max) }} {{ ticker }}</strong
           >
         </div>
       </div>
@@ -162,11 +162,12 @@ import copyToBuffer from "~/mixins/copyToBuffer";
 import { mapGetters } from "vuex";
 import AddressTextField from "@/components/AddressTextField.vue";
 import getRegularNumber from "~/mixins/getRegularNumber";
+import getFixedDecimal from "~/mixins/getFixedDecimal";
 
 export default {
   name: "WalletDepositAddress",
   components: { AddressTextField },
-  mixins: [copyToBuffer, getRegularNumber],
+  mixins: [copyToBuffer, getRegularNumber, getFixedDecimal],
   props: {
     coin: {
       type: Object,
