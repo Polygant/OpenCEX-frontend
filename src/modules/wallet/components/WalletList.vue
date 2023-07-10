@@ -4,7 +4,7 @@
 </template>
 <script>
 import getRegularNumber from "~/mixins/getRegularNumber";
-import { floor10 } from "~/utilities/helpers";
+import getFixedDecimal from "@/mixins/getFixedDecimal";
 import TabBlock from "~/components/ui/TabBlock.vue";
 import { mapGetters } from "vuex";
 
@@ -24,7 +24,7 @@ const FIELDS_TO_FORMAT = ["availablebalance", "inorders"];
 export default {
   name: "WalletList",
   components: { TabBlock },
-  mixins: [getRegularNumber],
+  mixins: [getRegularNumber, getFixedDecimal],
   props: {
     coins: {
       type: Object,
@@ -93,15 +93,15 @@ export default {
 
       switch (true) {
         case val > 9999999:
-          val = floor10(val, 0).toFixed(0);
+          val = this.addSpaceFixDecimal(val, 0);
           break;
 
         case val > 999:
-          val = floor10(val, -2).toFixed(2);
+          val = this.addSpaceFixDecimal(val, 2);
           break;
 
         default:
-          val = floor10(val, -8).toFixed(8);
+          val = this.addSpaceFixDecimal(val, 8);
       }
 
       return val === "-0.00" || val === "-0.01" ? "0.00" : val;

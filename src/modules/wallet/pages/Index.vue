@@ -116,8 +116,9 @@
                     :data-thead="$t('common.allbalance')"
                   >
                     {{
-                      formatingBalanceAndOrder(
-                        floor10(coin["actual"] + coin["orders"], -coin.decimals)
+                      addSpaceFixDecimal(
+                        coin["actual"] + coin["orders"],
+                        coin.decimals
                       )
                     }}
                   </td>
@@ -125,17 +126,18 @@
                     class="walletTable__item walletTable__item_order"
                     :data-thead="$t('common.inorders')"
                   >
-                    {{
-                      formatingBalanceAndOrder(
-                        floor10(coin["orders"], -coin.decimals)
-                      )
-                    }}
+                    {{ addSpaceFixDecimal(coin["orders"], coin.decimals) }}
                   </td>
                   <td
                     class="walletTable__item walletTable__item_order"
                     :data-thead="$t('common.lockedBalance')"
                   >
-                    {{ showLockedBalance(ticker) }}
+                    {{
+                      addSpaceFixDecimal(
+                        showLockedBalance(ticker),
+                        coin.decimals
+                      )
+                    }}
                   </td>
                   <td
                     class="walletTable__item walletTable__item--hide-mobile"
@@ -483,9 +485,6 @@ export default {
         return `${newArray[0]}`;
       }
       return "0";
-    },
-    formatingBalanceAndOrder(value) {
-      return (value !== 0 ? value.toFixed(8) : value.toFixed()) * 1;
     },
     showLockedBalance(ticker) {
       return this.lockedBalance[ticker];

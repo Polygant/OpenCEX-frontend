@@ -170,7 +170,7 @@ export default {
     withdrawal() {
       let config = {
         currency: this.currency,
-        amount: this.getFixedDecimal(this.amount, 2),
+        amount: this.addSpaceFixDecimal(this.amount, 2),
         gate_id: 7,
       };
 

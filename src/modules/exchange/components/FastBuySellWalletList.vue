@@ -63,7 +63,7 @@
                     </td>
                     <td>
                       <div class="wallet-table__td">
-                        {{ getCoolBalance(ticker) }}
+                        {{ addSpace(getCoolBalance(ticker)) }}
                       </div>
                     </td>
                     <td>
@@ -102,10 +102,11 @@
 <script>
 import { mapGetters } from "vuex";
 import getCoolBalance from "~/mixins/getCoolBalance";
+import getFixedDecimal from "~/mixins/getFixedDecimal";
 
 export default {
   name: "FastBuySellWalletList",
-  mixins: [getCoolBalance],
+  mixins: [getCoolBalance, getFixedDecimal],
   emits: ["set-pair"],
   computed: {
     ...mapGetters({ coins: "core/coins" }),

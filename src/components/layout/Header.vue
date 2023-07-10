@@ -38,7 +38,12 @@
           {{ accountData?.currentPair[0] }}/{{ accountData?.currentPair[1] }}
         </div>
         <span class="header__ether-info-text v1">
-          {{ $t("common.header.volume") }}: {{ volume() }}&nbsp;
+          {{
+            addSpaceFixDecimal(
+              volume() || 0,
+              coins[accountData?.currentQuoteCurrency]?.decimals || 8
+            )
+          }}: {{ volume() }}&nbsp;
           {{ accountData?.currentQuoteCurrency }}
         </span>
       </div>
@@ -157,11 +162,7 @@
               </li>
 
               <!-- eslint-disable-next-line -->
-              <router-link
-                  v-else
-                  :to="item.path"
-                  class="author-list__item"
-              >
+              <router-link v-else :to="item.path" class="author-list__item">
                 <a class="author-list__link">
                   <svg
                     v-if="item.iconClass === 'cog'"
@@ -244,13 +245,14 @@ import { mapGetters } from "vuex";
 import menuHelper from "~/mixins/menuHelper";
 import helpers from "~/mixins/helpers";
 import handleLogout from "~/mixins/handleLogout";
+import getFixedDecimal from "~/mixins/getFixedDecimal";
 import LanguageSelector from "~/components/layout/parts/LanguageSelector.vue";
 import { useCookies } from "vue3-cookies";
 
 export default {
   name: "HeaderComponent",
   components: { LanguageSelector, MenuComponent },
-  mixins: [menuHelper, handleLogout, helpers],
+  mixins: [menuHelper, handleLogout, helpers, getFixedDecimal],
   props: {
     routeName: {
       type: String,

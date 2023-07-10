@@ -152,22 +152,12 @@
                     </td>
                     <td>
                       <div class="currency-table__td">
-                        {{
-                          getFixedDecimal(
-                            pair.price,
-                            coins[currentBaseCurrency].decimals
-                          )
-                        }}
+                        {{ pair.price }}
                       </div>
                     </td>
                     <td>
                       <div class="currency-table__td">
-                        {{
-                          getFixedDecimal(
-                            pair.vol24h,
-                            coins[currentBaseCurrency].decimals
-                          )
-                        }}
+                        {{ pair.vol24h }}
                       </div>
                     </td>
                     <td>
@@ -266,8 +256,8 @@ export default {
       return res.map((pair) => ({
         ...pair,
         currency: pair.base,
-        price: this.getTradeCell(pair, false),
-        vol24h: this.getTradeCell(pair, true),
+        price: this.addSpace(this.getTradeCell(pair, false)),
+        vol24h: this.addSpace(this.getTradeCell(pair, true)),
         price24h: this.getPairs24h(`${pair["base"]}-${pair["quote"]}`),
       }));
     },

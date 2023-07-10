@@ -236,7 +236,7 @@ export default {
 
       config = {
         currency: this.currency,
-        amount: this.getFixedDecimal(this.amount, 2),
+        amount: this.addSpaceFixDecimal(this.amount, 2),
         gate_id: 1,
         data: { method: this.method, details: { user: cardNumber } },
       };
@@ -328,7 +328,7 @@ export default {
 
       config = {
         currency: this.currency,
-        amount: this.getFixedDecimal(this.amount, 2),
+        amount: this.addSpaceFixDecimal(this.amount, 2),
         gate_id: 5,
         data: {
           method: this.method,
