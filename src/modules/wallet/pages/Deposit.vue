@@ -173,7 +173,10 @@ export default {
     deep: true,
   },
   mounted() {
-    this.showDepositNoticeModal();
+    if (localStorage.getItem("showDepositNoticeModal")) {
+      this.showDepositNoticeModal();
+      localStorage.removeItem("showDepositNoticeModal");
+    }
     this.$store.dispatch("core/getCoinsLimits");
     this.loadWallets();
     this.showSecurityNotice();

@@ -263,6 +263,7 @@ export default {
     if (localStorage.getItem("token")) {
       this.$router.push("/trade/BTC-USDT");
     }
+    localStorage.setItem("showDepositNoticeModal", "1");
     if (localStorage.getItem("justactivate") === "true") {
       setTimeout(() => {
         this.$notify({
