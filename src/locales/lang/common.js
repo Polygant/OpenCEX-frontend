@@ -2,7 +2,8 @@ const common = {
   ru: {
     deposit_modal: {
       title: "Внимание!",
-      text: "Адрес для пополнения для каждой монеты уникален. Будьте внимательны!",
+      text: "Адрес для пополнения для каждой монеты уникален.",
+      subtext: "Будьте внимательны!",
     },
     ok: "OK",
     country_not_support: "Регистрация пользователей из данной страны запрещена",
@@ -777,7 +778,8 @@ const common = {
   en: {
     deposit_modal: {
       title: "Attention!",
-      text: "The deposit address for each coin is unique. Be careful!",
+      text: "The deposit address for each coin is unique.",
+      subtext: "Be careful!",
     },
     ok: "OK",
     country_not_support: "Users from this country are not allowed to register",

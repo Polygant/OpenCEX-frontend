@@ -7,7 +7,11 @@
             {{ $t("common.deposit_modal.title") }}
           </h3>
           <div class="security-notice">
-            <p>{{ $t("common.deposit_modal.text") }}</p>
+            <p class="font-bold text-center">
+              {{ $t("common.deposit_modal.text") }}<br />{{
+                $t("common.deposit_modal.subtext")
+              }}
+            </p>
             <div class="text-center">
               <button
                 type="button"
