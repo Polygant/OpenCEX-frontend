@@ -119,25 +119,7 @@ export default {
   },
   methods: {
     selectCountry(country) {
-      const excludeCountries = [
-        "US",
-        "KP",
-        "IR",
-        "SY",
-        "YE",
-        "SG",
-        "KR",
-        "HK",
-        "CN",
-        "CH",
-        "TW",
-        "AF",
-        "PK",
-        "SO",
-        "SD",
-        "CF",
-        "SS",
-      ];
+      const excludeCountries = [];
 
       if (excludeCountries.includes(country.value)) {
         this.$emit("valid-country", false);
