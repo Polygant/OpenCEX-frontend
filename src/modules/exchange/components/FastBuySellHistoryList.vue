@@ -31,7 +31,7 @@
             >
               <div class="walletTable__amount">
                 <span class="walletTable__column_sell">
-                  {{ getQuantityValue(ex) }}
+                  {{ addSpace(getQuantityValue(ex)) }}
                   {{ ex.base_currency }}
                 </span>
                 <i class="fa fa-exchange" aria-hidden="true"></i>
@@ -39,13 +39,13 @@
                   class="walletTable__column_buy"
                   :style="mainColor ? `color: ${mainColor} !important` : {}"
                 >
-                  {{ getCostValue(ex) }}
+                  {{ addSpace(getCostValue(ex)) }}
                   {{ ex.quote_currency }}
                 </span>
               </div>
             </td>
             <td class="walletTable__column" :data-thead="$t('common.price')">
-              {{ ex.order.price }}
+              {{ addSpace(ex.order.price) }}
             </td>
           </tr>
         </tbody>
@@ -187,7 +187,7 @@ export default {
         : this.getCoolValueForTable(ex.cost);
     },
     getCoolValueForTable(x) {
-      return precision(x) > 8 ? this.getFixedDecimal(x, 8) : x;
+      return precision(x) > 8 ? this.addSpaceFixDecimal(x, 8) : x;
     },
     getprettyDate(ptime) {
       const a = new Date();

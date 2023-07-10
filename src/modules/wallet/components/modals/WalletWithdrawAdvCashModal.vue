@@ -149,7 +149,7 @@ export default {
 
       const config = {
         currency: this.currency,
-        amount: this.getFixedDecimal(this.amount, 2),
+        amount: this.addSpaceFixDecimal(this.amount, 2),
         gate_id: 2,
         data: { recipient: this.targetRecipient },
       };

@@ -12,7 +12,7 @@
         'select',
         order.price,
         Number(
-          getFixedDecimal(order.depth, coins[currentBaseCurrency].decimals)
+          addSpaceFixDecimal(order.depth, coins[currentBaseCurrency].decimals)
         )
       )
     "
@@ -22,7 +22,9 @@
       :style="order.owner ? 'font-weight: 600' : ''"
     >
       <div class="sell-orders__td">
-        {{ order.price }}
+        {{
+          addSpaceFixDecimal(order.price, coins[currentQuoteCurrency].decimals)
+        }}
       </div>
       <div
         v-if="isCircle && isAuthorized"
@@ -31,18 +33,18 @@
     </td>
     <td :class="{ 'td-bold': order.owner }">
       <div class="sell-orders__td">
-        {{ getFixedDecimal(quantity, coins[currentBaseCurrency].decimals) }}
+        {{ addSpaceFixDecimal(quantity, coins[currentBaseCurrency].decimals) }}
       </div>
     </td>
 
     <td :class="{ 'td-bold': order.owner }">
       <div class="sell-orders__td">
-        {{ price }}
+        {{ addSpace(price) }}
       </div>
     </td>
     <td :class="{ 'td-bold': order.owner }">
       <div class="sell-orders__td">
-        {{ getFixedDecimal(order.depth, coins[currentBaseCurrency].decimals) }}
+        {{ addSpaceFixDecimal(order.depth, round) }}
       </div>
     </td>
   </tr>
@@ -73,7 +75,11 @@ export default {
     },
     price() {
       return this.getCoolTrade(
-        this.getFixedDecimal(this.order.quantity * this.order.price, 8, true),
+        this.addSpaceFixDecimal(
+          this.order.quantity * this.order.price,
+          8,
+          true
+        ),
         this.currentQuoteCurrency
       );
     },

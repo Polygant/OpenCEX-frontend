@@ -45,12 +45,12 @@
       <div class="otc__min-max">
         <span>
           {{ $t("common.min") }}:
-          {{ limits?.min }}
+          {{ addSpaceFixDecimal(limits?.min, coins[limits.currency].decimals) }}
           {{ limits.currency }}
         </span>
         <span class="mt-1">
           {{ $t("common.max") }}:
-          {{ limits?.max }}
+          {{ addSpaceFixDecimal(limits?.max, coins[limits.currency].decimals) }}
           {{ limits.currency }}
         </span>
       </div>
@@ -145,9 +145,9 @@ export default {
     onSubmit() {
       this.$emit("add-order", {
         orderData: {
-          quantity: this.getFixedDecimal(this.operationData.quantity),
-          price: this.getFixedDecimal(this.operationData.limitPrice),
-          stop: this.getFixedDecimal(this.operationData.stopPrice),
+          quantity: this.addSpaceFixDecimal(this.operationData.quantity),
+          price: this.addSpaceFixDecimal(this.operationData.limitPrice),
+          stop: this.addSpaceFixDecimal(this.operationData.stopPrice),
         },
         type: 4,
         callback: () => {
@@ -184,8 +184,10 @@ export default {
       return this.operation == "buy" ? "green" : "orange";
     },
     balanceByOperation() {
-      return `${this.getCoolBalance(
-        this.operation === "buy" ? this.quoteCurrency : this.baseCurrency
+      return `${this.addSpace(
+        this.getCoolBalance(
+          this.operation === "buy" ? this.quoteCurrency : this.baseCurrency
+        )
       )} ${this.operation === "buy" ? this.quoteCurrency : this.baseCurrency}`;
     },
     limits() {

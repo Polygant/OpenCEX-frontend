@@ -118,7 +118,7 @@
                   class="walletTable__item1"
                   :data-thead="$t('fees.second_table_deposit_fee')"
                 >
-                  {{ getStringOfFloat(coin.fee?.deposit?.address) }}
+                  {{ addSpace(getStringOfFloat(coin.fee?.deposit?.address)) }}
                   {{ ticker }}
                 </td>
                 <td
@@ -132,20 +132,21 @@
                   class="walletTable__item1"
                   :data-thead="$t('fees.second_table_min_deposit')"
                 >
-                  {{ coin?.limits?.deposit.min }} {{ ticker }}
+                  {{ addSpace(coin?.limits?.deposit.min) }} {{ ticker }}
                 </td>
                 <td
                   class="walletTable__item1"
                   :data-thead="$t('fees.second_table_max_deposit')"
                 >
-                  {{ coin?.limits?.deposit.max }} {{ ticker }}
+                  {{ addSpace(coin?.limits?.deposit.max) }} {{ ticker }}
                 </td>
                 <td
                   class="walletTable__item1"
                   :data-thead="$t('fees.second_table_w_limits')"
                 >
-                  {{ coin?.limits?.withdrawal.min }} -
-                  {{ formatNum(coin?.limits?.withdrawal.max) }} {{ ticker }}
+                  {{ addSpace(coin?.limits?.withdrawal.min) }} -
+                  {{ addSpace(coin?.limits?.withdrawal.max) }}
+                  {{ ticker }}
                 </td>
               </tr>
             </tbody>
@@ -212,7 +213,7 @@
                   class="walletTable__item1"
                   :data-thead="$t('fees.third_table_1c')"
                 >
-                  {{ formatNum(coin?.limits?.order.max) }} {{ ticker }}
+                  {{ addSpace(coin?.limits?.order.max) }} {{ ticker }}
                 </td>
               </tr>
             </tbody>
@@ -225,6 +226,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import getFixedDecimal from "~/mixins/getFixedDecimal";
 
 import { TRADING_VOLUME } from "~/utilities/consts";
 
@@ -238,6 +240,7 @@ export default {
       meta: [{ name: "description", content: this.$t("fees.fees") }],
     };
   },
+  mixins: [getFixedDecimal],
   data() {
     return {
       contentClass: CONTENT_CLASS,
@@ -257,9 +260,6 @@ export default {
       const notation = number.toExponential();
       const [base, exp] = notation.split("e-");
       return number.toFixed(Math.max(base.length - 1, exp));
-    },
-    formatNum(num) {
-      return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/gi, "$1 ");
     },
     formatingCommission(address) {
       let res = "0";

@@ -15,12 +15,12 @@ export const TRADING_VOLUME = [
     taker: 0.1,
   },
   {
-    volume: "&ge; 1000 BTC",
+    volume: "&ge; 1 000 BTC",
     maker: 0.1,
     taker: 0.1,
   },
   {
-    volume: "&ge; 5000 BTC",
+    volume: "&ge; 5 000 BTC",
     maker: 0.1,
     taker: 0.1,
   },
