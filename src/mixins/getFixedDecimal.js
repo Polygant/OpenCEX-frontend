@@ -24,7 +24,7 @@ function addSpace(number) {
   let [whole, decimal] = number.split(".");
 
   for (let i = whole.length - 3; i > 0; i -= 3) {
-    whole = whole.slice(0, i) + " " + whole.slice(i);
+    whole = whole.slice(0, i) + "," + whole.slice(i);
   }
 
   if (decimal && Number(decimal) !== 0)
