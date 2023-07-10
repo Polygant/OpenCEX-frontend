@@ -5,6 +5,7 @@ const common = {
       text: "Адрес для пополнения для каждой монеты уникален. Будьте внимательны!",
     },
     ok: "OK",
+    country_not_support: "Регистрация пользователей из данной страны запрещена",
     rights: "Все права защищены",
     tradeOn: "Торгуй в пару кликов с {trade}",
     allDay: "Круглосуточная клиентская поддержка в чате к вашим услугам.",
@@ -779,6 +780,7 @@ const common = {
       text: "The deposit address for each coin is unique. Be careful!",
     },
     ok: "OK",
+    country_not_support: "Users from this country are not allowed to register",
     rights: "All Rights Reserved",
     tradeOn: "Trade on the go with {trade}",
     allDay:
