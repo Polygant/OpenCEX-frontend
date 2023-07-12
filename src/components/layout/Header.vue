@@ -38,12 +38,13 @@
           {{ accountData?.currentPair[0] }}/{{ accountData?.currentPair[1] }}
         </div>
         <span class="header__ether-info-text v1">
+          {{ $t("common.header.volume") }}:
           {{
             addSpaceFixDecimal(
               volume() || 0,
               coins[accountData?.currentQuoteCurrency]?.decimals || 8
             )
-          }}: {{ volume() }}&nbsp;
+          }}&nbsp;
           {{ accountData?.currentQuoteCurrency }}
         </span>
       </div>
