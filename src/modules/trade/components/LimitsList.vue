@@ -171,7 +171,7 @@ export default {
       if (this.operation === "buy")
         output = this.addSpace(
           this.operationData.quantity *
-            (typeof this.profile.user.user_fee !== "undefined" &&
+            (typeof this.profile.user.user_fee === "number" &&
             this.profile.user.user_fee !== 0
               ? this.profile.user.user_fee
               : this.coins[this.baseCurrency]?.fee?.order.limit)
@@ -180,7 +180,7 @@ export default {
         output = this.addSpace(
           this.operationData.quantity *
             this.operationData.price *
-            (typeof this.profile.user.user_fee !== "undefined" &&
+            (typeof this.profile.user.user_fee === "number" &&
             this.profile.user.user_fee !== 0
               ? this.profile.user.user_fee
               : this.coins[this.quoteCurrency].fee?.order.limit)
