@@ -14,7 +14,11 @@
           "
           class="otc__wallet-image mr-1 inline-block"
         />
-        {{ getCoolBalance(operation == "buy" ? quoteCurrency : baseCurrency) }}
+        {{
+          addSpace(
+            getCoolBalance(operation == "buy" ? quoteCurrency : baseCurrency)
+          )
+        }}
         {{ operation == "buy" ? quoteCurrency : baseCurrency }}
       </div>
     </div>
@@ -29,12 +33,12 @@
       <div class="otc__min-max">
         <span>
           {{ $t("common.min") }}:
-          {{ limits?.min }}
+          {{ addSpaceFixDecimal(limits?.min, coins[limits.currency].decimals) }}
           {{ limits.currency }}
         </span>
         <span class="mt-1">
           {{ $t("common.max") }}:
-          {{ limits?.max }}
+          {{ addSpaceFixDecimal(limits?.max, coins[limits.currency].decimals) }}
           {{ limits.currency }}
         </span>
       </div>
@@ -183,7 +187,7 @@ export default {
           return Number(
             (
               this.operationData.quantity *
-              (this.profile.user.user_fee !== "undefined"
+              (typeof this.profile.user.user_fee === "number"
                 ? this.profile.user.user_fee
                 : this.coins[this.baseCurrency]?.fee?.order.limits)
             ).toFixed(8)
@@ -193,7 +197,7 @@ export default {
             (
               this.operationData.quantity *
               Math.max(+this.operationData.limit, this.bitfinexPrice) *
-              (this.profile.user.user_fee !== "undefined"
+              (typeof this.profile.user.user_fee === "number"
                 ? this.profile.user.user_fee
                 : this.coins[this.quoteCurrency].fee?.order.limits)
             ).toFixed(8)
@@ -205,9 +209,9 @@ export default {
     onSubmit() {
       this.$emit("add-order", {
         orderData: {
-          quantity: this.getFixedDecimal(+this.operationData.quantity),
-          otc_limit: this.getFixedDecimal(+this.operationData.limit),
-          otc_percent: this.getFixedDecimal(+this.operationData.percent),
+          quantity: this.addSpaceFixDecimal(+this.operationData.quantity),
+          otc_limit: this.addSpaceFixDecimal(+this.operationData.limit),
+          otc_percent: this.addSpaceFixDecimal(+this.operationData.percent),
         },
         type: 2,
         callback: () => {

@@ -77,10 +77,10 @@
       <div v-if="order.type === 4" class="orders-table__td">
         {{ $t("common.stop") }}: {{ order.stop }}<br />
         {{ $t("common.limit2") }}:
-        {{ getFixedDecimal(order.price, coins[quote].decimals) }}
+        {{ addSpaceFixDecimal(order.price, coins[quote].decimals) }}
       </div>
       <div v-else class="orders-table__td">
-        {{ getFixedDecimal(order.price, coins[quote].decimals) }}
+        {{ addSpace(getCoolTrade(order.price, currentQuoteCurrency)) }}
       </div>
     </td>
     <td
@@ -91,7 +91,7 @@
       <div v-if="order.type === 4" class="orders-table__td">
         {{ $t("common.stop") }}: {{ order.stop }}<br />
         {{ $t("common.limit2") }}:
-        {{ getFixedDecimal(order.price, coins[quote].decimals) }}
+        {{ addSpaceFixDecimal(order.price, coins[quote].decimals) }}
       </div>
       <div v-else class="orders-table__td">
         <span
@@ -99,17 +99,17 @@
             order.quantity_left !== 0 && order.quantity_left === order.quantity
           "
         >
-          {{ getFixedDecimal(order.price, coins[quote].decimals) }}
+          {{ addSpace(getCoolTrade(order.price, currentQuoteCurrency)) }}
         </span>
         <span
           v-if="
             order.quantity_left !== 0 && order.quantity_left !== order.quantity
           "
         >
-          {{ getFixedDecimal(vwapOrPrice, coins[quote].decimals) }}
+          {{ addSpace(getCoolTrade(vwapOrPrice, currentQuoteCurrency)) }}
         </span>
         <span v-if="order.quantity_left === 0">
-          {{ getFixedDecimal(vwapOrPrice, coins[quote].decimals) }}
+          {{ addSpace(getCoolTrade(vwapOrPrice, currentQuoteCurrency)) }}
         </span>
       </div>
     </td>
@@ -119,7 +119,7 @@
       :data-thead="$t('common.amountoriginal')"
     >
       <div class="orders-table__td hideMiddleRes">
-        {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
+        {{ addSpace(getCoolTrade(order.quantity)) }}
       </div>
       <div class="orders-table__td middleRes">
         {{ order.quantity }}
@@ -136,24 +136,18 @@
             order.quantity_left !== 0 && order.quantity_left === order.quantity
           "
         >
-          {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
+          {{ addSpace(getCoolTrade(order.quantity)) }}
         </span>
         <span
           v-if="
             order.quantity_left !== 0 && order.quantity_left !== order.quantity
           "
         >
-          {{
-            getFixedDecimal(
-              order.quantity - order.quantity_left,
-              coins[base].decimals
-            )
-          }}
-          /
-          {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
+          {{ addSpace(getCoolTrade(order.quantity - order.quantity_left)) }} /
+          {{ addSpace(getCoolTrade(order.quantity)) }}
         </span>
         <span v-if="order.quantity_left === 0">
-          {{ getFixedDecimal(order.quantity, coins[base]?.decimals) }}
+          {{ addSpace(getCoolTrade(order.quantity)) }}
         </span>
       </div>
     </td>
@@ -163,10 +157,10 @@
       :data-thead="$t('common.amountleft')"
     >
       <div class="orders-table__td hideMiddleRes">
-        {{ getFixedDecimal(order.quantity_left, coins[base].decimals) }}
+        {{ addSpace(getCoolTrade(order.quantity_left)) }}
       </div>
       <div class="orders-table__td middleRes">
-        {{ getFixedDecimal(order.quantity_left, coins[base].decimals) }}
+        {{ addSpaceFixDecimal(order.quantity_left, coins[base].decimals) }}
       </div>
     </td>
     <td
@@ -181,13 +175,7 @@
           "
           class="orders-table__td"
         >
-          {{
-            getFixedDecimal(
-              order.quantity * order.price,
-              coins[quote].decimals,
-              true
-            )
-          }}
+          {{ addSpaceFixDecimal(order.quantity * order.price, 3, true) }}
         </span>
         <span
           v-if="
@@ -195,21 +183,15 @@
           "
         >
           {{
-            getFixedDecimal(
+            addSpaceFixDecimal(
               (order.quantity - order.quantity_left) * vwapOrPrice,
-              coins[quote].decimals,
+              3,
               true
             )
           }}
         </span>
         <span v-if="order.quantity_left === 0">
-          {{
-            getFixedDecimal(
-              order.quantity * vwapOrPrice,
-              coins[quote].decimals,
-              true
-            )
-          }}
+          {{ addSpace(getCoolTrade(order.quantity * vwapOrPrice)) }}
         </span>
       </div>
     </td>
@@ -219,13 +201,7 @@
       :data-thead="$t('common.sum')"
     >
       <div class="orders-table__td">
-        {{
-          getFixedDecimal(
-            order.quantity_left * order.price,
-            coins[quote].decimals,
-            true
-          )
-        }}
+        {{ addSpaceFixDecimal(order.quantity_left * order.price, 3, true) }}
       </div>
     </td>
     <td

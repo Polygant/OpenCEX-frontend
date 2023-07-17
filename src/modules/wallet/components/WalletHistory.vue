@@ -52,7 +52,9 @@
           </div>
           <div class="wallet-history__item wallet-history__amount">
             <span class="thead">{{ $t("common.amountTableHeader") }}</span>
-            {{ getRegularNumber(tx.amount) }}&nbsp;&nbsp;{{ tx.currency }}
+            {{
+              addSpaceFixDecimal(tx.amount, coins[tx.currency].decimals)
+            }}&nbsp;&nbsp;{{ tx.currency }}
           </div>
           <div
             v-if="
@@ -238,11 +240,12 @@ import { mapGetters } from "vuex";
 import Paginate from "vuejs-paginate-next";
 import getRegularNumber from "~/mixins/getRegularNumber";
 import { truncateCenter } from "~/utilities/helpers";
+import getFixedDecimal from "~/mixins/getFixedDecimal";
 
 export default {
   name: "WalletHistory",
   components: { Paginate },
-  mixins: [getRegularNumber],
+  mixins: [getRegularNumber, getFixedDecimal],
   props: {
     curPage: {
       type: Number,

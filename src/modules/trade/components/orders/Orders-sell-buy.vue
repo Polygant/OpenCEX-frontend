@@ -17,7 +17,7 @@
         {{ $t("common.totalsell") }}:
         <b class="total-sell-val"
           >{{
-            getFixedDecimal(sellVolume, coins[currentBaseCurrency].decimals)
+            addSpaceFixDecimal(sellVolume, coins[currentBaseCurrency].decimals)
           }}&nbsp;{{ currentBaseCurrency }}</b
         >
       </p>
@@ -30,7 +30,7 @@
         {{ $t("common.totalbuy") }}:
         <b class="total-buy-val"
           >{{
-            getFixedDecimal(
+            addSpaceFixDecimal(
               getBuyOrderVolume(),
               coins[currentQuoteCurrency].decimals
             )
@@ -106,21 +106,21 @@ export default {
 
       if (this.isFiat(this.currentQuoteCurrency)) {
         if (price >= 100000) {
-          return price.toFixed(0);
+          return this.addSpaceFixDecimal(price, 0);
         } else {
-          return price.toFixed(2);
+          return this.addSpaceFixDecimal(price, 2);
         }
       } else {
         if (price >= 10000) {
-          return price.toFixed(0);
+          return this.addSpaceFixDecimal(price, 0);
         } else if (price >= 1000) {
-          return price.toFixed(1);
+          return this.addSpaceFixDecimal(price, 1);
         } else if (price >= 100) {
-          return price.toFixed(2);
+          return this.addSpaceFixDecimal(price, 2);
         } else if (price >= 10) {
-          return price.toFixed(3);
+          return this.addSpaceFixDecimal(price, 3);
         } else {
-          return price.toFixed(4);
+          return this.addSpaceFixDecimal(price, 4);
         }
       }
     },

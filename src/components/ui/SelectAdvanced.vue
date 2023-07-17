@@ -23,7 +23,7 @@
           "
           class="coinSelector__price"
           >{{
-            getFixedDecimal(
+            addSpaceFixDecimal(
               currentOption.price,
               coins[currentOption.id]?.decimals
             )
@@ -55,7 +55,9 @@
               v-if="coin.price && coin.price !== '0' && coin.price !== 'NAN'"
               class="coinSelector__price"
             >
-              {{ getFixedDecimal(coin.price, coins[coin.id].decimals) }}
+              {{
+                addSpaceFixDecimal(coin.price, coins[coin.id]?.decimals || 8)
+              }}
             </span>
           </div>
         </li>

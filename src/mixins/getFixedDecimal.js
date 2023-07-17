@@ -1,17 +1,62 @@
 import { Decimal } from "decimal.js";
 
+/**
+ * @param number {String. Number}
+ */
+
+function toString(number) {
+  if (Number.isNaN(Number(number)) || number === null) {
+    console.error("Error while formatting number, cannot format value", number);
+    return number;
+  } else {
+    if (typeof number === "string") return number;
+    else return String(number);
+  }
+}
+
+/**
+ * @param number {String, Number}
+ */
+
+function addSpace(number) {
+  number = toString(number);
+
+  let [whole, decimal] = number.split(".");
+
+  for (let i = whole.length - 3; i > 0; i -= 3) {
+    whole = whole.slice(0, i) + "," + whole.slice(i);
+  }
+
+  if (decimal && Number(decimal) !== 0)
+    return whole + "." + decimal.replace(/0+$/g, "");
+  else return whole;
+}
+
+/**
+ * @param number {String, Number}
+ * @param precision {Number}
+ * @param toClosest {Boolean}
+ */
+
+function getFixedDecimal(val, precision = 8, toClosest = false) {
+  return val
+    ? new Decimal(
+        new Decimal(val).toFixed(
+          precision,
+          toClosest ? Decimal.ROUND_HALF_FLOOR : Decimal.ROUND_DOWN
+        )
+      ).toNumber()
+    : 0;
+}
+
 export default {
   methods: {
-    getFixedDecimal(val, precision = 8, toClosest = false) {
-      let res = val
-        ? new Decimal(
-            new Decimal(val).toFixed(
-              precision,
-              toClosest ? Decimal.ROUND_HALF_FLOOR : Decimal.ROUND_DOWN
-            )
-          ).toNumber()
-        : 0;
-      return val > 0 && res === 0 ? val : res;
+    addSpaceFixDecimal(number, precision, toClosest = false) {
+      return addSpace(getFixedDecimal(number, precision, toClosest));
     },
+
+    getFixedDecimal,
+
+    addSpace,
   },
 };
