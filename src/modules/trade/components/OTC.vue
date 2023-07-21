@@ -187,7 +187,7 @@ export default {
           return Number(
             (
               this.operationData.quantity *
-              (this.profile.user.user_fee !== "undefined"
+              (typeof this.profile.user.user_fee === "number"
                 ? this.profile.user.user_fee
                 : this.coins[this.baseCurrency]?.fee?.order.limits)
             ).toFixed(8)
@@ -197,7 +197,7 @@ export default {
             (
               this.operationData.quantity *
               Math.max(+this.operationData.limit, this.bitfinexPrice) *
-              (this.profile.user.user_fee !== "undefined"
+              (typeof this.profile.user.user_fee === "number"
                 ? this.profile.user.user_fee
                 : this.coins[this.quoteCurrency].fee?.order.limits)
             ).toFixed(8)
