@@ -331,7 +331,7 @@ export default {
           this.accountData.pairs,
           this.accountData.pairprop + ":volume",
           0
-        )
+        ) || 0
       ).toFixed(2);
     },
 
