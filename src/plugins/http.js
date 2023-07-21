@@ -46,7 +46,6 @@ export default (app) => {
       config.headers["X-API-LANG"] = localStorage.getItem("planguage") || "en";
       let token = localStorage.getItem("token");
       try {
-        debugger;
         let payload = jwt_decode(token);
         let expTime = payload.exp * 1000;
         let curTime = new Date().getTime();
