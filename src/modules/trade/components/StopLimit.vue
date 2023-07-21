@@ -145,9 +145,9 @@ export default {
     onSubmit() {
       this.$emit("add-order", {
         orderData: {
-          quantity: this.addSpaceFixDecimal(this.operationData.quantity),
-          price: this.addSpaceFixDecimal(this.operationData.limitPrice),
-          stop: this.addSpaceFixDecimal(this.operationData.stopPrice),
+          quantity: this.getFixedDecimal(this.operationData.quantity),
+          price: this.getFixedDecimal(this.operationData.limitPrice),
+          stop: this.getFixedDecimal(this.operationData.stopPrice),
         },
         type: 4,
         callback: () => {
