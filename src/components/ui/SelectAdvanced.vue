@@ -122,11 +122,12 @@ export default {
           id: key,
           selected: this.selectedDefault === key || this.selected === key,
           title: value.name,
-          price: value["actual"]
-            ? this.formatingBalanceAndOrder(
-                floor10(value["actual"] + value["orders"], -8)
-              )
-            : "",
+          price:
+            typeof value["actual"] !== "undefined"
+              ? this.formatingBalanceAndOrder(
+                  floor10(value["actual"] + value["orders"], -8)
+                )
+              : "",
         });
       }
       return list;
