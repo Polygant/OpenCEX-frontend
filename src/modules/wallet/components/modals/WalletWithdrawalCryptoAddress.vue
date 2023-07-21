@@ -390,11 +390,11 @@ export default {
       if (
         this.amountToPayMe &&
         !isNaN(this.amountToPayMe) &&
-        this.addSpaceFixDecimal(this.amountToPayMe) > 0
+        this.getFixedDecimal(this.amountToPayMe) > 0
       ) {
         this.setErrorMessage("");
         let data = {
-          amount: this.addSpaceFixDecimal(this.amountToPayMe),
+          amount: this.getFixedDecimal(this.amountToPayMe),
           currency: this.ticker,
           destination: this.addrToPayMe,
         };
