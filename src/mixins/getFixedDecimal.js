@@ -21,11 +21,20 @@ function toString(number) {
 function addSpace(number) {
   number = toString(number);
 
+  let negative = false;
+
   let [whole, decimal] = number.split(".");
+
+  if (whole.startsWith("-")) {
+    whole = whole.slice(1);
+    negative = true;
+  }
 
   for (let i = whole.length - 3; i > 0; i -= 3) {
     whole = whole.slice(0, i) + "," + whole.slice(i);
   }
+
+  if (negative) whole = "-" + whole;
 
   if (decimal && Number(decimal) !== 0)
     return whole + "." + decimal.replace(/0+$/g, "");
