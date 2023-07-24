@@ -21,6 +21,8 @@ import { Profile } from "~/api/profile";
 import { PaymentList } from "~/api/payment_list";
 import { Notifications } from "~/api/notifications";
 
+let refreshTokenPromise = null;
+
 export default {
   changeTheme({ state }, val) {
     state.theme = val;
@@ -405,29 +407,31 @@ export default {
     localStorage.removeItem("refresh_token");
     commit(mutationTypes.LOGOUT);
   },
-  async refreshToken({ dispatch, state }) {
-    if (!state.refresh_token_lock) {
-      state.refresh_token_lock = true;
-      if (
-        localStorage.getItem("refresh_token") &&
-        localStorage.getItem("refresh_token") !== "undefined"
-      ) {
-        app.config.globalProperties.$http
-          .post("auth/token/refresh/", {
-            refresh: localStorage.getItem("refresh_token") ?? "",
-          })
-          .then((response) => {
-            localStorage.setItem("token", response.data.access);
-            localStorage.setItem("refresh_token", response.data.refresh);
-          })
-          .catch(() => {
-            dispatch("logout");
-          })
-          .finally(() => {
-            state.refresh_token_lock = false;
-          });
-      }
-    }
+  refreshToken({ dispatch }) {
+    if (!refreshTokenPromise)
+      refreshTokenPromise = (async function () {
+        if (
+          localStorage.getItem("refresh_token") &&
+          localStorage.getItem("refresh_token") !== "undefined"
+        ) {
+          await app.config.globalProperties.$http
+            .post("auth/token/refresh/", {
+              refresh: localStorage.getItem("refresh_token") ?? "",
+            })
+            .then((response) => {
+              localStorage.setItem("token", response.data.access);
+              localStorage.setItem("refresh_token", response.data.refresh);
+            })
+            .catch(() => {
+              dispatch("logout");
+            })
+            .finally(() => {
+              refreshTokenPromise = null;
+            });
+        }
+      })();
+
+    return refreshTokenPromise;
   },
   getStoreList({ commit }, callback) {
     StoreList.list().then((response) => {

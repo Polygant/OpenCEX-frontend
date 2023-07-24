@@ -43,13 +43,13 @@ export default (app) => {
 
   app.config.globalProperties.$http.interceptors.request.use(
     async function (config) {
-      config.headers["X-API-LANG"] = localStorage.getItem("lang") || "en";
+      config.headers["X-API-LANG"] = localStorage.getItem("planguage") || "en";
       let token = localStorage.getItem("token");
       try {
         let payload = jwt_decode(token);
         let expTime = payload.exp * 1000;
         let curTime = new Date().getTime();
-        if (expTime - curTime <= -3000) {
+        if (expTime - curTime <= 3000) {
           if (config.url !== "auth/token/refresh/") {
             await store.dispatch("core/refreshToken");
           }
@@ -83,10 +83,16 @@ export default (app) => {
         !noAuthRequireApis.includes(error.response.config.url) &&
         error.response.config.url !== "auth/token/refresh/"
       ) {
-        if (!localStorage.getItem("wiz-auth")) {
-          localStorage.removeItem("token");
+        if (
+          error.response &&
+          error.response?.data?.code?.code === "token_not_valid"
+        ) {
+          const originalRequest = error.config;
+          await store.dispatch("core/refreshToken");
+          originalRequest.headers["Authorization"] =
+            "Bearer " + localStorage.getItem("token");
+          return app.config.globalProperties.$http(originalRequest);
         }
-        await store.dispatch("core/refreshToken");
         const pathname = window.location.pathname;
         const matchNotAuthViews = noAuthRequireRoutes.find((route) =>
           pathname.startsWith(route)

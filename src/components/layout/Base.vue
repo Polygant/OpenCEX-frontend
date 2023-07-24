@@ -54,6 +54,7 @@ export default {
       isLoading: false,
       simpleLayout: true,
       color: "#CCC",
+      updatingCoinsData: false,
     };
   },
   computed: {
@@ -114,13 +115,20 @@ export default {
     } else {
       this.$store.dispatch("core/changeTheme", "light");
     }
-    this.updateCoinsData();
-    this.interval = setInterval(() => this.updateCoinsData(), 5 * 60 * 1000);
   },
+
   methods: {
+    startUpdatingCoinsData() {
+      if (this.updatingCoinsData) return;
+      this.updatingCoinsData = true;
+      this.updateCoinsData();
+      this.interval = setInterval(() => this.updateCoinsData(), 5 * 60 * 1000);
+    },
+
     async updateCoinsData() {
       Init.Base();
     },
+
     checkLayout() {
       if (
         this.$route.name === "login" ||
@@ -136,6 +144,7 @@ export default {
         this.simpleLayout = true;
       } else {
         this.simpleLayout = false;
+        this.startUpdatingCoinsData();
       }
     },
   },
