@@ -75,7 +75,8 @@
       :data-thead="$t('common.price')"
     >
       <div v-if="order.type === 4" class="orders-table__td">
-        {{ $t("common.stop") }}: {{ order.stop }}<br />
+        {{ $t("common.stop") }}:
+        {{ addSpaceFixDecimal(order.stop, coins[quote].decimals) }}<br />
         {{ $t("common.limit2") }}:
         {{ addSpaceFixDecimal(order.price, coins[quote].decimals) }}
       </div>
@@ -89,7 +90,8 @@
       :data-thead="$t('common.price')"
     >
       <div v-if="order.type === 4" class="orders-table__td">
-        {{ $t("common.stop") }}: {{ order.stop }}<br />
+        {{ $t("common.stop") }}:
+        {{ addSpaceFixDecimal(order.stop, coins[quote].decimals) }}<br />
         {{ $t("common.limit2") }}:
         {{ addSpaceFixDecimal(order.price, coins[quote].decimals) }}
       </div>
