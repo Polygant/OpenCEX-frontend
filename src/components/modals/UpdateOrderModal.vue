@@ -214,7 +214,7 @@ export default {
 
   methods: {
     toNumber(value) {
-      return this.addSpaceFixDecimal(value.toString().replace(",", "."));
+      return this.getFixedDecimal(value.toString().replace(",", "."));
     },
 
     onSubmit() {
