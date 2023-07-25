@@ -327,10 +327,7 @@ export default {
         let fee =
           this.receiveAmount *
           this.coins[this.cur2]["fee"]["exchange"]["value"];
-        fee = this.addSpaceFixDecimal(
-          fee,
-          this.coins[this.cur2]?.decimals || 8
-        );
+        fee = this.getFixedDecimal(fee, this.coins[this.cur2]?.decimals || 8);
         return this.getRegularNumber(fee);
       }
 
@@ -355,10 +352,10 @@ export default {
         : 0;
     },
     cur1notEnough() {
-      return this.addSpaceFixDecimal(this.currentBalance) < this.give;
+      return this.getFixedDecimal(this.currentBalance) < this.give;
     },
     cur2notEnough() {
-      return this.addSpaceFixDecimal(this.currentBalance) < this.get;
+      return this.getFixedDecimal(this.currentBalance) < this.get;
     },
     limits() {
       const coin = this.coins[this.cur1];
@@ -381,8 +378,8 @@ export default {
     settledAmount() {
       const rest = this.isFiat(this.cur2) ? 2 : 8;
       return (
-        this.addSpaceFixDecimal(this.receiveAmount, rest) -
-        this.addSpaceFixDecimal(this.exchangeFee, rest)
+        this.getFixedDecimal(this.receiveAmount, rest) -
+        this.getFixedDecimal(this.exchangeFee, rest)
       ).toFixed(rest);
     },
   },
@@ -536,11 +533,11 @@ export default {
     },
     setCur1AmountPercentHandler(percent) {
       const result =
-        (this.addSpaceFixDecimal(this.currentBalance) / 100) * percent;
+        (this.getFixedDecimal(this.currentBalance) / 100) * percent;
       this.processexchange(result, percent);
     },
     checkAndSetAmount(result, percent = null) {
-      result = this.addSpaceFixDecimal(result);
+      result = this.getFixedDecimal(result);
       if (Number.isNaN(result) || result === 0) return false;
       if (percent && this.give !== result) {
         this.give = result;
@@ -607,7 +604,7 @@ export default {
       }
     },
     checkAndSetAmountEx(result, percent = null) {
-      result = this.addSpaceFixDecimal(result);
+      result = this.getFixedDecimal(result);
       if (Number.isNaN(result) || result === 0) return false;
       if (percent && this.get !== result) {
         this.get = result;
@@ -811,8 +808,8 @@ export default {
       this.maintimer && clearTimeout(this.maintimer);
 
       if (this.give !== "") {
-        if (this.addSpaceFixDecimal(this.give) > 0.0) {
-          qUANTITY = this.addSpaceFixDecimal(this.give);
+        if (this.getFixedDecimal(this.give) > 0.0) {
+          qUANTITY = this.getFixedDecimal(this.give);
         }
       }
       this.operation = opertype;
@@ -845,13 +842,13 @@ export default {
               if (
                 !this.give ||
                 this.give === "" ||
-                this.addSpaceFixDecimal(this.give) === 0
+                this.getFixedDecimal(this.give) === 0
               ) {
                 this.get = "";
                 this.receiveAmount = 0;
               } else {
                 this.receiveAmount = response.data["cost"]
-                  ? this.addSpaceFixDecimal(
+                  ? this.getFixedDecimal(
                       response.data["cost"],
                       this.coins[this.cur2]?.decimals || 8
                     )
@@ -867,7 +864,7 @@ export default {
                   !this.times &&
                   this.balance[this.cur1] &&
                   this.balance[this.cur1].actual >
-                    this.addSpaceFixDecimal(this.give)
+                    this.getFixedDecimal(this.give)
                 ) {
                   this.times = true;
 
@@ -926,8 +923,8 @@ export default {
       this.maintimer && clearTimeout(this.maintimer);
 
       if (this.give !== "") {
-        if (this.addSpaceFixDecimal(this.get) > 0.0) {
-          qUANTITY = this.addSpaceFixDecimal(this.get);
+        if (this.getFixedDecimal(this.get) > 0.0) {
+          qUANTITY = this.getFixedDecimal(this.get);
         }
       }
       this.operation = opertype;
@@ -950,7 +947,7 @@ export default {
               if (
                 !this.get ||
                 this.get === "" ||
-                this.addSpaceFixDecimal(this.get) === 0
+                this.getFixedDecimal(this.get) === 0
               ) {
                 this.give = "";
                 this.receiveAmount = 0;
@@ -969,7 +966,7 @@ export default {
                   !this.times &&
                   this.balance[this.cur2] &&
                   this.balance[this.cur2].actual >
-                    this.addSpaceFixDecimal(this.get)
+                    this.getFixedDecimal(this.get)
                 ) {
                   this.times = true;
 
