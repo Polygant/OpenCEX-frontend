@@ -88,10 +88,14 @@ export default (app) => {
           error.response?.data?.code?.code === "token_not_valid"
         ) {
           const originalRequest = error.config;
-          await store.dispatch("core/refreshToken");
-          originalRequest.headers["Authorization"] =
-            "Bearer " + localStorage.getItem("token");
-          return app.config.globalProperties.$http(originalRequest);
+          try {
+            await store.dispatch("core/refreshToken");
+            originalRequest.headers["Authorization"] =
+              "Bearer " + localStorage.getItem("token");
+            return app.config.globalProperties.$http(originalRequest);
+          } catch (e) {
+            console.log(e);
+          }
         }
         const pathname = window.location.pathname;
         const matchNotAuthViews = noAuthRequireRoutes.find((route) =>
@@ -99,15 +103,15 @@ export default (app) => {
         );
         if (pathname !== "/" && !matchNotAuthViews) {
           const lastPage = router.currentRoute.value.fullPath;
-          if (lastPage) {
-            if (
-              error.response &&
-              error.response?.data?.code?.code !== "token_not_valid"
-            ) {
+          if (
+            error.response &&
+            error.response?.data?.code?.code === "token_not_valid"
+          ) {
+            if (lastPage) {
               router.push({ name: "login", query: { redirectFrom: lastPage } });
+            } else {
+              router.push({ name: "login" });
             }
-          } else {
-            router.push({ name: "login" });
           }
         }
       }

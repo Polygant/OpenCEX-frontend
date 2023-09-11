@@ -422,8 +422,9 @@ export default {
               localStorage.setItem("token", response.data.access);
               localStorage.setItem("refresh_token", response.data.refresh);
             })
-            .catch(() => {
+            .catch((e) => {
               dispatch("logout");
+              return Promise.reject(e);
             })
             .finally(() => {
               refreshTokenPromise = null;
