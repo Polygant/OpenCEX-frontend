@@ -88,7 +88,6 @@ export default {
     return {
       selectedCoin: "",
       openedAction: "",
-      networksList: [],
       selectedDefault: this.$route?.params?.walletitem,
       openedActionProperties: {},
       payout_form_view: "pending",
@@ -161,11 +160,13 @@ export default {
       }
     },
   },
-  mounted() {
-    this.$store.dispatch("core/getCoinsLimits");
-    this.loadWallets();
+  async mounted() {
+    await Promise.all([
+      this.$store.dispatch("core/getCoinsLimits"),
+      this.loadWallets(),
+      this.$store.dispatch("core/getUserNotifications"),
+    ]);
     this.showSecurityNotice();
-    this.$store.dispatch("core/getUserNotifications");
     if (this.isConnectedSocket) {
       if (localStorage.getItem("token")) {
         this.$store.dispatch(
@@ -179,9 +180,7 @@ export default {
         this.getWalletHistory();
       }
     }
-    setTimeout(() => {
-      this.coinSelected(this.$route?.params?.walletitem, this.coins);
-    }, 300);
+    this.cryptoWithdrawalClickHandler(this.$route?.params?.walletitem);
   },
   beforeUnmount() {
     this.unsubscribeWsData();
@@ -199,29 +198,6 @@ export default {
           },
         });
       }
-    },
-    coinSelected(value, coins) {
-      if (coins) {
-        this.selectedCoin = { coin: value, ...coins[value] };
-      } else {
-        this.selectedDefault = "";
-        this.selectedCoin = { coin: value, ...this.filteredCoins[value] };
-      }
-      this.networksList = {};
-      if (typeof this.selectedCoin.is_fiat === "undefined") {
-        this.networksList[this.selectedCoin.coin] = {
-          id: this.selectedCoin.coin,
-          name: `${this.formatingCommission(
-            this.selectedCoin?.fee?.withdrawal.address
-          )} ${this.selectedCoin.coin}`,
-          action: () =>
-            this.cryptoWithdrawalClickHandler(this.selectedCoin.coin),
-        };
-      }
-      this.networksList[Object.values(this.networksList)[0].id].action();
-    },
-    networkSelected(id) {
-      this.networksList[id].action();
     },
     blockchainCurrencyByCoin(coin) {
       return coin.blockchain_list
@@ -363,8 +339,8 @@ export default {
       this.sendSocketMessage("del_balance", {}, false, true);
       this.sendSocketMessage("del_wallet_withdrawals_history", {}, false, true);
     },
-    loadWallets() {
-      this.$http.post("getwallets/", {}).then((response) => {
+    async loadWallets() {
+      await this.$http.post("getwallets/", {}).then((response) => {
         response.data.forEach((wallet) => {
           if (!this.coins[wallet.currency]) {
             this.coins[wallet.currency] = {};
