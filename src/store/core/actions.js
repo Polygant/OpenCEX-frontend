@@ -38,8 +38,8 @@ export default {
       commit(mutationTypes.COINS_LIMITS_UPDATE, response);
     });
   },
-  getUserNotifications({ commit }) {
-    UserNotifications.get().then((response) => {
+  async getUserNotifications({ commit }) {
+    await UserNotifications.get().then((response) => {
       commit(mutationTypes.USER_NOTIFICATION, response);
     });
   },
