@@ -73,6 +73,7 @@ import OrdersSellBuy from "./Orders-sell-buy.vue";
 import OrdersTableRow from "./Orders-table-row.vue";
 import { mapGetters } from "vuex";
 import getFixedDecimal from "~/mixins/getFixedDecimal";
+
 export default {
   name: "OrdersComp",
   components: {
