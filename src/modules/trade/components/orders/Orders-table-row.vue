@@ -39,7 +39,7 @@
 
     <td :class="{ 'td-bold': order.owner }">
       <div class="sell-orders__td">
-        {{ addSpace(price) }}
+        {{ addSpace(quantityQuote) }}
       </div>
     </td>
     <td :class="{ 'td-bold': order.owner }">
@@ -73,13 +73,17 @@ export default {
     depthWidth() {
       return (this.order.depth / this.maxDepth) * 100;
     },
-    price() {
-      return this.getCoolTrade(
-        this.addSpaceFixDecimal(
+    quantityQuote() {
+      console.log(
+        this.order.quantity * this.order.price,
+        this.currentQuoteCurrency,
+        this.getCoolTrade(
           this.order.quantity * this.order.price,
-          8,
-          true
-        ),
+          this.currentQuoteCurrency
+        )
+      );
+      return this.getCoolTrade(
+        this.order.quantity * this.order.price,
         this.currentQuoteCurrency
       );
     },
