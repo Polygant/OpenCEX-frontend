@@ -12,7 +12,11 @@
         'select',
         order.price,
         Number(
-          addSpaceFixDecimal(order.depth, coins[currentBaseCurrency].decimals)
+          addSpaceFixDecimal(
+            order.depth,
+            coins[currentBaseCurrency].decimals,
+            true
+          )
         )
       )
     "
@@ -44,7 +48,7 @@
     </td>
     <td :class="{ 'td-bold': order.owner }">
       <div class="sell-orders__td">
-        {{ addSpaceFixDecimal(order.depth, round) }}
+        {{ addSpaceFixDecimal(order.depth, round, true) }}
       </div>
     </td>
   </tr>
