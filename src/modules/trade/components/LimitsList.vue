@@ -76,7 +76,7 @@
     <div class="limit-list__row mt-3 limit-list__caption">
       <span>{{ $t("common.fee") }}:</span>
       <span
-        >{{ noExponents(fee) }}
+        >{{ noExponents((fee * 1).toFixed(8) * 1) }}
         {{ operation == "buy" ? baseCurrency : quoteCurrency }}</span
       >
     </div>
