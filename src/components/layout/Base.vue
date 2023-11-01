@@ -248,6 +248,7 @@ input[type="password"],
 .address-text-field,
 .currency-list .currency-table .table tbody tr.active,
 .wallet-list .currency-table .table tbody tr.active,
+.nav-tabs .nav-link:not(.active),
 .alert-container,
 .footer {
   background-color: v-bind(mainBackgroundLocal) !important;
