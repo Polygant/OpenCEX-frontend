@@ -35,13 +35,16 @@ export default {
   watch: {
     lang() {
       try {
+        this.setGraphColor();
         this.makeChart();
       } catch (e) {
         console.log(e);
       }
     },
-    precision() {
+    precision(value) {
+      if (!value) return;
       try {
+        this.setGraphColor();
         this.makeChart();
       } catch (e) {
         console.log(e);
