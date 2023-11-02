@@ -75,10 +75,9 @@
     />
     <div class="limit-list__row mt-3 limit-list__caption">
       <span>{{ $t("common.fee") }}:</span>
-      <span
-        >{{ noExponents(fee) }}
-        {{ operation == "buy" ? baseCurrency : quoteCurrency }}</span
-      >
+      <span>
+        {{ fee }} {{ operation == "buy" ? baseCurrency : quoteCurrency }}
+      </span>
     </div>
     <button
       class="limit-list__submit-button mt-4"
@@ -258,14 +257,14 @@ export default {
         case "buy":
           this.lastEditedField = FIELDS.SUM;
           this.resultedQuoteSum =
-            this.addSpaceFixDecimal(
+            this.getFixedDecimal(
               this.getCoolBalance(this.quoteCurrency) * fraction,
               this.coins[this.quoteCurrency].decimals
             ) + "";
           break;
         case "sell":
           this.operationData.quantity =
-            this.addSpaceFixDecimal(
+            this.getFixedDecimal(
               this.getCoolBalance(this.baseCurrency) * fraction,
               this.coins[this.baseCurrency].decimals
             ) + "";
@@ -276,28 +275,30 @@ export default {
     updateResultedSum: debounce(function () {
       if (this.lastEditedField === FIELDS.QUANTITY)
         this.resultedQuoteSum = String(
-          this.addSpaceFixDecimal(
+          this.getFixedDecimal(
             this.operationData.price * this.operationData.quantity,
             this.coins[this.quoteCurrency].decimals
           )
         );
+
+      console.log({ updateResultedSum: this.resultedQuoteSum });
     }, 500),
 
     updateOperationQuantity: debounce(function () {
-      console.log("updateOperationQuantity");
-      if (this.lastEditedField === FIELDS.SUM)
+      if (this.lastEditedField === FIELDS.SUM) {
         if (
           !Number.isNaN(Number(this.operationData.price)) &&
           Number(this.operationData.price) !== 0 &&
           !Number.isNaN(this.resultedQuoteSum)
         )
           this.operationData.quantity = String(
-            this.addSpaceFixDecimal(
+            this.getFixedDecimal(
               this.resultedQuoteSum / this.operationData.price || 0,
               this.coins[this.baseCurrency].decimals
             )
           );
         else this.operationData.quantity = "0";
+      }
     }, 500),
 
     getMax8Digits(x) {

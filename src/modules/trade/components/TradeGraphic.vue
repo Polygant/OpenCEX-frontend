@@ -4,14 +4,22 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Datafeed from "~/api/TradingView";
+import getDatafeed from "~/api/TradingView";
 import { widget } from "~/assets/TradingView/charting_library/charting_library.esm.js";
 import localConfig from "~/local_config";
 
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: {
+    precision: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       tvWidget: null,
+      datafeed: null,
     };
   },
   computed: {
@@ -32,10 +40,23 @@ export default {
   watch: {
     lang() {
       try {
+        this.setGraphColor();
         this.makeChart();
       } catch (e) {
         console.log(e);
       }
+    },
+    precision: {
+      immediate: true,
+      handler(value) {
+        if (!value) return;
+        try {
+          this.setGraphColor();
+          this.makeChart();
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
     currentTheme() {
       this.setGraphColor();
@@ -58,7 +79,7 @@ export default {
   },
 
   beforeUnmount() {
-    Datafeed.unsubscribeBars();
+    if (this.datafeed) this.datafeed.unsubscribeBars();
   },
 
   methods: {
@@ -73,6 +94,10 @@ export default {
       }, 1000);
     },
     makeChart() {
+      if (this.datafeed) {
+        this.datafeed.unsubscribeBars();
+      }
+      this.datafeed = getDatafeed(this.precision);
       const intervalFromLocalStorage =
           localStorage.getItem("chart_interval") || "5",
         tvWidget = new widget({
@@ -81,7 +106,7 @@ export default {
           timezone: "Etc/UTC",
           container: this.$refs.graphic,
           locale: this.lang,
-          datafeed: Datafeed,
+          datafeed: this.datafeed,
           library_path: "/public/TV/charting_library/",
           autosize: true,
           toolbar_bg: "#f6f6f8",

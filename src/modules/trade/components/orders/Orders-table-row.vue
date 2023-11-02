@@ -12,7 +12,11 @@
         'select',
         order.price,
         Number(
-          addSpaceFixDecimal(order.depth, coins[currentBaseCurrency].decimals)
+          getFixedDecimal(
+            order.depth,
+            coins[currentBaseCurrency].decimals,
+            true
+          )
         )
       )
     "
@@ -23,7 +27,10 @@
     >
       <div class="sell-orders__td">
         {{
-          addSpaceFixDecimal(order.price, coins[currentQuoteCurrency].decimals)
+          addSpaceFixDecimal(
+            order.price,
+            -Math.round(Math.log(precision) / Math.log(10))
+          )
         }}
       </div>
       <div
@@ -39,12 +46,12 @@
 
     <td :class="{ 'td-bold': order.owner }">
       <div class="sell-orders__td">
-        {{ addSpace(price) }}
+        {{ addSpace(quantityQuote) }}
       </div>
     </td>
     <td :class="{ 'td-bold': order.owner }">
       <div class="sell-orders__td">
-        {{ addSpaceFixDecimal(order.depth, round) }}
+        {{ addSpaceFixDecimal(order.depth, round, true) }}
       </div>
     </td>
   </tr>
@@ -58,7 +65,7 @@ export default {
   name: "OrdersTableRow",
   mixins: [getCoolTrade, getFixedDecimal],
   // eslint-disable-next-line vue/require-prop-types
-  props: ["order", "maxDepth", "color", "isCircle", "round"],
+  props: ["order", "maxDepth", "color", "isCircle", "round", "precision"],
   emits: ["select"],
   computed: {
     isAuthorized() {
@@ -73,13 +80,9 @@ export default {
     depthWidth() {
       return (this.order.depth / this.maxDepth) * 100;
     },
-    price() {
+    quantityQuote() {
       return this.getCoolTrade(
-        this.addSpaceFixDecimal(
-          this.order.quantity * this.order.price,
-          8,
-          true
-        ),
+        this.order.quantity * this.order.price,
         this.currentQuoteCurrency
       );
     },

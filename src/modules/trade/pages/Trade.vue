@@ -17,7 +17,9 @@
       </div>
       <div class="md:w-6/12 graphic-order xl:px-4">
         <div class="graphic-order-wrapper">
-          <TradeGraphic />
+          <TradeGraphic
+            :precision="Math.min(savedPrecision * 1, 0.01) || 0.01"
+          />
         </div>
         <div>
           <v-card>
