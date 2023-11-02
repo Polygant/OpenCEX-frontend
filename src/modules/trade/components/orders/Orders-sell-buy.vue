@@ -76,6 +76,9 @@ export default {
   name: "OrdersSellBuy",
   mixins: [getCoolTrade, getFixedDecimal],
 
+  // eslint-disable-next-line vue/require-prop-types
+  props: ["precision"],
+
   data() {
     return {
       currentPriceStakan: 0,
@@ -104,24 +107,19 @@ export default {
     getPriceForStakan() {
       const price = this.currentPriceStakan;
 
-      if (this.isFiat(this.currentQuoteCurrency)) {
-        if (price >= 100000) {
-          return this.addSpaceFixDecimal(price, 0);
-        } else {
-          return this.addSpaceFixDecimal(price, 2);
-        }
+      if (price >= 10000) {
+        return this.addSpaceFixDecimal(price, 0);
+      } else if (price >= 1000) {
+        return this.addSpaceFixDecimal(price, 1);
+      } else if (price >= 100) {
+        return this.addSpaceFixDecimal(price, 2);
+      } else if (price >= 10) {
+        return this.addSpaceFixDecimal(price, 3);
       } else {
-        if (price >= 10000) {
-          return this.addSpaceFixDecimal(price, 0);
-        } else if (price >= 1000) {
-          return this.addSpaceFixDecimal(price, 1);
-        } else if (price >= 100) {
-          return this.addSpaceFixDecimal(price, 2);
-        } else if (price >= 10) {
-          return this.addSpaceFixDecimal(price, 3);
-        } else {
-          return this.addSpaceFixDecimal(price, 4);
-        }
+        return this.addSpaceFixDecimal(
+          price,
+          -Math.round(Math.log(this.precision || 0.01) / Math.log(10))
+        );
       }
     },
   },

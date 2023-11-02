@@ -38,12 +38,13 @@
         :max-depth="sellOrders[0].depth"
         :order="order"
         :is-circle="order.owner"
+        :precision="precision"
         color="rgba(255, 93, 85, .3)"
         @select="sellRowClick"
       ></orders-table-row>
     </orders-table>
 
-    <orders-sell-buy></orders-sell-buy>
+    <orders-sell-buy :precision="precision"></orders-sell-buy>
 
     <orders-table :type="'buy'">
       <orders-table-row
@@ -54,6 +55,7 @@
         :max-depth="buyOrders[buyOrders.length - 1].depth"
         :order="order"
         :is-circle="order.owner"
+        :precision="precision"
         color="rgba(31, 167, 114, .3)"
         @select="buyRowClick"
       ></orders-table-row>
