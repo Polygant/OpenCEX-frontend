@@ -4,14 +4,17 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Datafeed from "~/api/TradingView";
+import getDatafeed from "~/api/TradingView";
 import { widget } from "~/assets/TradingView/charting_library/charting_library.esm.js";
 import localConfig from "~/local_config";
 
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: ["precision"],
   data() {
     return {
       tvWidget: null,
+      datafeed: null,
     };
   },
   computed: {
@@ -31,6 +34,13 @@ export default {
   },
   watch: {
     lang() {
+      try {
+        this.makeChart();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    precision() {
       try {
         this.makeChart();
       } catch (e) {
@@ -58,7 +68,7 @@ export default {
   },
 
   beforeUnmount() {
-    Datafeed.unsubscribeBars();
+    if (this.datafeed) this.datafeed.unsubscribeBars();
   },
 
   methods: {
@@ -73,6 +83,10 @@ export default {
       }, 1000);
     },
     makeChart() {
+      if (this.datafeed) {
+        this.datafeed.unsubscribeBars();
+      }
+      this.datafeed = getDatafeed(this.precision);
       const intervalFromLocalStorage =
           localStorage.getItem("chart_interval") || "5",
         tvWidget = new widget({
@@ -81,7 +95,7 @@ export default {
           timezone: "Etc/UTC",
           container: this.$refs.graphic,
           locale: this.lang,
-          datafeed: Datafeed,
+          datafeed: this.datafeed,
           library_path: "/public/TV/charting_library/",
           autosize: true,
           toolbar_bg: "#f6f6f8",
