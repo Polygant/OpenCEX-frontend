@@ -10,7 +10,12 @@ import localConfig from "~/local_config";
 
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ["precision"],
+  props: {
+    precision: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       tvWidget: null,
@@ -41,14 +46,17 @@ export default {
         console.log(e);
       }
     },
-    precision(value) {
-      if (!value) return;
-      try {
-        this.setGraphColor();
-        this.makeChart();
-      } catch (e) {
-        console.log(e);
-      }
+    precision: {
+      immediate: true,
+      handler(value) {
+        if (!value) return;
+        try {
+          this.setGraphColor();
+          this.makeChart();
+        } catch (e) {
+          console.log(e);
+        }
+      },
     },
     currentTheme() {
       this.setGraphColor();

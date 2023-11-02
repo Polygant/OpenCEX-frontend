@@ -48,6 +48,8 @@ function addSpace(number) {
  */
 
 function getFixedDecimal(val, precision = 8, toClosest = false) {
+  console.log(val, precision);
+  if (val === Infinity) debugger;
   return val
     ? new Decimal(
         new Decimal(val).toFixed(
