@@ -20,7 +20,6 @@
           $t("common.destination")
         }}</span>
         <span class="wallet-history__tx">tx</span>
-        <span class="wallet-history__actions"></span>
       </div>
       <div class="wallet-history__content">
         <div
@@ -110,63 +109,6 @@
             class="wallet-history__item wallet-history__tx"
           >
             <span class="thead">TX</span>
-          </div>
-          <div class="wallet-history__item wallet-history__actions">
-            <button
-              v-if="tx.state === 6"
-              class="btn btn-sm btn-link"
-              :title="$t('common.resend_letter_code')"
-              @click="resendLetter(tx)"
-            >
-              <img
-                v-if="!resendLoader[tx.id]"
-                class="inline-block"
-                src="/public/img/envelope.svg"
-                width="20"
-                alt=""
-              />
-              <img
-                v-if="resendLoader[tx.id] === 2"
-                class="inline-block"
-                src="/public/img/launchpad/icons/check.svg"
-                width="20"
-                alt=""
-              />
-              <img
-                v-if="resendLoader[tx.id] === 1"
-                class="inline-block"
-                src="/public/img/spinner.svg"
-                width="20"
-              />
-            </button>
-            <button
-              v-if="tx.state === 6"
-              class="btn btn-sm btn-danger btn-link text-danger"
-              :title="$t('common.cancel')"
-              @click="cancelWithdraw(tx)"
-            >
-              <img
-                v-if="!cancelLoader[tx.id]"
-                class="inline-block"
-                src="/public/img/times_r.svg"
-                width="20"
-                alt=""
-              />
-              <img
-                v-if="cancelLoader[tx.id] === 2"
-                class="inline-block"
-                src="/public/img/launchpad/icons/check.svg"
-                width="20"
-                alt=""
-              />
-              <img
-                v-if="cancelLoader[tx.id] === 1"
-                class="inline-block"
-                src="/public/img/spinner.svg"
-                width="20"
-                alt=""
-              />
-            </button>
           </div>
         </div>
       </div>
@@ -530,19 +472,19 @@ export default {
   }
 
   &__operation {
-    width: 12%;
+    width: 15%;
   }
 
   &__blockchain {
-    width: 12%;
+    width: 15%;
   }
 
   &__amount {
-    width: 12%;
+    width: 15%;
   }
 
   &__status {
-    width: 14%;
+    width: 15%;
   }
 
   &__destination {
@@ -583,30 +525,6 @@ export default {
       width: 100% !important;
       display: flex;
       justify-content: space-between;
-    }
-  }
-
-  &__actions {
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    @media screen and (max-width: 900px) {
-      justify-content: center !important;
-      padding-bottom: 10px;
-    }
-
-    .btn {
-      width: 20px;
-      height: 20px;
-      padding: 0;
-      font-size: 1em;
-      margin: 0;
-    }
-
-    .btn:not(:last-child) {
-      margin-right: 10px;
     }
   }
 }

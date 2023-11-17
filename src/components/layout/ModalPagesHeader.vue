@@ -167,7 +167,7 @@ button:disabled {
     color: white;
 
     &:hover {
-      background-color: #4e5557;
+      opacity: 0.8;
     }
   }
 

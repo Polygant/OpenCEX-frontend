@@ -57,7 +57,10 @@ const errorManager = {
     email_not_verified: {
       triggers: ["email_not_verified"],
       callback(r, item, component) {
-        component.$router.push(`/confirm-register/${r.body.token[0].message}`);
+        component.$router.push({
+          name: "confirm-register",
+          query: { login_email: component.username },
+        });
       },
     },
     wrong_2fa_many_times: {
