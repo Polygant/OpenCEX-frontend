@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <form @submit.prevent="goToWithdrawal">
+        <form @submit.prevent="payMe">
           <div class="formField">
             <label>{{ $t("common.amount_sum") }}</label>
             <div class="stake-field_input_w">
@@ -208,7 +208,6 @@
           {{ $t("common.withdrawalprocessing") }}
         </p>
         <br />
-        <p style="text-align: center">{{ $t("common.checkyouremail") }}</p>
         <div class="withdrawal__btnWrapper">
           <div class="big_btn" @click="$router.go()">
             {{ $t("common.continue") }}
@@ -216,31 +215,42 @@
         </div>
       </template>
       <!--SUCCESS-->
-      <template v-if="payout_form_view === 'confirm_by_sms'">
-        <div>
-          <phoneVerify
-            verify-type="withdrawal"
-            @verified-phone="verifiedPhone"
-          />
-          <div style="text-align: right">
-            <button
-              class="opacitychangebtn btn-danger"
-              style="
-                opacity: 0.85;
-                color: rgb(255, 255, 255);
-                width: 100px;
-                height: 35px;
-                font-weight: 600 !important;
-                font-size: 15px !important;
-                line-height: 1;
-                border-radius: 3px;
-              "
-              @click="payout_form_view = 'pending'"
-            >
-              {{ $t("common.cancel") }}
-            </button>
+      <template v-if="payout_form_view === 'confirm_by_email'">
+        <form @submit.prevent="sendConfirmationCode">
+          <div class="formField">
+            <label>{{ $t("common.email_sent") }}</label>
+            <input
+              v-model="confirmationCode"
+              required
+              class="formField__input"
+              type="text"
+            />
           </div>
-        </div>
+          <div v-if="confirmEmailTimer > 0" class="logIn__descr mb-4">
+            <strong>{{ $t("common.getCode") }}</strong>
+            {{ $t("common.againAfter", { n: confirmEmailTimer }) }}
+          </div>
+          <button
+            v-else
+            class="withdrawal__btn withdrawal__btn_yellow mx-auto mb-4 w-[292px]"
+            type="button"
+            @click="resendCode"
+          >
+            {{ $t("common.resend") }}
+          </button>
+
+          <button class="withdrawal__btn mx-auto mb-4 w-[292px]" type="submit">
+            {{ $t("common.confirm") }}
+          </button>
+
+          <button
+            class="withdrawal__btn withdrawal__btn_red w-[292px] mx-auto mb-4"
+            type="button"
+            @click="cancelWithdrawal"
+          >
+            {{ $t("common.cancel_withdrawal") }}
+          </button>
+        </form>
       </template>
     </div>
   </div>
@@ -250,7 +260,6 @@ import { mapGetters } from "vuex";
 import errorManager from "~/helpers/errorHundle";
 import getFixedDecimal from "~/mixins/getFixedDecimal";
 import accountSettingMixin from "~/modules/account/components/mixin";
-import phoneVerify from "~/components/PhoneVerify.vue";
 import SelectAdvanced from "~/components/ui/SelectAdvanced.vue";
 import getRegularNumber from "~/mixins/getRegularNumber";
 
@@ -258,7 +267,6 @@ export default {
   name: "WalletWithdrawalCryptoAddress",
   components: {
     SelectAdvanced,
-    phoneVerify,
   },
   mixins: [getFixedDecimal, accountSettingMixin, getRegularNumber],
   props: {
@@ -271,6 +279,8 @@ export default {
   emits: ["close"],
   data() {
     return {
+      confirmationCode: "",
+      confirmEmailTimer: 0,
       lastWithdrawalAdresses: {},
       destinationTag: "",
       addrToPayMe: "",
@@ -353,6 +363,56 @@ export default {
     }
   },
   methods: {
+    cancelWithdrawal() {
+      this.$http
+        .post("withdrawal/cancel-withdrawal-request", {
+          withdrawal_request_id: this.requestId,
+        })
+        .then(() => {
+          this.payout_form_view = "pending";
+        });
+    },
+
+    sendConfirmationCode() {
+      this.$http
+        .post("withdrawal/confirm-withdrawal-request", {
+          confirmation_token: this.confirmationCode,
+        })
+        .then(() => {
+          this.payout_form_view = "success";
+        })
+        .catch(() => {
+          this.$notify({
+            type: "error",
+            title: "",
+            text: this.$t("common.invalid_code"),
+          });
+        });
+    },
+
+    runConfirmEmailTimer() {
+      if (this.confirmEmailTimer > 0) return;
+
+      this.confirmEmailTimer = 180;
+
+      const interval = setInterval(() => {
+        this.confirmEmailTimer--;
+        if (this.confirmEmailTimer < 0) {
+          clearInterval(interval);
+        }
+      }, 1000);
+    },
+
+    resendCode() {
+      this.$http
+        .post("withdrawal/resend-withdrawal-request", {
+          withdrawal_request_id: this.requestId,
+        })
+        .then(() => {
+          this.runConfirmEmailTimer();
+        });
+    },
+
     setMax() {
       this.amountToPayMe = this.balance[this.ticker].actual;
     },
@@ -384,7 +444,6 @@ export default {
       this.addrToPayMe = addr;
     },
     payMe() {
-      if (this.isBlockedByPhoneVerification) return;
       let self = this;
 
       if (
@@ -417,13 +476,16 @@ export default {
           data["sms_code"] = this.sms_code;
         }
         this.$http.post("wallet_withdrawal/", data).then(
-          () => {
-            this.payout_form_view = "success";
+          (response) => {
             this.amountToPayMe = "";
             this.addrToPayMe = "";
             setTimeout(function () {
               self.$modal.close();
             }, 3500);
+            this.payout_form_view = "confirm_by_email";
+            this.confirmationCode = "";
+            this.runConfirmEmailTimer();
+            this.requestId = response.data.id;
           },
           (err) => {
             errorManager.parse(err, this, [
@@ -454,13 +516,6 @@ export default {
           console.error(err.data);
         }
       );
-    },
-    goToWithdrawal() {
-      if (this.profile.withdrawals_sms_confirmation) {
-        this.payout_form_view = "confirm_by_sms";
-      } else {
-        this.payMe();
-      }
     },
     verifiedPhone(code) {
       this.sms_code = code;
@@ -549,11 +604,19 @@ input.address {
   line-height: 20px;
   display: flex;
   align-items: center;
+  justify-content: center;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #ffffff;
   padding: 0 50px;
 }
+.withdrawal__btn_red {
+  background: #e34848;
+}
+.withdrawal__btn_yellow {
+  background: #ffba38;
+}
+
 .withdrawal__btnIcon {
   background-color: #fff;
   mask: url("/public/img/withdrawal.svg") no-repeat center;

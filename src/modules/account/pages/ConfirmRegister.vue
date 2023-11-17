@@ -4,32 +4,52 @@
     :style="loginBackground ? `background: ${loginBackground} !important` : {}"
   >
     <MainLogo />
-    <template v-if="!showBanner">
-      <div class="flex box white flex-col">
-        <div
-          class="logIn__title"
-          :style="loginText ? `color: ${loginText} !important` : {}"
-        >
-          {{ $t("common.confirm_reg_email") }}
-        </div>
-      </div>
-      <div class="confirm_reg_email-actions">
-        <button class="btn btn-primary btn-block" @click="resendEmail">
-          <span>{{ $t("common.send") }}</span>
-          <img src="/public/img/p/arrow-right.svg" height="15" alt="" />
-        </button>
-        <button class="btn btn-danger btn-block" @click="cancel">
-          <span>{{ $t("common.cancel") }}</span>
-          <img src="/public/img/p/arrow-right.svg" height="15" alt="" />
-        </button>
-      </div>
-    </template>
-    <template v-else>
+    <div class="flex box white flex-col">
       <div class="logIn__title">
-        {{ $t("common.resend_reg_email_after") }} {{ timer }}
-        {{ $t("common.seconds") }}
+        {{ $t("common.email_confirmation") }}
       </div>
-    </template>
+    </div>
+    <div class="logIn__descr mb-4">
+      <strong>{{ $t("common.email_sent") }}</strong>
+    </div>
+    <form class="logIn_form" autocomplete="off" @submit.prevent="confirmEmail">
+      <input
+        v-model="confirmationCode"
+        required
+        autocomplete="google2fa"
+        class="text-center mb-4"
+        type="text"
+      />
+      <template v-if="email">
+        <div v-if="showBanner" class="logIn__descr mb-4">
+          <strong>{{ $t("common.getCode") }}</strong>
+          {{ $t("common.againAfter", { n: timer }) }}
+        </div>
+        <button
+          v-else
+          class="logIn__form__input logIn__form__input_button !bg-[#ffba38] block uppercase"
+          type="button"
+          @click="resendCode"
+        >
+          {{ $t("common.resend") }}
+        </button>
+      </template>
+
+      <button
+        class="logIn__form__input logIn__form__input_button block uppercase mb-[13px]"
+        type="submit"
+      >
+        {{ $t("common.confirm_email") }}
+      </button>
+
+      <button
+        class="logIn__register button-red block uppercase mb-[13px]"
+        type="button"
+        @click="cancel"
+      >
+        {{ $t("common.cancel") }}
+      </button>
+    </form>
   </div>
 </template>
 
@@ -44,46 +64,39 @@ export default {
       token: this.$route.params.token,
       timer: 300,
       awaitSeconds: 300,
+      confirmationCode: "",
+      email: "",
     };
   },
   mounted() {
     const savedTime = localStorage.getItem("confirm-email");
+    this.email = this.$route.query.login_email || "";
+
     if (savedTime) {
       this.showBanner = true;
       this.runTimer();
     }
   },
   methods: {
-    resendEmail() {
-      if (this.token) {
-        this.$http
-          .post("resend-email-confirmation/", {
-            token: this.token,
-          })
-          .then(() => {
-            localStorage.setItem(
-              "confirm-email",
-              `${Math.round(new Date().getTime() / 1000)}`
-            );
-            this.showBanner = true;
-            this.runTimer();
-          })
-          .catch((error) => {
-            this.$notify({
-              type: "error",
-              text: error.data?.code,
-            });
-            this.$router.push("/login");
-          });
-      } else {
-        this.$router.push("/login");
-      }
+    resendCode() {
+      this.$http
+        .post("auth/registration/resend-email/", {
+          email: this.email,
+        })
+        .then(this.runTimer);
     },
+
     cancel() {
       this.$router.push("/login");
     },
     runTimer() {
-      let savedTime = localStorage.getItem("confirm-email");
+      let savedTime =
+        localStorage.getItem("confirm-email") ||
+        `${Math.round(new Date().getTime() / 1000)}`;
+      this.showBanner = true;
+
+      localStorage.setItem("confirm-email", savedTime);
+
       const timerFn = () => {
         const currentTime = `${Math.round(new Date().getTime() / 1000)}`;
         if (savedTime) {
@@ -104,11 +117,38 @@ export default {
       timerFn();
       let interval = setInterval(timerFn, 1000);
     },
+
+    confirmEmail() {
+      this.$http
+        .post("auth/registration/verify-email/", {
+          key: this.confirmationCode,
+        })
+        .then(() => {
+          this.$notify({
+            type: "success",
+            title: "",
+            text: this.$t("common.you_were_registered"),
+          });
+          this.$router.push({ name: "login" });
+        })
+        .catch((r) => {
+          if (r.data?.type === "not_found") {
+            this.$notify({
+              type: "error",
+              title: "",
+              text: this.$t("common.invalid_code"),
+            });
+          }
+        });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.button-red {
+  background: #ff5d55;
+}
 .confirm_reg_email {
   text-align: center;
   .logIn__title {
@@ -137,5 +177,8 @@ export default {
 }
 .email-again {
   color: #ffffff !important;
+}
+.logIn__descr {
+  width: 304px;
 }
 </style>

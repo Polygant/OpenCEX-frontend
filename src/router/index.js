@@ -63,7 +63,7 @@ let routes = [
   },
   {
     name: "confirm-register",
-    path: "/confirm-register/:token",
+    path: "/confirm-register",
     component: lazyLoadView(
       import("~/modules/account/pages/ConfirmRegister.vue")
     ),

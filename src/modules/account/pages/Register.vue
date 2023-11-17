@@ -7,7 +7,7 @@
       "
     >
       <ModalPagesHeader />
-      <template v-if="!confirmEmailSent">
+      <template v-if="stage === 'data_gathering'">
         <div class="box mt-5">
           <div class="text-center">
             <div
@@ -17,355 +17,378 @@
               {{ $t("common.createAccount") }}
             </div>
           </div>
-          <div v-if="!successRegister" class="">
-            <form
-              class="register__form"
-              autocomplete="off"
-              novalidate
-              @submit.prevent="handleRegister"
+          <form
+            class="register__form"
+            autocomplete="off"
+            novalidate
+            @submit.prevent="handleRegister"
+          >
+            <div
+              class="register__input-group register__input-group--half-width"
             >
-              <div
-                class="register__input-group register__input-group--half-width"
-              >
-                <label
-                  for="first_name"
-                  :style="loginText ? `color: ${loginText} !important` : {}"
-                  >{{ $t("common.firstname") }}:</label
-                >
-                <span class="register__input-wrapper">
-                  <input
-                    id="first_name"
-                    v-model="form.first_name"
-                    type="text"
-                    class="register__input"
-                    :class="{ 'border-red': validationError.first_name }"
-                    @focus="clearError('first_name')"
-                  />
-                  {{ errorFirstName }}
-                  <span
-                    v-if="validationError.first_name"
-                    class="register__input-error-hint"
-                  >
-                    {{ validationError.first_name }}
-                  </span>
-                  <span
-                    v-if="!validFirstName"
-                    class="register__input-error-hint"
-                  >
-                    {{ $t("common.invalidValueString") }}
-                  </span>
-                </span>
-              </div>
-              <div
-                class="register__input-group register__input-group--half-width"
-              >
-                <label
-                  for="last_name"
-                  :style="loginText ? `color: ${loginText} !important` : {}"
-                  >{{ $t("common.lastname") }}:</label
-                >
-                <span class="register__input-wrapper">
-                  <input
-                    id="last_name"
-                    v-model="form.last_name"
-                    type="text"
-                    class="register__input"
-                    :class="{ 'border-red': validationError.last_name }"
-                    @focus="clearError('last_name')"
-                  />
-                  <span
-                    v-if="validationError.last_name"
-                    class="register__input-error-hint"
-                  >
-                    {{ validationError.last_name }}
-                  </span>
-                  <span
-                    v-if="!validLastName"
-                    class="register__input-error-hint"
-                  >
-                    {{ $t("common.invalidValueString") }}
-                  </span>
-                </span>
-              </div>
-              <div class="register__input-group">
-                <label
-                  for="email"
-                  :style="loginText ? `color: ${loginText} !important` : {}"
-                  >Email:</label
-                >
-                <span class="register__input-wrapper">
-                  <input
-                    id="email"
-                    v-model="form.email"
-                    v-pattern:email
-                    type="text"
-                    class="register__input"
-                    :class="{ 'border-red': validationError.email }"
-                    @focus="clearError('email')"
-                  />
-                  <span
-                    v-if="validationError.email"
-                    class="register__input-error-hint"
-                  >
-                    {{ validationError.email }}
-                  </span>
-                  <span v-if="validEmail" class="register__input-error-hint">
-                    {{ $t("common.invalidEmail") }}
-                  </span>
-                </span>
-              </div>
-              <div
-                class="register__input-group register__input-group--half-width"
-              >
-                <label
-                  :style="loginText ? `color: ${loginText} !important` : {}"
-                  >{{ $t("common.birthday") }}:</label
-                >
-                <date-picker
-                  ref="datepicker"
-                  v-model:value="form.birth_day"
-                  v-pattern="/^[0-9.]*$/"
-                  :typeable="true"
-                  :clearable="datePickerOptions.isClearable"
-                  :editable="datePickerOptions.editable"
-                  :format="datePickerOptions.format"
-                  :placeholder="datePickerOptions.placeholder"
-                  :first-day-of-week="datePickerOptions.firstDay"
-                  value-type="timestamp"
-                  :lang="$locale === 'en' ? 'en' : 'ru'"
-                  class="register__input--birthday"
-                  :class="{
-                    'register__input--birthday-invalid': birthRangeError,
-                    'border-red': validationError.birth_day,
-                  }"
-                  @focus="clearError('birth_day')"
-                  @change="clearError('birth_day')"
-                >
-                  <template #calendar-icon>
-                    <div class="register__date-icon">
-                      <i class="material-icons">calendar_today</i>
-                      <i class="material-icons">arrow_drop_down</i>
-                    </div>
-                  </template>
-                </date-picker>
-                <span
-                  v-if="validationError.birth_day"
-                  class="register__input-error-hint register__input-error-hint--birthday"
-                >
-                  {{ validationError.birth_day }}
-                </span>
-                <span v-if="birthRangeError" class="register__birthday-error">
-                  {{ $t("common.bdayError") }}
-                </span>
-              </div>
-              <div
-                class="register__input-group register__input-group--half-width register__password"
-              >
-                <label
-                  for="password"
-                  :style="loginText ? `color: ${loginText} !important` : {}"
-                  >{{ $t("common.password") }}:</label
-                >
-                <span class="register__input-wrapper">
-                  <input
-                    id="password"
-                    v-model="form.password"
-                    :type="passwordViewType"
-                    autocomplete="new-password"
-                    class="register__input register__input--password"
-                    :class="{ 'border-red': validationError.password }"
-                    style="height: auto"
-                    @focus="clearError('password')"
-                  />
-                  <span class="eye-pass" @click="togglePasswordVisible">
-                    <svg
-                      v-if="passwordViewType === 'text'"
-                      class="show-password-icon"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 1792 1792"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M555 1335l78-141q-87-63-136-159t-49-203q0-121 61-225-229 117-381 353 167 258 427 375zm389-759q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm363-191q0 7-1 9-106 189-316 567t-315 566l-49 89q-10 16-28 16-12 0-134-70-16-10-16-28 0-12 44-87-143-65-263.5-173t-208.5-245q-20-31-20-69t20-69q153-235 380-371t496-136q89 0 180 17l54-97q10-16 28-16 5 0 18 6t31 15.5 33 18.5 31.5 18.5 19.5 11.5q16 10 16 27zm37 447q0 139-79 253.5t-209 164.5l280-502q8 45 8 84zm448 128q0 35-20 69-39 64-109 145-150 172-347.5 267t-419.5 95l74-132q212-18 392.5-137t301.5-307q-115-179-282-294l63-112q95 64 182.5 153t144.5 184q20 34 20 69z"
-                      />
-                    </svg>
-                    <svg
-                      v-else
-                      class="show-password-icon"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 1792 1792"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z"
-                      />
-                    </svg>
-                  </span>
-                  <PasswordStrength :level="passwordStrengthLevel" />
-                  <span
-                    v-if="validationError.password"
-                    class="register__input-error-hint register__input-error-hint--password"
-                  >
-                    {{ validationError.password }}
-                  </span>
-                </span>
-                <div
-                  v-if="isPassNoEmpty"
-                  class="pass-error-block"
-                  @click="showPassPopup = false"
-                >
-                  <div class="arrow"></div>
-                  <ul>
-                    <li :class="{ 'no-correct': !isPassHasUppercase }">
-                      <span class="icon">&#x2714;</span>
-                      {{ $t("common.password_upper") }}
-                    </li>
-                    <li :class="{ 'no-correct': !isPassHasLowercase }">
-                      <span class="icon">&#x2714;</span>
-                      {{ $t("common.password_lower") }}
-                    </li>
-                    <li :class="{ 'no-correct': !isPassHasNumbercase }">
-                      <span class="icon">&#x2714;</span>
-                      {{ $t("common.password_number") }}
-                    </li>
-                    <li :class="{ 'no-correct': !isPassAnouth }">
-                      <span class="icon">&#x2714;</span>
-                      {{ $t("common.password_chars") }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="register__input-group register__input-group--country">
-                <label
-                  :style="loginText ? `color: ${loginText} !important` : {}"
-                  @click.stop="$refs.countryselect.toggle()"
-                  >{{ $t("common.country") }}:</label
-                >
-                <span class="register__input-wrapper">
-                  <CountrySelect
-                    ref="countryselect"
-                    :class="{ 'border-red': validationError.country }"
-                    @change-value="onSelectCountry"
-                    @valid-country="setValidCountry"
-                  />
-                  <span
-                    v-if="validationError.country"
-                    class="register__input-error-hint register__input-error-hint--country"
-                  >
-                    {{ validationError.country }}
-                  </span>
-                </span>
-              </div>
-              <div class="register__input-group register__input-group--agree">
-                <div class="custom-control custom-switch">
-                  <input
-                    id="terms"
-                    v-model="terms"
-                    type="checkbox"
-                    class="custom-control-input"
-                  />
-                  <label
-                    class="custom-control-label pt-1"
-                    :style="loginText ? `color: ${loginText} !important` : {}"
-                    for="terms"
-                    >{{ $t("common.agree") }}
-                    <a
-                      href="/public/docs/EN_User_Agreement_site.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      class="register__link"
-                      >{{ $t("common.terms") }}</a
-                    >
-                    &
-                    <a
-                      href="/public/docs/EN_Privacy_policy_site.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      class="register__link"
-                      >{{ $t("common.privacy") }}</a
-                    >
-                  </label>
-                </div>
-                <div class="custom-control custom-switch">
-                  <input
-                    id="newspaper"
-                    v-model="form.subscription"
-                    type="checkbox"
-                    class="custom-control-input"
-                  />
-                  <label
-                    class="custom-control-label pt-1"
-                    :style="loginText ? `color: ${loginText} !important` : {}"
-                    for="newspaper"
-                  >
-                    {{ $t("common.newspaper") }}
-                  </label>
-                </div>
-              </div>
-
-              <div class="register__input-group">
-                <!--CAPTCHA-->
-                <span
-                  class="register__input-wrapper register__input-wrapper--recap"
-                >
-                  <vue-recaptcha
-                    ref="recaptcha"
-                    :sitekey="localConfig.recaptcha_site_key"
-                    @verify="handleCaptcha"
-                    @expired="onExpired"
-                  />
-                </span>
-                <!--CAPTCHA-->
-
-                <button
-                  class="register__button mx-auto"
-                  :style="
-                    mainColor ? `background: ${mainColor} !important` : {}
-                  "
-                  :disabled="isButtonDisabled"
-                  type="submit"
-                >
-                  {{ $t("common.createAccount") }}
-                </button>
-              </div>
-
-              <p v-if="userExist" class="register__user-exist-hint">
-                {{ $t("common.user_registered") }}
-              </p>
-            </form>
-
-            <!--Другие опции-->
-            <section class="register__have-account">
-              <router-link
-                to="/login"
-                class="register__link register__link--hint"
+              <label
+                for="first_name"
                 :style="loginText ? `color: ${loginText} !important` : {}"
+                >{{ $t("common.firstname") }}:</label
               >
-                <span>{{ $t("common.haveaccount") }}</span>
-              </router-link>
-            </section>
-            <!--Другие опции-->
-          </div>
-          <div v-else class="success-register">
-            <p class="register__popup">
-              {{ $t("common.success_register") }}
+              <span class="register__input-wrapper">
+                <input
+                  id="first_name"
+                  v-model="form.first_name"
+                  type="text"
+                  class="register__input"
+                  :class="{
+                    'border-red': showedValidationError.first_name,
+                  }"
+                  @blur="showValidationErrorFor.first_name = true"
+                  @focus="showValidationErrorFor.first_name = false"
+                />
+                <span
+                  v-if="showedValidationError.first_name"
+                  class="register__input-error-hint"
+                >
+                  {{ showedValidationError.first_name }}
+                </span>
+              </span>
+            </div>
+            <div
+              class="register__input-group register__input-group--half-width"
+            >
+              <label
+                for="last_name"
+                :style="loginText ? `color: ${loginText} !important` : {}"
+                >{{ $t("common.lastname") }}:</label
+              >
+              <span class="register__input-wrapper">
+                <input
+                  id="last_name"
+                  v-model="form.last_name"
+                  type="text"
+                  class="register__input"
+                  :class="{ 'border-red': showedValidationError.last_name }"
+                  @blur="showValidationErrorFor.last_name = true"
+                  @focus="showValidationErrorFor.last_name = false"
+                />
+                <span
+                  v-if="showedValidationError.last_name"
+                  class="register__input-error-hint"
+                >
+                  {{ showedValidationError.last_name }}
+                </span>
+              </span>
+            </div>
+            <div class="register__input-group">
+              <label
+                for="email"
+                :style="loginText ? `color: ${loginText} !important` : {}"
+                >Email:</label
+              >
+              <span class="register__input-wrapper">
+                <input
+                  id="email"
+                  v-model="form.email"
+                  type="text"
+                  class="register__input"
+                  :class="{ 'border-red': showedValidationError.email }"
+                  @blur="showValidationErrorFor.email = true"
+                  @focus="showValidationErrorFor.email = false"
+                />
+                <span
+                  v-if="showedValidationError.email"
+                  class="register__input-error-hint"
+                >
+                  {{ showedValidationError.email }}
+                </span>
+              </span>
+            </div>
+            <div
+              class="register__input-group register__input-group--half-width"
+            >
+              <label :style="loginText ? `color: ${loginText} !important` : {}"
+                >{{ $t("common.birthday") }}:</label
+              >
+              <date-picker
+                ref="datepicker"
+                v-model:value="form.birth_day"
+                v-pattern="/^[0-9.]*$/"
+                :typeable="true"
+                :clearable="datePickerOptions.isClearable"
+                :editable="datePickerOptions.editable"
+                :format="datePickerOptions.format"
+                :placeholder="datePickerOptions.placeholder"
+                :first-day-of-week="datePickerOptions.firstDay"
+                value-type="timestamp"
+                :lang="$locale === 'en' ? 'en' : 'ru'"
+                class="register__input--birthday"
+                :class="{
+                  'register__input--birthday-invalid': birthRangeError,
+                  'border-red': showedValidationError.birth_day,
+                }"
+                @close="showValidationErrorFor.birth_day = true"
+                @focus="showValidationErrorFor.birth_day = false"
+              >
+                <template #calendar-icon>
+                  <div class="register__date-icon">
+                    <i class="material-icons">calendar_today</i>
+                    <i class="material-icons">arrow_drop_down</i>
+                  </div>
+                </template>
+              </date-picker>
+              <span
+                v-if="showedValidationError.birth_day"
+                class="register__input-error-hint register__input-error-hint--birthday"
+              >
+                {{ showedValidationError.birth_day }}
+              </span>
+              <span v-if="birthRangeError" class="register__birthday-error">
+                {{ $t("common.bdayError") }}
+              </span>
+            </div>
+            <div
+              class="register__input-group register__input-group--half-width register__password"
+            >
+              <label
+                for="password"
+                :style="loginText ? `color: ${loginText} !important` : {}"
+                >{{ $t("common.password") }}:</label
+              >
+              <span class="register__input-wrapper">
+                <input
+                  id="password"
+                  v-model="form.password"
+                  :type="passwordViewType"
+                  autocomplete="new-password"
+                  class="register__input register__input--password"
+                  :class="{ 'border-red': showedValidationError.password }"
+                  style="height: auto"
+                  @blur="showValidationErrorFor.password = true"
+                  @focus="showValidationErrorFor.password = false"
+                />
+                <span class="eye-pass" @click="togglePasswordVisible">
+                  <svg
+                    v-if="passwordViewType === 'text'"
+                    class="show-password-icon"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 1792 1792"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M555 1335l78-141q-87-63-136-159t-49-203q0-121 61-225-229 117-381 353 167 258 427 375zm389-759q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm363-191q0 7-1 9-106 189-316 567t-315 566l-49 89q-10 16-28 16-12 0-134-70-16-10-16-28 0-12 44-87-143-65-263.5-173t-208.5-245q-20-31-20-69t20-69q153-235 380-371t496-136q89 0 180 17l54-97q10-16 28-16 5 0 18 6t31 15.5 33 18.5 31.5 18.5 19.5 11.5q16 10 16 27zm37 447q0 139-79 253.5t-209 164.5l280-502q8 45 8 84zm448 128q0 35-20 69-39 64-109 145-150 172-347.5 267t-419.5 95l74-132q212-18 392.5-137t301.5-307q-115-179-282-294l63-112q95 64 182.5 153t144.5 184q20 34 20 69z"
+                    />
+                  </svg>
+                  <svg
+                    v-else
+                    class="show-password-icon"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 1792 1792"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1664 960q-152-236-381-353 61 104 61 225 0 185-131.5 316.5t-316.5 131.5-316.5-131.5-131.5-316.5q0-121 61-225-229 117-381 353 133 205 333.5 326.5t434.5 121.5 434.5-121.5 333.5-326.5zm-720-384q0-20-14-34t-34-14q-125 0-214.5 89.5t-89.5 214.5q0 20 14 34t34 14 34-14 14-34q0-86 61-147t147-61q20 0 34-14t14-34zm848 384q0 34-20 69-140 230-376.5 368.5t-499.5 138.5-499.5-139-376.5-368q-20-35-20-69t20-69q140-229 376.5-368t499.5-139 499.5 139 376.5 368q20 35 20 69z"
+                    />
+                  </svg>
+                </span>
+                <PasswordStrength :level="passwordStrengthLevel" />
+                <span
+                  v-if="showedValidationError.password"
+                  class="register__input-error-hint register__input-error-hint--password"
+                >
+                  {{ showedValidationError.password }}
+                </span>
+              </span>
+              <div
+                v-if="isPassNoEmpty"
+                class="pass-error-block"
+                @click="showPassPopup = false"
+              >
+                <div class="arrow"></div>
+                <ul>
+                  <li :class="{ 'no-correct': !isPassHasUppercase }">
+                    <span class="icon">&#x2714;</span>
+                    {{ $t("common.password_upper") }}
+                  </li>
+                  <li :class="{ 'no-correct': !isPassHasLowercase }">
+                    <span class="icon">&#x2714;</span>
+                    {{ $t("common.password_lower") }}
+                  </li>
+                  <li :class="{ 'no-correct': !isPassHasNumbercase }">
+                    <span class="icon">&#x2714;</span>
+                    {{ $t("common.password_number") }}
+                  </li>
+                  <li :class="{ 'no-correct': !isPassAnouth }">
+                    <span class="icon">&#x2714;</span>
+                    {{ $t("common.password_chars") }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="register__input-group register__input-group--country">
+              <label
+                :style="loginText ? `color: ${loginText} !important` : {}"
+                @click.stop="$refs.countryselect.toggle()"
+                >{{ $t("common.country") }}:</label
+              >
+              <span class="register__input-wrapper">
+                <CountrySelect
+                  ref="countryselect"
+                  :class="{ 'border-red': showedValidationError.country }"
+                  @change-value="onSelectCountry"
+                  @valid-country="setValidCountry"
+                />
+                <span
+                  v-if="showedValidationError.country"
+                  class="register__input-error-hint register__input-error-hint--country"
+                >
+                  {{ showedValidationError.country }}
+                </span>
+              </span>
+            </div>
+            <div class="register__input-group register__input-group--agree">
+              <div class="custom-control custom-switch">
+                <input
+                  id="terms"
+                  v-model="terms"
+                  type="checkbox"
+                  class="custom-control-input"
+                />
+                <label
+                  class="custom-control-label pt-1"
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  for="terms"
+                  >{{ $t("common.agree") }}
+                  <a
+                    href="/public/docs/EN_User_Agreement_site.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="register__link"
+                    >{{ $t("common.terms") }}</a
+                  >
+                  &
+                  <a
+                    href="/public/docs/EN_Privacy_policy_site.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    class="register__link"
+                    >{{ $t("common.privacy") }}</a
+                  ></label
+                >
+              </div>
+
+              <div class="custom-control custom-switch">
+                <input
+                  id="newspaper"
+                  v-model="form.subscription"
+                  type="checkbox"
+                  class="custom-control-input"
+                />
+                <label
+                  class="custom-control-label pt-1"
+                  :style="loginText ? `color: ${loginText} !important` : {}"
+                  for="newspaper"
+                  >{{ $t("common.newspaper") }}</label
+                >
+              </div>
+            </div>
+
+            <div class="register__input-group">
+              <!--CAPTCHA-->
+              <span
+                class="register__input-wrapper register__input-wrapper--recap"
+              >
+                <vue-recaptcha
+                  ref="recaptcha"
+                  :sitekey="localConfig.recaptcha_site_key"
+                  @verify="handleCaptcha"
+                  @expired="onExpired"
+                />
+                <span
+                  v-if="captchaResponseError"
+                  class="register__input-error-hint register__input-error-hint--recap"
+                >
+                  {{ captchaResponseError }}
+                </span>
+              </span>
+              <!--CAPTCHA-->
+
+              <button
+                class="register__button mx-auto"
+                :style="mainColor ? `background: ${mainColor} !important` : {}"
+                :disabled="isButtonDisabled"
+                type="submit"
+              >
+                {{ $t("common.createAccount") }}
+              </button>
+            </div>
+
+            <p v-if="userExist" class="register__user-exist-hint">
+              {{ $t("common.user_registered") }}
             </p>
-            <p class="text-primary alert text-justify">
-              {{ $t("common.success_timer_text") }}
-              <b>{{ successTimer }}</b>
-            </p>
-          </div>
+          </form>
+
+          <!--Другие опции-->
+          <section class="register__have-account">
+            <router-link
+              to="/login"
+              class="register__link register__link--hint"
+              :style="loginText ? `color: ${loginText} !important` : {}"
+            >
+              <span>{{ $t("common.haveaccount") }}</span>
+            </router-link>
+          </section>
+          <!--Другие опции-->
         </div>
       </template>
-      <template v-else>
+      <template v-else-if="stage === 'email_confirmation'">
         <!--Отправлено на почту-->
-        <div class="register__title">{{ $t("common.register") }}</div>
-        <div class="register__form">
-          <div class="register__popup text-center">
-            {{ $t("common.wesentemail") }}
+
+        <div class="flex flex-col box white max-w-[304px]">
+          <div class="logIn__title" style="max-width: 600px">
+            {{ $t("common.email_confirmation") }}
           </div>
+          <div class="logIn__descr mb-4">
+            <strong>{{ $t("common.email_sent") }}</strong>
+          </div>
+          <form
+            class="logIn_form"
+            autocomplete="off"
+            @submit.prevent="confirmEmail"
+          >
+            <input
+              v-model="confirmationCode"
+              required
+              autocomplete="google2fa"
+              class="text-center mb-4"
+              type="text"
+            />
+            <div v-if="confirmEmailTimer > 0" class="logIn__descr mb-4">
+              <strong>{{ $t("common.getCode") }}</strong>
+              {{ $t("common.againAfter", { n: confirmEmailTimer }) }}
+            </div>
+            <button
+              v-else
+              class="logIn__form__input logIn__form__input_button block uppercase !bg-[#ffba38]"
+              type="button"
+              @click="resendCode"
+            >
+              {{ $t("common.resend") }}
+            </button>
+
+            <button
+              class="logIn__form__input logIn__form__input_button block uppercase mb-[13px]"
+              type="submit"
+            >
+              {{ $t("common.confirm_email") }}
+            </button>
+
+            <button
+              class="logIn__register block uppercase !bg-[#ff5d55]"
+              @click="goToGathering"
+            >
+              {{ $t("common.back") }}
+            </button>
+          </form>
         </div>
         <!--Отправлено на почту-->
       </template>
@@ -380,6 +403,18 @@ import DatePicker from "vue-datepicker-next";
 import "vue-datepicker-next/index.css";
 import { VueRecaptcha } from "vue-recaptcha";
 import PasswordStrength from "../components/PasswordStrength.vue";
+
+function getEmptyForm() {
+  return {
+    first_name: "",
+    last_name: "",
+    email: "",
+    birth_day: "",
+    password: "",
+    country: "",
+    subscription: false,
+  };
+}
 
 export default {
   name: "ConfirmWithdrawalUrl",
@@ -412,33 +447,104 @@ export default {
   },
   data() {
     return {
+      stage: "data_gathering",
+      emailToWhichCodeSent: "",
+      captchaResponseError: "",
       minYearsOld: 18,
-      form: {
-        first_name: "",
-        last_name: "",
-        email: "",
-        birth_day: "",
-        password: "",
-        country: "",
-        subscription: false,
-      },
-      showPassPopup: false,
-      validationError: {},
+      form: getEmptyForm(),
       terms: false,
-      confirmEmailSent: false,
+      showPassPopup: false,
+      confirmEmailTimer: 0,
       refCode: "",
       isReferral: false,
       successRegister: false,
       successTimer: 0,
+      // если юзер пробует на существующий email зарегистрировать еще один аккаунт, сохраняем
+      // в переменной email для последующих проверок
       registeredUserEmail: null,
       passwordViewType: "password",
       isValidCountry: null,
-      validFirstName: true,
-      validLastName: true,
+      showValidationErrorFor: {},
+      confirmationCode: "",
       captcha: "",
     };
   },
   computed: {
+    validateRules() {
+      return {
+        first_name: {
+          required: true,
+          minLength: 2,
+          maxLength: 30,
+          validateFunction: this.isCorrectName,
+          invalidMessage: this.$t("common.invalidValueString"),
+        },
+        last_name: {
+          required: true,
+          minLength: 2,
+          maxLength: 30,
+          validateFunction: this.isCorrectName,
+          invalidMessage: this.$t("common.invalidValueString"),
+        },
+        email: {
+          required: true,
+          validateFunction: this.validateEmail,
+          invalidMessage: this.$t("common.invalidEmail"),
+        },
+        password: {
+          required: true,
+          minLength: 6,
+          maxLength: 350,
+        },
+        birth_day: {
+          required: true,
+        },
+        country: {
+          required: true,
+        },
+      };
+    },
+    validationError() {
+      const form = this.form,
+        output = {};
+
+      const validateRules = this.validateRules;
+
+      for (const key in validateRules) {
+        if (key in validateRules) {
+          let rule = validateRules[key];
+
+          if (form[key]) {
+            if (rule.minLength && form[key].length < rule.minLength) {
+              output[key] = this.$t("common.fieldMinLength") + rule.minLength;
+            } else if (rule.maxLength && form[key].length > rule.maxLength) {
+              output[key] = this.$t("common.fieldMaxLength") + rule.maxLength;
+            } else if (
+              rule.validateFunction &&
+              !rule.validateFunction(form[key])
+            ) {
+              output[key] = rule.invalidMessage;
+            }
+          } else if (rule.required) {
+            output[key] = this.$t("common.requiredField");
+          }
+        }
+      }
+
+      debugger;
+
+      // если нет ошибок то вернет true
+      return output;
+    },
+
+    showedValidationError() {
+      return Object.fromEntries(
+        Object.entries(this.validationError).filter(
+          ([key]) => this.showValidationErrorFor[key]
+        )
+      );
+    },
+
     isPassNoEmpty() {
       return this.form.password.length > 0;
     },
@@ -465,14 +571,9 @@ export default {
     },
     isButtonDisabled() {
       return (
-        !!Object.keys(this.validationError).length ||
+        Object.keys(this.validationError).length ||
         !this.terms ||
-        !this.isValidCountry ||
-        !this.isPassNoEmpty ||
-        !this.isPassHasUppercase ||
-        !this.isPassHasLowercase ||
-        !this.isPassHasNumbercase ||
-        !this.isPassAnouth
+        !this.isValidCountry
       );
     },
     passwordStrengthLevel() {
@@ -504,6 +605,10 @@ export default {
     birthRangeError() {
       return this.form.birth_day && !this.isBirthdayCorrect;
     },
+    /**
+     * Проверяет существует ли юзер
+     * @returns {boolean} true если сервер уже вернул ответ, что юзер зарегистрирован
+     */
     userExist() {
       return (
         this.registeredUserEmail !== null &&
@@ -531,19 +636,10 @@ export default {
         this.$store.dispatch("core/getCountryList", val);
       },
     },
-    "form.first_name": {
-      handler(val) {
-        this.validFirstName = this.isCorrectName(val);
-      },
-    },
-    "form.last_name": {
-      handler(val) {
-        this.validLastName = this.isCorrectName(val);
-      },
-    },
   },
   mounted() {
     const savedRefCode = localStorage.getItem("p2p.refcode");
+    // пробуем найти реф код в пропсах или с локалстореджа
     const refCode = this.$props.refcode || savedRefCode;
 
     if (refCode) {
@@ -553,17 +649,71 @@ export default {
     }
   },
   methods: {
+    goToGathering() {
+      this.form = getEmptyForm();
+      this.stage = "data_gathering";
+      this.showValidationErrorFor = {
+        country: true,
+      };
+    },
+
+    confirmEmail() {
+      this.$http
+        .post("auth/registration/verify-email/", {
+          key: this.confirmationCode,
+        })
+        .then(() => {
+          this.$notify({
+            type: "success",
+            title: "",
+            text: this.$t("common.you_were_registered"),
+          });
+          this.$router.push({ name: "login" });
+        })
+        .catch((r) => {
+          if (r.data?.type === "not_found") {
+            this.$notify({
+              type: "error",
+              title: "",
+              text: this.$t("common.invalid_code"),
+            });
+          }
+        });
+    },
+
+    resendCode() {
+      this.$http
+        .post("auth/registration/resend-email/", {
+          email: this.form.email,
+        })
+        .then(this.runConfirmEmailTimer);
+    },
+
+    runConfirmEmailTimer() {
+      this.confirmEmailTimer = 300;
+
+      const interval = setInterval(() => {
+        this.confirmEmailTimer--;
+        if (this.confirmEmailTimer < 0) {
+          clearInterval(interval);
+        }
+      }, 1000);
+    },
+
     setValidCountry(val) {
       this.isValidCountry = val;
     },
+    /**
+     * пропуверяет строку на '-' "whitespace" or 'a'-'z', что бы можно было считать
+     * валидными имена/фамилии типа "Anna-Maria"
+     */
     isCorrectName(val) {
       return /^[-\sa-zA-Z]+$/.test(val);
     },
-    clearError(prop) {
-      if (this.validationError[prop]) {
-        delete this.validationError[prop];
-      }
-    },
+    /**
+     * @param years {number} мин кол-во лет
+     * @returns {boolean} true если старше чем кол-во years
+     */
     isOlderThen(years) {
       const birthdayTimestamp = this.form.birth_day;
       const now = new Date();
@@ -576,79 +726,34 @@ export default {
     onExpired() {
       this.$refs.recaptcha.reset();
     },
+    /**
+     * Устанавливает страну проживания юзера
+     */
     onSelectCountry(value) {
-      this.clearError("country");
       this.form.country = value;
     },
+    /**
+     * Проверка email
+     * @param email
+     * @returns {boolean}
+     */
     validateEmail(email) {
       let re = /\S+@\S+\.\S+/;
       return re.test(email);
     },
-    validateData(form) {
-      const validateRules = {
-        first_name: {
-          required: true,
-          minLength: 2,
-          maxLength: 30,
-          validateFunction: this.isCorrectName,
-          validateFunctionParams: [form.first_name],
-          invalidMessage: this.$t("common.invalidValueString"),
-        },
-        last_name: {
-          required: true,
-          minLength: 2,
-          maxLength: 30,
-          validateFunction: this.isCorrectName,
-          validateFunctionParams: [form.last_name],
-          invalidMessage: this.$t("common.invalidValueString"),
-        },
-        email: {
-          required: true,
-          validateFunction: this.validateEmail,
-          validateFunctionParams: [form.email],
-          invalidMessage: this.$t("common.invalidEmail"),
-        },
-        password: {
-          required: true,
-          minLength: 6,
-          maxLength: 350,
-        },
-        birth_day: {
-          required: true,
-        },
-        country: {
-          required: true,
-        },
-      };
+    /**
+     * Проверка данных формы
+     * @returns {boolean} true, если форма валидна
+     */
+    validateData() {
+      Object.keys(this.validationError).forEach(
+        (field) => (this.showValidationErrorFor[field] = true)
+      );
 
-      for (const key in validateRules) {
-        if (key in validateRules) {
-          let rule = validateRules[key];
-
-          if (rule.required) {
-            if (form[key]) {
-              if (rule.minLength && form[key].length < rule.minLength) {
-                this.validationError[key] =
-                  this.$t("common.fieldMinLength") + rule.minLength;
-              } else if (rule.maxLength && form[key].length > rule.maxLength) {
-                this.validationError[key] =
-                  this.$t("common.fieldMaxLength") + rule.maxLength;
-              } else if (
-                rule.validateFunction &&
-                !rule.validateFunction(...rule.validateFunctionParams)
-              ) {
-                this.validationError[key] = rule.invalidMessage;
-              }
-            } else {
-              this.validationError[key] = this.$t("common.requiredField");
-            }
-          }
-        }
-      }
-      if (!form.birth_day) {
-        this.validationError["birth_day"] = this.$t("common.requiredField");
-      }
-      return !Object.keys(this.validationError).length || this.birthRangeError;
+      // если нет ошибок то вернет true
+      return (
+        Object.keys(this.validationError).length === 0 && !this.birthRangeError
+      );
     },
     togglePasswordVisible() {
       this.passwordViewType =
@@ -657,6 +762,9 @@ export default {
     handleCaptcha(captchaResponse) {
       this.captcha = captchaResponse;
     },
+    /**
+     * Запрос на регистрацию
+     */
     handleRegister() {
       if (
         this.validateData(this.form) &&
@@ -683,24 +791,13 @@ export default {
 
         this.$http.post("auth/registration/", config).then(
           () => {
-            this.confirmEmailSent = true;
+            this.stage = "email_confirmation";
+            this.runConfirmEmailTimer();
+            this.emailToWhichCodeSent = this.form.email;
 
             if (this.isReferral) {
               localStorage.removeItem("p2p.refcode");
             }
-
-            this.successRegister = true;
-
-            this.successTimer = 5;
-            let interval = setInterval(() => {
-              this.successTimer -= 1;
-            }, 1000);
-
-            const self = this;
-            setTimeout(() => {
-              clearInterval(interval);
-              self.$router.push("/login");
-            }, 5000);
 
             /* eslint-disable */
             ga("create", "UA-141014543-1", "auto");
@@ -708,6 +805,8 @@ export default {
             /* eslint-enable */
           },
           (r) => {
+            // список полей для которых нужно выводить нотификации
+            // (с сервера пока приходит много лишнего)
             const exceptedFields = [
               "email",
               "birth_day",
@@ -715,6 +814,7 @@ export default {
               "last_name",
               "country",
               "password1",
+              "captchaResponse",
             ];
             const errors = Object.entries(r.body);
 
@@ -765,7 +865,7 @@ $red: #e93a3a;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-color: #36373c;
+  background-color: #19233c;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -773,7 +873,7 @@ $red: #e93a3a;
   &__date-icon {
     width: 100%;
     height: 100%;
-    background-color: var(--theme-primary-color);
+    background-color: #3cbf8c;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -781,7 +881,7 @@ $red: #e93a3a;
     transition: background-color 0.15s ease-in;
 
     &:hover {
-      background-color: darken($theme-primary-color, 5%);
+      background-color: darken(#3cbf8c, 5%);
       transition: background-color 0.15s ease-out;
     }
 
@@ -840,18 +940,15 @@ $red: #e93a3a;
   left: -10px;
   top: 10px;
 }
-
 .pass-error-block ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
-
 .pass-error-block li {
   display: flex;
   align-items: center;
 }
-
 .pass-error-block .icon {
   background-color: #56ba57;
   color: white;
