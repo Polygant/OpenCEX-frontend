@@ -1,5 +1,12 @@
 const common = {
   ru: {
+    resend: "Переотправить",
+    cancel_withdrawal: "Отменить вывод",
+    againAfter: "повторно через {n} секунд",
+    confirm_email: "Подтвердить имейл",
+    email_confirmation: "Подтверждение почты",
+    email_sent: "Вам отправлено письмо с кодом, введите его в поле ниже",
+    you_were_registered: "Аккаунт успешно создан",
     deposit_modal: {
       title: "Внимание!",
       text: "Адрес для пополнения для каждой монеты уникален.",
@@ -777,6 +784,14 @@ const common = {
   },
 
   en: {
+    resend: "Resend",
+    cancel_withdrawal: "Cancel withdrawal",
+    againAfter: "again in {n} seconds",
+    confirm_email: "Confirm Email",
+    email_confirmation: "Confirm email",
+    email_sent:
+      "Email with a code has been sent to you, please enter it in the form below",
+    you_were_registered: "Account successfully registered",
     deposit_modal: {
       title: "Attention!",
       text: "The deposit address for each coin is unique.",
